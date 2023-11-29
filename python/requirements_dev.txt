@@ -1,0 +1,26 @@
+numpy >= 2.0
+
+black >= 24.2.0
+setuptools >= 65.5.1
+pytest >= 7 # Sync with tox.ini
+pytest-cov >= 4.1.0
+pre-commit >= 3.3.2
+
+tox >= 4.6.2 # Sync with tox.ini
+virtualenv >= 20
+build
+
+sphinx >= 6.0
+pydata_sphinx_theme
+jupyter
+ipykernel
+kaleido
+myst-nb
+sphinxcontrib-napoleon
+sphinxcontrib-bibtex
+sphinx-copybutton
+sphinx-design
+sphinx-gallery
+pillow
+jupyterlab
+ipywidgets
