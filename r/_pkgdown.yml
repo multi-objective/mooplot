@@ -1,0 +1,33 @@
+url: https://multi-objective.github.io/mooplot/r/
+
+repo:
+  url:
+    home: https://github.com/multi-objective/mooplot/
+    source: https://github.com/multi-objective/mooplot/blob/HEAD/r/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+development:
+  mode: unreleased
+  destination: devel
+  version_label: light
+  version_tooltip: Github version
+navbar:
+  bg: dark
+  structure:
+    right:
+    - search
+    - cran
+    - github
+  components:
+    cran:
+      icon: fab fa-r-project
+      href: https://cloud.r-project.org/package=mooplot
+reference:
+- title: Visualization of the Empirical Attainment Function
+  contents: has_concept("eaf")
+- title: Other useful functions
+  contents:
+  - pdf_crop
+  - reexports

@@ -1,0 +1,68 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools>=42",
+]
+
+[project]
+name = "mooplot"
+version = "0.0.9999"
+description = "Visualizations for Multi-Objective Optimization"
+readme = "README.md"
+authors = [
+  { name = "Manuel López-Ibáñez", email = "manuel.lopez-ibanez@manchester.ac.uk"},
+  { name="Fergus Rooney", email="fergus.rooney@outlook.com" }
+]
+requires-python = ">=3.10"
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "matplotlib>=3.6",
+  "moocore==0.0.9999",
+  "numpy>=1.22.3",
+  "pandas>=2.0.2",
+  "plotly>=5.15",
+]
+[project.urls]
+Documentation = "https://multi-objective.github.io/mooplot/python"
+Homepage = "https://multi-objective.github.io/mooplot/python"
+Source = "https://github.com/multi-objective/mooplot/"
+Tracker = "https://github.com/multi-objective/mooplot/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.ruff]
+# Set the maximum line length to 79.
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = [
+   "D",   # pydocstyle
+]
+ignore = [
+  "D203", # one-blank-line-before-class
+  "D213", # multi-line-summary-second-line
+
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/mooplot/colour.py" = [ "D" ] # FIXME!
+"examples/*" = [
+"D205", # blank line required between summary line and description
+"D400", # First line should end with a period
+"D415", # First line should end with a period, question mark, or exclamation point
+]
+
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.pytest.ini_options]
+doctest_optionflags = "NUMBER"
