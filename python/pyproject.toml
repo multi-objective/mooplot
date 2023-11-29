@@ -1,0 +1,42 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools>=42",
+]
+
+[project]
+name = "mooplot"
+version = "0.0.9999"
+description = "Visualizations for Multi-Objective Optimization"
+readme = "README.md"
+authors = [
+  { name = "Manuel López-Ibáñez", email = "manuel.lopez-ibanez@manchester.ac.uk"},
+  { name="Fergus Rooney", email="fergus.rooney@outlook.com" }
+]
+requires-python = ">=3.10"
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "matplotlib>=3.6",
+  "moocore==0.0.9999",
+  "numpy>=1.22.3",
+  "pandas>=2.0.2",
+  "plotly>=5.15",
+]
+[project.urls]
+Documentation = "https://multi-objective.github.io/mooplot/python"
+Homepage = "https://multi-objective.github.io/mooplot/python"
+Source = "https://github.com/multi-objective/mooplot/"
+Tracker = "https://github.com/multi-objective/mooplot/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+doctest_optionflags = "NUMBER"
