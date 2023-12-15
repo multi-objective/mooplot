@@ -12,6 +12,7 @@ Imports:
         graphics,
         grDevices,
         matrixStats,
+        collapse,
         Rdpack
 Suggests: 
     extrafont,

@@ -5,16 +5,16 @@
 \title{Plot empirical attainment function differences}
 \usage{
 eafdiffplot(
-  data.left,
-  data.right,
+  data_left,
+  data_right,
   col = c("#FFFFFF", "#808080", "#000000"),
-  intervals = 5,
-  percentiles = c(50),
+  intervals = 5L,
+  percentiles = 50,
   full.eaf = FALSE,
   type = "area",
   legend.pos = if (full.eaf) "bottomleft" else "topright",
-  title.left = deparse(substitute(data.left)),
-  title.right = deparse(substitute(data.right)),
+  title_left = deparse(substitute(data_left)),
+  title_right = deparse(substitute(data_right)),
   xlim = NULL,
   ylim = NULL,
   cex = par("cex"),
@@ -29,7 +29,7 @@ eafdiffplot(
 )
 }
 \arguments{
-\item{data.left, data.right}{Data frames corresponding to the input data of
+\item{data_left, data_right}{Data frames corresponding to the input data of
 left and right sides, respectively. Each data frame has at least three
 columns, the third one being the set of each point. See also
 \code{\link[=read_datasets]{read_datasets()}}.}
@@ -54,13 +54,13 @@ plotted as attainment surfaces. \code{NA} does not plot any. See
 differences between the EAFs.}
 
 \item{type}{Whether the EAF differences are plotted as points
-(\samp{points}) or whether to color the areas that have at least a
-certain value (\samp{area}).}
+(\code{"points"}) or whether to color the areas that have at least a
+certain value (\code{"area"}).}
 
 \item{legend.pos}{The position of the legend. See \code{\link[=legend]{legend()}}.  A value of
 \code{"none"} hides the legend.}
 
-\item{title.left, title.right}{Title for left and right panels, respectively.}
+\item{title_left, title_right}{Title for left and right panels, respectively.}
 
 \item{xlim, ylim, cex, cex.lab, cex.axis}{Graphical parameters, see
 \code{\link[=plot.default]{plot.default()}}.}

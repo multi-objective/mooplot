@@ -39,7 +39,7 @@ install: build
 	cd $(BINDIR) && R CMD INSTALL $(INSTALL_FLAGS) $(PACKAGE)_$(PACKAGEVERSION).tar.gz
 
 setup:
-	Rscript -e 'if(!require(devtools)) install.packages("devtools"); devtools::install_deps(upgrade="never")'
+	Rscript -e 'if(!require(devtools)) install.packages("devtools"); devtools::install_dev_deps(build=FALSE, upgrade="never")'
 
 gendoc: $(PACKAGEDIR)/man/$(PACKAGE)-package.Rd
 
@@ -51,7 +51,6 @@ pkgdown: gendoc
 
 build:
 	@$(MAKE) gendoc
-	$(Reval) 'devtools::install_dev_deps(build = FALSE, upgrade="never")'
 	cd $(BINDIR) && R CMD build $(PACKAGEDIR)
 
 closeversion:

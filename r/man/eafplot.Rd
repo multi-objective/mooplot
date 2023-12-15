@@ -10,7 +10,7 @@ eafplot(x, ...)
 
 \method{eafplot}{default}(
   x,
-  sets = NULL,
+  sets,
   groups = NULL,
   percentiles = c(0, 50, 100),
   attsurfs = NULL,
@@ -97,7 +97,7 @@ on the plot.}
 \item{sci.notation}{Generate prettier labels}
 }
 \value{
-Return (invisibly) the attainment surfaces computed.
+the attainment surfaces computed (invisibly).
 }
 \description{
 Computes and plots the Empirical Attainment Function, either as
@@ -136,13 +136,13 @@ str(attsurfs)
 
 ## Using extra.points
 \donttest{
-data(HybridGA)
-data(SPEA2relativeVanzyl)
+data(HybridGA, package="moocore")
+data(SPEA2relativeVanzyl, package="moocore")
 eafplot(SPEA2relativeVanzyl, percentiles = c(25, 50, 75), 
         xlab = expression(C[E]), ylab = "Total switches", xlim = c(320, 400),
         extra.points = HybridGA$vanzyl, extra.legend = "Hybrid GA")
 
-data(SPEA2relativeRichmond)
+data(SPEA2relativeRichmond, package="moocore")
 eafplot (SPEA2relativeRichmond, percentiles = c(25, 50, 75),
          xlab = expression(C[E]), ylab = "Total switches",
          xlim = c(90, 140), ylim = c(0, 25),
@@ -155,7 +155,7 @@ eafplot (SPEA2relativeRichmond, percentiles = c(25, 50, 75),
          extra.points = HybridGA$richmond, extra.lty = "dashed",
          extra.legend = "Hybrid GA", legend.pos = "bottomright")
 
-data(SPEA2minstoptimeRichmond)
+data(SPEA2minstoptimeRichmond, package="moocore")
 SPEA2minstoptimeRichmond[,2] <- SPEA2minstoptimeRichmond[,2] / 60
 eafplot (SPEA2minstoptimeRichmond, xlab = expression(C[E]),
          ylab = "Minimum idle time (minutes)", maximise = c(FALSE, TRUE),

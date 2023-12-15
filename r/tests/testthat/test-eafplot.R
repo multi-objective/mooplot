@@ -41,15 +41,14 @@ expect_true(eaftest("ALG_1_dat.xz", "ALG_2_dat.xz", maximise = c(TRUE, TRUE)))
 dev.off()
 })
 
-data(HybridGA)
+data(HybridGA, package="moocore")
  
 test_that("eafplot SPEA2relativeVanzyl", {
   skip_on_cran()
-  data(SPEA2relativeVanzyl)
+  data(SPEA2relativeVanzyl, package="moocore")
   expect_snapshot_plot("SPEA2relativeVanzyl", {
     eafplot(SPEA2relativeVanzyl, percentiles = c(25, 50, 75), 
-            xlab = expression(C[E]), ylab = "Total switches", xlim = c(320, 400),
-            extra.points = HybridGA$vanzyl, extra.legend = "Hybrid GA")
+            xlab = expression(C[E]), ylab = "Total switches", xlim = c(320, 400))
   })
 
   expect_snapshot_plot("SPEA2relativeVanzyl-extra_points", {
@@ -61,13 +60,11 @@ test_that("eafplot SPEA2relativeVanzyl", {
 
 test_that("eafplot SPEA2relativeRichmond", {
   skip_on_cran()
-  data(SPEA2relativeRichmond)
+  data(SPEA2relativeRichmond, package="moocore")
   expect_snapshot_plot("SPEA2relativeRichmond", {
     eafplot (SPEA2relativeRichmond, percentiles = c(25, 50, 75),
              xlab = expression(C[E]), ylab = "Total switches",
-             xlim = c(90, 140), ylim = c(0, 25),
-             extra.points = HybridGA$richmond, extra.lty = "dashed",
-             extra.legend = "Hybrid GA")
+             xlim = c(90, 140), ylim = c(0, 25))
   })
   expect_snapshot_plot("SPEA2relativeRichmond-extra_points", {
     eafplot(SPEA2relativeRichmond, percentiles = c(25, 50, 75), xlab = expression(C[E]),
@@ -78,15 +75,12 @@ test_that("eafplot SPEA2relativeRichmond", {
 
 test_that("eafplot SPEA2minstoptimeRichmond", {
   skip_on_cran()
-  data(SPEA2minstoptimeRichmond)
+  data(SPEA2minstoptimeRichmond, package="moocore")
   SPEA2minstoptimeRichmond[,2] <- SPEA2minstoptimeRichmond[,2] / 60
   expect_snapshot_plot("SPEA2minstoptimeRichmond", {
     eafplot (SPEA2minstoptimeRichmond, xlab = expression(C[E]),
              ylab = "Minimum idle time (minutes)",
-             las = 1, log = "y", maximise = c(FALSE, TRUE), main = "SPEA2 (Richmond)")
-  })
-  expect_snapshot_plot("SPEA2minstoptimeRichmond-extra_points", {
-    eafplot(SPEA2minstoptimeRichmond, xlab = expression(C[E]), ylab = "Minimum idle time (minutes)",
-            las = 1, log = "y", maximise = c(FALSE, TRUE), main = "SPEA2 (Richmond)")
+             las = 1, log = "y", maximise = c(FALSE, TRUE), main = "SPEA2 (Richmond)",
+      legend.pos = "bottomright")
   })
 })

@@ -1,9 +1,10 @@
 #' @import moocore
 #' @import graphics
+#' @importFrom utils modifyList write.table tail
 #' @importFrom grDevices pdf colorRampPalette embedFonts gray
 #' @importFrom matrixStats colRanges
+#' @importFrom collapse .range replace_inf
 #' @importFrom Rdpack reprompt
-#' @importFrom utils modifyList write.table tail
 #'
 #' @examples
 #' # TODO

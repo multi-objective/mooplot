@@ -3,10 +3,8 @@
 #' The symmetric deviation function is the probability for a given target in
 #' the objective space to belong to the symmetric difference between the
 #' Vorob'ev expectation and a realization of the (random) attained set.
-#' 
-#' @param x Either a matrix of data values, or a data frame, or a list of data
-#'   frames of exactly three columns.  The third column gives the set (run,
-#'   sample, ...) identifier.
+#'
+#' @inheritParams moocore::vorobT
 #' @param VE,threshold Vorob'ev expectation and threshold, e.g., as returned
 #'   by [moocore::vorobT()].
 #' @param nlevels number of levels in which is divided the range of the
@@ -21,8 +19,8 @@
 #' @author Mickael Binois
 #' @seealso    [moocore::vorobT()] [moocore::vorobDev()] [eafplot()]
 #' @examples
-#' data(CPFs)
-#' res <- vorobT(CPFs, reference = c(2, 200))
+#' data(CPFs, package = "moocore")
+#' res <- moocore::vorobT(CPFs, reference = c(2, 200))
 #' print(res$threshold)
 #' 
 #' ## Display Vorob'ev expectation and attainment function
@@ -39,14 +37,14 @@
 #'         main = substitute(paste("Empirical attainment function, ",beta,"* = ", a, "%"),
 #'                           list(a = formatC(res$threshold, digits = 2, format = "f"))))
 #' # Vorob'ev deviation
-#' VD <- vorobDev(CPFs, res$VE, reference = c(2, 200))
+#' VD <- moocore::vorobDev(CPFs, reference = c(2, 200), VE = res$VE)
 #' # Display the symmetric deviation function.
-#' symdevplot(CPFs, res$VE, res$threshold, nlevels = 11)
+#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11)
 #' # Levels are adjusted automatically if too large.
-#' symdevplot(CPFs, res$VE, res$threshold, nlevels = 200, legend.pos = "none")
+#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 200, legend.pos = "none")
 #' 
 #' # Use a different palette.
-#' symdevplot(CPFs, res$VE, res$threshold, nlevels = 11, col.fun = heat.colors)
+#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11, col.fun = heat.colors)
 #' 
 #' @references
 #' 
@@ -55,7 +53,7 @@
 #' C. Chevalier (2013), Fast uncertainty reduction strategies relying on
 #' Gaussian process models, University of Bern, PhD thesis.
 #'
-#' I. Molchanov (2005), Theory of random sets, Springer.
+#' \insertRef{Molchanov2005theory}{moocore}
 #'
 #' @concept eaf
 #' @export
@@ -63,26 +61,36 @@
 # surfaces and does not create the plot nor the legend (but returns the info
 # needed to create a legend), so that one can use the function to add stuff to
 # another plot.
-symdevplot <- function(x, VE, threshold, nlevels = 11,
+symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
                        ve.col = "blue", xlim = NULL, ylim = NULL,
                        legend.pos = "topright", main = "Symmetric deviation function",
                        col.fun = function(n) gray(seq(0, 0.9, length.out = n)^2))
 {
+  if (missing(sets)) {
+    sets <- x[, ncol(x)]
+    x <- x[, -ncol(x), drop=FALSE]
+  }
   # FIXME: These maybe should be parameters of the function in the future.
   maximise <- c(FALSE, FALSE)
   xaxis_side <- "below"
   yaxis_side <- "left"
   log <- ""
-  xlab <- colnames(x)[1]
-  ylab <- colnames(x)[2]
+  if (is.null(colnames(x))) {
+    xlab <- "objective 1"
+    ylab <- "objective 2"
+  } else {
+    xlab <- colnames(x)[1L]
+    ylab <- colnames(x)[2L]
+  }
+
   las <- par("las")
   sci.notation <- FALSE
-  nlevels <- min(length(unique.default(x[, 3])) - 1, nlevels)
+  nlevels <- min(length(unique.default(sets)) - 1, nlevels)
   
-  threshold <- round(threshold, 4)
-  seq.levs <- round(seq(0, 100, length.out = nlevels), 4)
+  threshold <- round(threshold, 4L)
+  seq.levs <- round(seq(0, 100, length.out = nlevels), 4L)
   levs <- sort.int(unique.default(c(threshold, seq.levs)))
-  attsurfs <- compute_eaf_as_list(x, percentiles = levs)
+  attsurfs <- eaf_as_list(eaf(x, sets, percentiles = levs, maximise = maximise))
     
   # Denote p_n the attainment probability, the value of the symmetric
   # difference function is p_n if p_n < alpha (Vorob'ev threshold) and 1 - p_n
@@ -103,9 +111,10 @@ symdevplot <- function(x, VE, threshold, nlevels = 11,
             "#FFFFFF") # To have white after worst case
   names(levs) <- cols
     
-  # FIXME: We should take the range from the attsurfs to not make x mandatory.
-  xlim <- get_xylim(xlim, maximise[1], data = x[,1])
-  ylim <- get_xylim(ylim, maximise[2], data = x[,2])
+  if (is.null(xlim))
+    xlim <- range_finite(x[,1L])
+  if (is.null(ylim))
+    ylim <- range_finite(x[,2L])
   extreme <- get_extremes(xlim, ylim, maximise, log = log)
 
   plot(xlim, ylim, type = "n", xlab = "", ylab = "",
@@ -123,7 +132,7 @@ symdevplot <- function(x, VE, threshold, nlevels = 11,
 
   # Use first.open to print "(0,X)", because the color for 0 is white.
   intervals <- seq_intervals_labels(seq.levs, first.open = TRUE)
-  intervals <- intervals[1:max.interval]
+  intervals <- intervals[seq_len(max.interval)]
   names(intervals) <- names(colscale)
   #names(intervals) <- names(colscale[1:max.interval])
   if (is.na(pmatch(legend.pos, "none")))

@@ -5,7 +5,7 @@
 #' the left EAF minus the right EAF and the right side shows the
 #' differences in the other direction.
 #' 
-#' @param data.left,data.right Data frames corresponding to the input data of
+#' @param data_left,data_right Data frames corresponding to the input data of
 #'   left and right sides, respectively. Each data frame has at least three
 #'   columns, the third one being the set of each point. See also
 #'   [read_datasets()].
@@ -30,13 +30,13 @@
 #'   differences between the EAFs.
 #' 
 #' @param type Whether the EAF differences are plotted as points
-#'   (\samp{points}) or whether to color the areas that have at least a
-#'   certain value (\samp{area}).
+#'   (`"points"`) or whether to color the areas that have at least a
+#'   certain value (`"area"`).
 #' 
 #'@param legend.pos The position of the legend. See [legend()].  A value of
 #'   `"none"` hides the legend.
 #' 
-#'@param title.left,title.right Title for left and right panels, respectively.
+#'@param title_left,title_right Title for left and right panels, respectively.
 #'  
 #' @param xlim,ylim,cex,cex.lab,cex.axis Graphical parameters, see
 #'   [plot.default()].
@@ -132,15 +132,15 @@
 #' @concept visualisation
 #'@export
 eafdiffplot <-
-  function(data.left, data.right,
+  function(data_left, data_right,
            col = c("#FFFFFF", "#808080","#000000"),
-           intervals = 5,
-           percentiles = c(50),
+           intervals = 5L,
+           percentiles = 50,
            full.eaf = FALSE,
            type = "area",
            legend.pos = if (full.eaf) "bottomleft" else "topright",
-           title.left = deparse(substitute(data.left)),
-           title.right = deparse(substitute(data.right)),
+           title_left = deparse(substitute(data_left)),
+           title_right = deparse(substitute(data_right)),
            xlim = NULL, ylim = NULL,
            cex = par("cex"), cex.lab = par("cex.lab"), cex.axis = par("cex.axis"),
            maximise = c(FALSE, FALSE),
@@ -152,103 +152,106 @@ eafdiffplot <-
 {
   type <- match.arg (type, c("point", "area"))
   # FIXME: check that it is either an integer or a character vector.
-  if (length(intervals) == 1) {
+  if (length(intervals) == 1L) {
     intervals <- seq_intervals_labels(
-      round(seq(0,1 , length.out = 1 + intervals), 4), digits = 1)
+      round(seq(0, 1 , length.out = 1 + intervals), 4L), digits = 1L)
   }
   if (is.function(col)) { # It is a color-map, like viridis()
     col <- col(length(intervals))
   } else {
-    if (length(col) != 3) {
+    if (length(col) != 3L)
       stop ("'col' is either three colors (minimum, medium maximum) or a function that produces a colormap")
-    }
     col <- colorRampPalette(col)(length(intervals))
   }
   # FIXME: The lowest color must be white (it should be the background).
-  col[1] <- "white"
-  title.left <- title.left
-  title.right <- title.right
+  col[1L] <- "white"
+
+  unique_counts <- function(x) as.vector(table(x))
+
+  sets_left <- data_left[, ncol(data_left)]
+  cumsizes_left <- cumsum(unique_counts(sets_left))
+  data_left <- data_left[, -ncol(data_left), drop=FALSE]
+  data_left <- as_double_matrix(data_left)
+  sets_right <- data_right[, ncol(data_right)]
+  cumsizes_right <- cumsum(unique_counts(sets_right))
+  data_right <- data_right[, -ncol(data_right), drop=FALSE]
+  data_right <- as_double_matrix(data_right)
 
   maximise <- as.logical(maximise)
-  if (length(maximise) == 1) {
-    maximise <- rep_len(maximise, 2)
-  } else if (length(maximise) != 2) {
-    stop("length of maximise must be either 1 or 2")
+  if (any(maximise)) {
+    data_left <- transform_maximise(data_left, maximise)
+    data_right <- transform_maximise(data_right, maximise)
   }
 
-  data.left <- check_eaf_data(data.left)
-  data.left[,1:2] <- matrix_maximise(data.left[,1:2, drop=FALSE], maximise)
-  data.right <- check_eaf_data(data.right)
-  data.right[,1:2] <- matrix_maximise(data.right[,1:2, drop=FALSE], maximise)
+  compute_attsurfs <- function(x, cumsizes, percentiles, maximise) {
+    x <- compute_eaf_call(x, cumsizes = cumsizes, percentiles = percentiles)
+    if (any(maximise))
+      x[,-ncol(x)] <- transform_maximise(x[, -ncol(x), drop=FALSE], maximise)
+    eaf_as_list(x)
+  }
 
-  attsurfs.left <- attsurfs.right <- list()
+  attsurfs_left <- attsurfs_right <- list()
   if (!any(is.na(percentiles))) {
-    attsurfs.left <- compute_eaf_as_list (data.left, percentiles)
-    attsurfs.left <- lapply(attsurfs.left, matrix_maximise, maximise = maximise)
-    attsurfs.right <- compute_eaf_as_list (data.right, percentiles)
-    attsurfs.right <- lapply(attsurfs.right, matrix_maximise, maximise = maximise)
+    attsurfs_left <- compute_attsurfs(data_left, cumsizes_left, percentiles = percentiles, maximise = maximise)
+    attsurfs_right <- compute_attsurfs(data_right, cumsizes_right, percentiles = percentiles, maximise = maximise)
   }
-
-  # FIXME: We do not need this for the full EAF.
-  # Merge the data
-  data.combined <- rbind_datasets(data.left, data.right)
-
-  def.par <- par(no.readonly = TRUE) # save default, for resetting...
-  on.exit(par(def.par))
 
   if (full.eaf) {
     if (type == "area") {
-      lower.boundaries <- 0:(length(intervals)-1) * 100 / length(intervals)
-      diff_left <- compute_eaf (data.left, percentiles = lower.boundaries)
-      diff_right <- compute_eaf (data.right, percentiles = lower.boundaries)
+      lower_boundaries <- 0L:(length(intervals)-1L) * (100 / length(intervals))
+      diff_left <- compute_eaf_call(data_left, cumsizes = cumsizes_left, percentiles = lower_boundaries)
+      diff_right <- compute_eaf_call(data_right, cumsizes = cumsizes_right, percentiles = lower_boundaries)
     } else if (type == "point") {
-      diff_left <- compute_eaf (data.left)
-      diff_right <- compute_eaf (data.right)
-      # Since plot_eafdiff_side uses floor to calculate the color, and
-      # we want color[100] == color[99].
-      diff_left[diff_left[,3] == 100, 3] <- 99
-      diff_right[diff_right[,3] == 100, 3] <- 99
+      diff_left <- compute_eaf_call(data_left, cumsizes = cumsizes_left, percentiles = NULL)
+      diff_right <- compute_eaf_call(data_right, cumsizes = cumsizes_right, percentiles = NULL)
+      # Since plot_eafdiff_side uses floor to calculate the color, and we want
+      # color[100] == color[99].
+      diff_left[diff_left[,3L] == 100, 3L] <- 99
+      diff_right[diff_right[,3L] == 100, 3L] <- 99
     }
     # Convert percentile into color index
-    diff_left[,3] <- diff_left[,3] * length(intervals) / 100
-    diff_right[,3] <- diff_right[,3] * length(intervals) / 100
-    #remove(data.left,data.right,data.combined) # Free memory?
+    diff_left[,3L] <- diff_left[,3L] * length(intervals) / 100
+    diff_right[,3L] <- diff_right[,3L] * length(intervals) / 100
+    #remove(data_left,data_right,data.combined) # Free memory?
   } else {
+    DIFF <- compute_eafdiff_call (data_left, data_right,
+      cumsizes_x = cumsizes_left,
+      cumsizes_y = cumsizes_right,
+      intervals = length(intervals),
+      ret = if (type == "area") "polygons" else "points")
     if (type == "area") {
-      DIFF <- compute_eafdiff_polygon (data.combined, intervals = length(intervals))
-    } else if (type == "point") {
-      #remove(data.left,data.right) # Free memory?
-      DIFF <- compute_eafdiff (data.combined, intervals = length(intervals))
-      #remove(data.combined) # Free memory?
+      diff_left <- DIFF$left
+      diff_right <- DIFF$right
+    } else {
+      ## FIXME: Do this computation in C code. See compute_eafdiff_area_C
+      eafval <- DIFF[, ncol(DIFF)]
+      diff_left <- unique(DIFF[ eafval >= 1L, , drop=FALSE])
+      diff_right <- unique(DIFF[ eafval <= -1L, , drop=FALSE])
+      diff_right[, ncol(DIFF)] <- -diff_right[, ncol(DIFF)]
     }
-    diff_left <- DIFF$left
-    diff_right <- DIFF$right
   }
     
-  # FIXME: This can be avoided and just taken from the full EAF.
-  grand.attsurf <- compute_eaf_as_list (data.combined, c(0, 100))
+  # Merge the data
+  cumsizes.combined <- c(cumsizes_left, cumsizes_left[length(cumsizes_left)] + cumsizes_right)
+  grand.attsurf <- compute_attsurfs(rbind(data_left, data_right),
+    cumsizes = cumsizes.combined, percentiles = c(0, 100), maximise)
   grand.best <- grand.attsurf[["0"]]
   grand.worst <- grand.attsurf[["100"]]
 
-  xlim <- get_xylim(xlim, maximise[1],
-                    data = c(grand.best[,1], grand.worst[,1],
-                             range_finite(diff_left[,1]), range_finite(diff_right[,1])))
-  ylim <- get_xylim(ylim, maximise[2],
-                    data = c(grand.best[,2], grand.worst[,2],
-                             range_finite(diff_left[,2]), range_finite(diff_right[,2])))
-
-  grand.best <- matrix_maximise(grand.best, maximise)
-  grand.worst <- matrix_maximise(grand.worst, maximise)
-  diff_left[,1:2] <- matrix_maximise(diff_left[,1:2, drop=FALSE], maximise)
-  diff_right[,1:2] <- matrix_maximise(diff_right[,1:2, drop=FALSE], maximise)
+  if (is.null(xlim))
+    xlim <- .range(c(.range(grand.best[,1L]), .range(grand.worst[,1L]),
+      range_finite(diff_left[,1L]), range_finite(diff_right[,1L])))
+  if (is.null(ylim))
+    ylim <- .range(c(.range(grand.best[,2L]), .range(grand.worst[,2L]),
+      range_finite(diff_left[,2L]), range_finite(diff_right[,2L])))
   
   # FIXME: This does not generate empty space between the two plots, but the
   # plots are not squared.
-  layout(matrix(1:2, ncol=2, byrow=TRUE), respect=TRUE)
-  bottommar <- 5
-  topmar   <- 4
-  leftmar  <- 4
-  rightmar <- 4
+  layout(matrix(1:2, ncol=2L, byrow=TRUE), respect=TRUE)
+  bottommar <- 5L
+  topmar   <- 4L
+  leftmar  <- 4L
+  rightmar <- 4L
   
   # FIXME: This generates empty spaces between the two plots. How to ensure
   # that the side-by-side plots are kept together?
@@ -259,24 +262,29 @@ eafdiffplot <-
   ## leftmar  <- 4
   ## rightmar <- 4
 
+  if (length(maximise) == 1L)
+    maximise <- c(maximise,maximise)
+
   # cex.axis is multiplied by cex, but cex.lab is not.
-  par(cex = cex, cex.lab = cex.lab, cex.axis = cex.axis
+  withr::local_par(cex = cex, cex.lab = cex.lab, cex.axis = cex.axis
     , mar = c(bottommar, leftmar, topmar, 0)
     , lab = c(10,5,7)
     , las = 0
       )
 
   if (grand.lines) {
-    attsurfs <- c(list(grand.best), attsurfs.left, list(grand.worst))
+    attsurfs <- c(list(grand.best), attsurfs_left, list(grand.worst))
   } else {
-    attsurfs <- attsurfs.left
+    attsurfs <- attsurfs_left
   }
-    
+  # FIXME: force?
+  title_left <- title_left
+  title_right <- title_right
   plot_eafdiff_side (diff_left,
                      attsurfs = attsurfs,
                      col = col,
                      type = type, full.eaf = full.eaf,
-                     title = title.left,
+                     title = title_left,
                      xlim = xlim, ylim = ylim,
                      side = "left", maximise = maximise,
                      sci.notation = sci.notation, ...)
@@ -292,15 +300,15 @@ eafdiffplot <-
   par(mar = c(bottommar, 0, topmar, rightmar))
 
   if (grand.lines) {
-    attsurfs <- c(list(grand.best), attsurfs.right, list(grand.worst))
+    attsurfs <- c(list(grand.best), attsurfs_right, list(grand.worst))
   } else {
-    attsurfs <- attsurfs.right
+    attsurfs <- attsurfs_right
   }
   plot_eafdiff_side (diff_right,
                      attsurfs = attsurfs,
                      col = col,
                      type = type, full.eaf = full.eaf,
-                     title = title.right,
+                     title = title_right,
                      xlim = xlim, ylim = ylim,
                      side = "right", maximise = maximise,
                      sci.notation = sci.notation, ...)
@@ -322,10 +330,10 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
                                ...)
 {
   type <- match.arg (type, c("point", "area"))
-  maximise <- as.logical(maximise)
   side <- match.arg (side, c("left", "right"))
   xaxis.side <- if (side == "left") "below" else "above"
   yaxis.side <- if (side == "left") "left" else "right"
+  maximise <- as.logical(maximise)
 
   # For !full.eaf && type == "area", str(eafdiff) is a polygon:
   ##  $  num [, 1:2]
@@ -341,7 +349,7 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
     # be painted with color 2 rather than 3.
     # +1 because col[1] is white ([0,1)).
     eafdiff[,3L] <- floor(eafdiff[,3L]) + 1
-    if (length(unique(eafdiff[,3L])) > length(col)) {
+    if (nunique(eafdiff[,3L]) > length(col)) {
       stop ("Too few colors: length(unique(eafdiff[,3L])) > length(col)")
     }
   }
@@ -374,12 +382,12 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
          if (nrow(eafdiff)) {
            if (type == "area") {
              if (full.eaf) {
-               plot_eaf_full_area(split.data.frame(eafdiff[,1:2], eafdiff[,3L]),
+               plot_eaf_full_area(split.data.frame(eafdiff[,1L:2], eafdiff[,3L]),
                                    extreme, maximise, col)
              } else {
-               eafdiff[,1] <- rm_inf(eafdiff[,1], extreme[1])
-               eafdiff[,2] <- rm_inf(eafdiff[,2], extreme[2])
                polycol <- attr(eafdiff, "col")
+               eafdiff[,1L] <- replace_inf(eafdiff[,1L], value = extreme[1L])
+               eafdiff[,2L] <- replace_inf(eafdiff[,2L], value = extreme[2L])
                #print(unique(polycol))
                #print(length(col))
                ## The maximum value should also be painted.
@@ -395,25 +403,21 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
                #print(col[polycol])
                # FIXME: This reduces the number of artifacts but increases the memory consumption of embedFonts(filename) until it crashes.
                #polygon(eafdiff[,1], eafdiff[,2], border = col[polycol], lwd=0.1, col = col[polycol])
-               polygon(eafdiff[,1], eafdiff[,2], border = col[polycol], col = col[polycol])
+               polygon(eafdiff[,1L], eafdiff[,2L], border = col[polycol], col = col[polycol])
              }
            } else {
              ## The maximum value should also be painted.
              eafdiff[eafdiff[,3L] > length(col), 3L] <- length(col)
              eafdiff <- eafdiff[order(eafdiff[,3L], decreasing = FALSE), , drop=FALSE]
-             points(eafdiff[,1], eafdiff[,2], col = col[eafdiff[,3L]], type = "p", pch=20)
+             points(eafdiff[,1L], eafdiff[,2L], col = col[eafdiff[,3L]], type = "p", pch=20)
            }
          }
        }), ...)
 
   lty <- c("solid", "dashed")
-  lwd <- c(1)
-  if (type == "area" && full.eaf) {
-    col <- c("black", "black", "white")
-  } else {
-    col <- c("black")
-  }
-
+  lwd <- c(1L)
+  col <- if (type == "area" && full.eaf) c("black", "black", "white") else "black"
+  
   plot_eaf_full_lines(attsurfs, extreme, maximise,
                       col = col, lty = lty, lwd = lwd)
   mtext(title, 1, line = 3.5, cex = par("cex.lab"), las = 0, font = 2)

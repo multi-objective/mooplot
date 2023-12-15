@@ -51,6 +51,7 @@ decision-making as shown in \citet{DiaLop2020ejor}. The function
 \examples{
 
 \donttest{
+library(moocore)
 extdata_dir <- system.file(package="moocore", "extdata") 
 A1 <- read_datasets(file.path(extdata_dir, "wrots_l100w10_dat"))
 A2 <- read_datasets(file.path(extdata_dir, "wrots_l10w100_dat"))

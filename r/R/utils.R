@@ -1,10 +1,10 @@
 # Get correct xlim or ylim when maximising / minimising.
-get_xylim <- function(lim, maximise, data)
+get_xylim <- function(lim, maximise, x)
 {
   # FIXME: This seems too complicated.
   if (!is.null(lim) && maximise) lim <- -lim 
-  if (is.null(lim)) lim <- range(data)
-  if (maximise) lim <- range(-lim)
+  if (is.null(lim)) lim <- .range(x)
+  if (maximise) lim <- .range(-lim)
   lim
 }
   
@@ -12,18 +12,14 @@ get_extremes <- function(xlim, ylim, maximise, log)
 {
   if (length(log) && log != "")
     log <- strsplit(log, NULL)[[1L]]
-  if ("x" %in% log) xlim <- log(xlim)
-  if ("y" %in% log) ylim <- log(ylim)
-  
-  extreme1 <- ifelse(maximise[1],
-                     xlim[1] - 0.05 * diff(xlim),
-                     xlim[2] + 0.05 * diff(xlim))
-  extreme2 <- ifelse(maximise[2],
-                     ylim[1] - 0.05 * diff(ylim),
-                     ylim[2] + 0.05 * diff(ylim))
-  
-  if ("x" %in% log) extreme1 <- exp(extreme1)
-  if ("y" %in% log) extreme2 <- exp(extreme2)
+  xlog <- "x" %in% log
+  ylog <- "y" %in% log
+  if (xlog) xlim <- log(xlim)
+  if (ylog) ylim <- log(ylim)
+  extreme1 <- if (maximise[1L]) xlim[1L] - 0.05 * diff(xlim) else xlim[2L] + 0.05 * diff(xlim)
+  extreme2 <- if (maximise[2L]) ylim[1L] - 0.05 * diff(ylim) else ylim[2L] + 0.05 * diff(ylim)
+  if (xlog) extreme1 <- exp(extreme1)
+  if (ylog) extreme2 <- exp(extreme2)
   c(extreme1, extreme2)
 }
 
@@ -34,38 +30,13 @@ add_extremes <- function(x, extremes, maximise)
   rbind(c(best1(x[,1]), extremes[2]), x, c(extremes[1], best2(x[,2])))
 }
 
-rm_inf <- function(x, xmax)
-{
-  x[is.infinite(x)] <- xmax
-  x
-}
-
-
-# FIXME: Accept ...
-max_finite <- function (x)
-{
-  x <- as.vector(x)
-  x <- x[is.finite(x)]
-  if (length(x)) return(max(x))
-  NULL
-}
-
-# FIXME: Accept ...
-min_finite <- function (x)
-{
-  x <- as.vector(x)
-  x <- x[is.finite(x)]
-  if (length(x)) return(min(x))
-  NULL
-}
-
 # FIXME: Accept ...
 range_finite <- function(x)
 {
-  x <- as.vector(x)
-  x <- x[is.finite(x)]
-  if (length(x)) return(range(x))
-  NULL
+  if (is.null(x)) return(NULL)
+  x <- .range(replace_inf(x))
+  if (anyNA(x)) return(NULL)
+  x
 }
 
 ## Calculate the intermediate points in order to plot a staircase-like
@@ -82,3 +53,5 @@ points_steps <- function(x)
   stopifnot(!anyDuplicated(idx))
   x[idx, ]
 }
+
+nunique <- collapse::fnunique

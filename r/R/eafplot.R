@@ -59,7 +59,7 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'
 #' @param ... Other graphical parameters to [plot.default()].
 #' 
-#' @return Return (invisibly) the attainment surfaces computed.
+#' @return  the attainment surfaces computed (invisibly).
 #' 
 #' @seealso   [moocore::read_datasets()] [eafdiffplot()] [pdf_crop()]
 #'
@@ -79,13 +79,13 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #' 
 #' ## Using extra.points
 #' \donttest{
-#' data(HybridGA)
-#' data(SPEA2relativeVanzyl)
+#' data(HybridGA, package="moocore")
+#' data(SPEA2relativeVanzyl, package="moocore")
 #' eafplot(SPEA2relativeVanzyl, percentiles = c(25, 50, 75), 
 #'         xlab = expression(C[E]), ylab = "Total switches", xlim = c(320, 400),
 #'         extra.points = HybridGA$vanzyl, extra.legend = "Hybrid GA")
 #' 
-#' data(SPEA2relativeRichmond)
+#' data(SPEA2relativeRichmond, package="moocore")
 #' eafplot (SPEA2relativeRichmond, percentiles = c(25, 50, 75),
 #'          xlab = expression(C[E]), ylab = "Total switches",
 #'          xlim = c(90, 140), ylim = c(0, 25),
@@ -98,7 +98,7 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'          extra.points = HybridGA$richmond, extra.lty = "dashed",
 #'          extra.legend = "Hybrid GA", legend.pos = "bottomright")
 #' 
-#' data(SPEA2minstoptimeRichmond)
+#' data(SPEA2minstoptimeRichmond, package="moocore")
 #' SPEA2minstoptimeRichmond[,2] <- SPEA2minstoptimeRichmond[,2] / 60
 #' eafplot (SPEA2minstoptimeRichmond, xlab = expression(C[E]),
 #'          ylab = "Minimum idle time (minutes)", maximise = c(FALSE, TRUE),
@@ -108,7 +108,7 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #' @concept visualisation
 #' @export
 eafplot.default <-
-  function (x, sets = NULL, groups = NULL,
+  function (x, sets, groups = NULL,
             percentiles = c(0,50,100),
             attsurfs = NULL,
             xlab = NULL, ylab = NULL,
@@ -136,11 +136,15 @@ eafplot.default <-
             sci.notation = FALSE,
             ... )
 {
-  type <- match.arg (type, c("point", "area"))
-  maximise <- as.logical(maximise)
+  type <- match.arg(type, c("point", "area"))
   xaxis.side <- match.arg(xaxis.side, c("below", "above"))
   yaxis.side <- match.arg(yaxis.side, c("left", "right"))
-                      
+  maximise <- as.logical(maximise)
+  if (missing(sets)) {
+    sets <- x[, ncol(x)]
+    x <- x[, -ncol(x), drop=FALSE]
+  }
+
   if (is.null(col)) {
     if (type == "point") {
       col <- c("black", "darkgrey", "black", "grey40", "darkgrey")
@@ -150,45 +154,25 @@ eafplot.default <-
   }
 
   if (is.null(xlab))
-    xlab <- if(!is.null(colnames(x)[1])) colnames(x)[1] else "objective 1"
+    xlab <- if (!is.null(colnames(x)[1L])) colnames(x)[1L] else "objective 1"
   if (is.null(ylab))
-    ylab <- if(!is.null(colnames(x)[2])) colnames(x)[2] else "objective 2"
+    ylab <- if (!is.null(colnames(x)[2L])) colnames(x)[2L] else "objective 2"
      
   if (!is.null (attsurfs)) {
     # Don't we need to apply maximise?
-    attsurfs <- lapply(attsurfs, function(x) { as.matrix(x[, 1:2, drop=FALSE]) })
+    attsurfs <- lapply(attsurfs, function(x) as.matrix(x[, c(1L,2L), drop=FALSE]))
   } else {
-    # FIXME: This is a bit of wasted effort. We should decide what is more
-    # efficient, one large matrix or separate points and sets, then be
-    # consistent everywhere.
-    if (!is.null(sets)) x <- cbind(x, sets)
-    x <- check_eaf_data(x)
-    sets <- x[, 3L]
-    x <- as.matrix(x[,1:2, drop=FALSE])
-    x <- matrix_maximise(x, maximise)
-
-    # Transform EAF matrix into attsurfs list.
-    if (is.null(groups)) {
-      attsurfs <- compute_eaf_as_list(cbind(x, sets), percentiles)
-    } else {
-      # FIXME: Is this equivalent to compute_eaf_as_list for each g?
-      EAF <- eafs(x, sets, groups, percentiles)
-      attsurfs <- list()
-      groups <- factor(EAF$groups)
-      for (g in levels(groups)) {
-        tmp <- lapply(split.data.frame(EAF[groups == g,],
-                                       as.factor(EAF[groups == g, 3])),
-                      function(x) { as.matrix(x[, 1:2, drop=FALSE]) })
-        attsurfs <- c(attsurfs, tmp)
-      }
-    }
-    # FIXME: rm(EAF) to save memory ?
-    attsurfs <- lapply(attsurfs, matrix_maximise, maximise = maximise)
+    attsurfs <- eaf(x, sets, percentiles = percentiles, maximise = maximise, groups = groups)
+    attsurfs <- eaf_as_list(attsurfs)
+    #    attsurfs <- lapply(attsurfs, matrix_maximise, maximise = maximise)
   }
 
   # FIXME: We should take the range from the attsurfs to not make x mandatory.
-  xlim <- get_xylim(xlim, maximise[1], data = x[,1])
-  ylim <- get_xylim(ylim, maximise[2], data = x[,2])
+  if (is.null(xlim))
+    xlim <- range_finite(x[, 1L])
+  if (is.null(ylim))
+    ylim <- range_finite(x[, 2L])
+
   extreme <- get_extremes(xlim, ylim, maximise, log)
 
   # FIXME: Find a better way to handle different x-y scale.
@@ -215,9 +199,8 @@ eafplot.default <-
   args <- args[names(args) %in% c("cex", "cex.lab", "cex.axis", "lab")]
   par_default <- list(cex = 1.0, cex.lab = 1.1, cex.axis = 1.0, lab = c(10,5,7))
   par_default <- modifyList(par_default, args)
-  op <- par(par_default)
-  on.exit(par(op))
-  
+  withr::local_par(par_default)
+    
   plot(xlim, ylim, type = "n", xlab = "", ylab = "",
        xlim = xlim, ylim = ylim, log = log, axes = FALSE, las = las,
        panel.first = ({
@@ -244,10 +227,10 @@ eafplot.default <-
            plot_eaf_full_area(attsurfs, extreme, maximise, col = col)
          } else {
            ## Recycle values
-           lwd <- rep(lwd, length=length(attsurfs))
-           lty <- rep(lty, length=length(attsurfs))
-           col <- rep(col, length=length(attsurfs))
-           if (!is.null(pch)) pch <- rep(pch, length=length(attsurfs))
+           lwd <- rep_len(lwd, length(attsurfs))
+           lty <- rep_len(lty, length(attsurfs))
+           col <- rep_len(col, length(attsurfs))
+           if (!is.null(pch)) pch <- rep_len(pch, length(attsurfs))
            plot_eaf_full_lines(attsurfs, extreme, maximise,
                                col = col, lty = lty, lwd = lwd, pch = pch, cex = cex.pch)
          }
@@ -262,33 +245,33 @@ eafplot.default <-
     }
     ## Recycle values
     extra.length <- length(extra.points)
-    extra.lwd <- rep(extra.lwd, length=extra.length)
-    extra.lty <- rep(extra.lty, length=extra.length)
-    extra.col <- rep(extra.col, length=extra.length)
-    extra.pch <- rep(extra.pch, length=extra.length)
+    extra.lwd <- rep_len(extra.lwd, extra.length)
+    extra.lty <- rep_len(extra.lty, extra.length)
+    extra.col <- rep_len(extra.col, extra.length)
+    extra.pch <- rep_len(extra.pch, extra.length)
     if (is.null(extra.legend)) {
       extra.legend <- names(extra.points)
       if (is.null(extra.legend))
-        extra.legend <- paste0("extra.points ", 1:length(extra.points))
+        extra.legend <- paste0("extra.points ", seq_along(extra.points))
     }
-    for (i in 1:length(extra.points)) {
-      if (any(is.na(extra.points[[i]][,1]))) {
+    for (i in seq_along(extra.points)) {
+      if (any(is.na(extra.points[[i]][,1L]))) {
         if (is.na(extra.lty[i])) extra.lty <- "dashed"
         ## Extra points are given in the correct order so no reverse
-        extra.points[[i]][,2] <- extra.points[[i]][,2] / yscale
-        abline(h=extra.points[[i]][,2], lwd = extra.lwd[i], col = extra.col[i],
-               lty = extra.lty[i])
+        extra.points[[i]][,2L] <- extra.points[[i]][,2L] / yscale
+        abline(h=extra.points[[i]][,2L], lwd = extra.lwd[i], col = extra.col[i],
+          lty = extra.lty[i])
         extra.pch[i] <- NA
 
-      } else if (any(is.na(extra.points[[i]][,2]))) {
+      } else if (any(is.na(extra.points[[i]][,2L]))) {
         if (is.na(extra.lty[i])) extra.lty <- "dashed"
-        abline(v=extra.points[[i]][,1], lwd = extra.lwd[i], col = extra.col[i],
+        abline(v=extra.points[[i]][,1L], lwd = extra.lwd[i], col = extra.col[i],
                lty = extra.lty[i])
         extra.pch[i] <- NA
 
       } else {
         ## Extra points are given in the correct order so no reverse
-        extra.points[[i]][,2] <- extra.points[[i]][,2] / yscale
+        extra.points[[i]][,2L] <- extra.points[[i]][,2L] / yscale
         if (!is.na(extra.pch[i])) 
           points (extra.points[[i]], type = "p", pch = extra.pch[i],
                   col = extra.col[i], cex = cex.pch)
@@ -337,7 +320,7 @@ eafplot.default <-
 prettySciNotation <- function(x, digits = 1L)
 {
   if (length(x) > 1L) {
-    return(append(prettySciNotation(x[1]), prettySciNotation(x[-1])))
+    return(append(prettySciNotation(x[1L]), prettySciNotation(x[-1L])))
   }
   if (!x) return(0)
   exponent <- floor(log10(x))
@@ -349,11 +332,11 @@ prettySciNotation <- function(x, digits = 1L)
 axis_side <- function(side)
 {
   if (!is.character(side)) return(side)
-  return(switch(side,
-                below = 1,
-                left = 2,
-                above = 3,
-                right = 4))
+  switch (side,
+    below = 1L,
+    left  = 2L,
+    above = 3L,
+    right = 4L)
 }
 
 plot_eaf_axis <- function(side, lab, las,
@@ -391,16 +374,16 @@ plot_eaf_axis <- function(side, lab, las,
 }
 
 plot_eaf_full_lines <- function(attsurfs, extreme, maximise,
-                                 col, lty, lwd, pch = NULL, cex = par("cex"))
+                                col, lty, lwd, pch = NULL, cex = par("cex"))
 {
   ## Recycle values
-  lwd <- rep(lwd, length = length(attsurfs))
-  lty <- rep(lty, length = length(attsurfs))
-  col <- rep(col, length = length(attsurfs))
+  lwd <- rep_len(lwd, length(attsurfs))
+  lty <- rep_len(lty, length(attsurfs))
+  col <- rep_len(col, length(attsurfs))
   if (!is.null(pch))
-    pch <- rep(pch, length = length(attsurfs))
+    pch <- rep_len(pch, length(attsurfs))
 
-  attsurfs = lapply(attsurfs, add_extremes, extreme, maximise)
+  attsurfs <- lapply(attsurfs, add_extremes, extreme, maximise)
   for (k in seq_along(attsurfs)) {
     # FIXME: Is there a way to plot points and steps in one call?
     if (!is.null(pch))
@@ -415,7 +398,7 @@ plot_eaf_full_area <- function(attsurfs, extreme, maximise, col)
   for (i in seq_along(attsurfs)) {
     poli <- add_extremes(points_steps(attsurfs[[i]]), extreme, maximise)
     poli <- rbind(poli, extreme)
-    polygon(poli[,1], poli[,2], border = NA, col = col[i])
+    polygon(poli[,1L], poli[,2L], border = NA, col = col[i])
   }
 }
 
@@ -442,28 +425,27 @@ seq_intervals_labels <- function(s, first.open = FALSE, last.open = FALSE,
 
 
 #' @describeIn eafplot List interface for lists of data.frames or matrices
-#' 
-#'@export
-#'@concept visualisation
+#' @export
+#' @concept visualisation
 eafplot.list <- function(x, ...)
 {
   if (!is.list(x))
     stop("'x' must be a list of data.frames or matrices with exactly three columns")
 
-  groups <- if (!is.null(names(x))) names(x) else 1:length(x)
-
-  check_elem <- function(elem) {
-    elem <- check_eaf_data(elem)
-    if (ncol(elem) != 3L)
-      stop("Each element of the list have exactly three columns. If you have grouping and conditioning variables, please consider using this format: 'eafplot.formula, data, ...)'")
-    return(elem)
-  }
-  x <- lapply(x, check_elem)
-  groups <- rep(groups, sapply(x, nrow))
-  x <- do.call(rbind, x)
+  sets <- lapply(x, function(y) {
+    if (length(dim(y)) != 2L)
+      stop("Each element of the list must be a data.frame or a matrix.")
+    if (ncol(y) != 3L)
+      stop("Each element of the list must have exactly three columns.")
+    y[,3L]
+  })
+  groups <- if (is.null(names(x))) seq_along(x) else names(x)
+  groups <- rep(groups, times = sapply(x, nrow))
+  # FIXME: Is this the fastest way? Maybe rbind first, then drop the column?
+  x <- lapply(x, function(y) y[,-3L, drop=FALSE])
   
-  eafplot(as.matrix(x[,c(1L,2L)]),
-          sets = as.numeric(as.factor(x[, 3L])),
+  eafplot(do.call(rbind,x),
+          sets = unlist(sets, recursive=FALSE, use.names=FALSE),
           groups = groups, ...)
 }
 
