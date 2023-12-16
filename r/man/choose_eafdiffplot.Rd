@@ -5,33 +5,33 @@
 \title{Interactively choose according to empirical attainment function differences}
 \usage{
 choose_eafdiffplot(
-  data.left,
-  data.right,
+  data_left,
+  data_right,
   intervals = 5,
   maximise = c(FALSE, FALSE),
-  title.left = deparse(substitute(data.left)),
-  title.right = deparse(substitute(data.right)),
+  title_left = deparse(substitute(data_left)),
+  title_right = deparse(substitute(data_right)),
   ...
 )
 }
 \arguments{
-\item{data.left, data.right}{Data frames corresponding to the input data of
+\item{data_left, data_right}{Data frames corresponding to the input data of
 left and right sides, respectively. Each data frame has at least three
 columns, the third one being the set of each point. See also
 \code{\link[=read_datasets]{read_datasets()}}.}
 
-\item{intervals}{(\code{integer(1)}|\code{character()}) \cr The absolute range of the
-differences \eqn{[0, 1]} is partitioned into the number of intervals
-provided. If an integer is provided, then labels for each interval are
-computed automatically. If a character vector is provided, its length is
-taken as the number of intervals.}
+\item{intervals}{(\code{integer(1)}|\code{character()}) \cr The
+absolute range of the differences \eqn{[0, 1]} is partitioned into the number
+of intervals provided. If an integer is provided, then labels for each
+interval are  computed automatically. If a character vector is
+provided, its length is taken as the number of intervals.}
 
 \item{maximise}{(\code{logical()} | \code{logical(1)}) \cr Whether the objectives must be
 maximised instead of minimised. Either a single logical value that applies
 to all objectives or a vector of logical values, with one value per
 objective.}
 
-\item{title.left, title.right}{Title for left and right panels, respectively.}
+\item{title_left, title_right}{Title for left and right panels, respectively.}
 
 \item{...}{Other graphical parameters are passed down to
 \code{\link[=eafdiffplot]{eafdiffplot()}}.}

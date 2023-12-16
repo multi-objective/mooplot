@@ -5,21 +5,18 @@
 #' favour of the chosen side. These rectangles may be used for interactive
 #' decision-making as shown in \citet{DiaLop2020ejor}. The function
 #' [moocore::choose_eafdiff()] may be used in a non-interactive context.
-#' 
-#' @param data.left,data.right Data frames corresponding to the input data of
-#'   left and right sides, respectively. Each data frame has at least three
-#'   columns, the third one being the set of each point. See also
-#'   [read_datasets()].
-#' 
-#' @param intervals (`integer(1)`|`character()`) \cr The absolute range of the
-#'   differences \eqn{[0, 1]} is partitioned into the number of intervals
-#'   provided. If an integer is provided, then labels for each interval are
-#'   computed automatically. If a character vector is provided, its length is
-#'   taken as the number of intervals.
-#' 
-#' @template arg_maximise
 #'
-#' @param title.left,title.right Title for left and right panels, respectively.
+#' @inheritParams eafdiffplot
+# @param data.left,data.right Data frames corresponding to the input data of
+#   left and right sides, respectively. Each data frame has at least three
+#   columns, the third one being the set of each point. See also
+#   [read_datasets()].
+# 
+# @param intervals (`integer(1)`|`character()`) \cr The absolute range of the
+#   differences \eqn{[0, 1]} is partitioned into the number of intervals
+#   provided. If an integer is provided, then labels for each interval are
+#   computed automatically. If a character vector is provided, its length is
+#   taken as the number of intervals.
 #'  
 #' @param ... Other graphical parameters are passed down to
 #'   [eafdiffplot()].
@@ -63,18 +60,17 @@
 #' \insertAllCited{}
 #' @concept visualisation
 #' @export
-choose_eafdiffplot <- function(data.left, data.right, intervals = 5,
+choose_eafdiffplot <- function(data_left, data_right, intervals = 5,
                                maximise = c(FALSE, FALSE),
-                               title.left = deparse(substitute(data.left)),
-                               title.right = deparse(substitute(data.right)),
+                               title_left = deparse(substitute(data_left)),
+                               title_right = deparse(substitute(data_right)),
                                ...)
 {
-  op <- options(locatorBell = FALSE)
-  on.exit(options(op))
-  eafdiffplot(data.left, data.right, title.left= title.left, title.right = title.right,
+  withr::local_options(locatorBell = FALSE)
+  eafdiffplot(data_left, data_right, title_left= title_left, title_right = title_right,
               intervals = intervals, maximise = maximise, ...)
   # FIXME: Avoid calculating eafdiff twice.
-  DIFF <- eafdiff(data.left, data.right, intervals = intervals, maximise = maximise,
+  DIFF <- eafdiff(data_left, data_right, intervals = intervals, maximise = maximise,
                   rectangles = TRUE)
 
   coord <- grid::grid.locator("npc")
