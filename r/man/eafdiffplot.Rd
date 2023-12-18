@@ -13,14 +13,14 @@ eafdiffplot(
   full.eaf = FALSE,
   type = "area",
   legend.pos = if (full.eaf) "bottomleft" else "topright",
-  title_left = deparse(substitute(data_left)),
-  title_right = deparse(substitute(data_right)),
+  maximise = c(FALSE, FALSE),
+  title_left,
+  title_right,
   xlim = NULL,
   ylim = NULL,
   cex = par("cex"),
   cex.lab = par("cex.lab"),
   cex.axis = par("cex.axis"),
-  maximise = c(FALSE, FALSE),
   grand.lines = TRUE,
   sci.notation = FALSE,
   left.panel.last = NULL,
@@ -60,15 +60,15 @@ certain value (\code{"area"}).}
 \item{legend.pos}{The position of the legend. See \code{\link[=legend]{legend()}}.  A value of
 \code{"none"} hides the legend.}
 
-\item{title_left, title_right}{Title for left and right panels, respectively.}
-
-\item{xlim, ylim, cex, cex.lab, cex.axis}{Graphical parameters, see
-\code{\link[=plot.default]{plot.default()}}.}
-
 \item{maximise}{(\code{logical()} | \code{logical(1)}) \cr Whether the objectives must be
 maximised instead of minimised. Either a single logical value that applies
 to all objectives or a vector of logical values, with one value per
 objective.}
+
+\item{title_left, title_right}{Title for left and right panels, respectively.}
+
+\item{xlim, ylim, cex, cex.lab, cex.axis}{Graphical parameters, see
+\code{\link[=plot.default]{plot.default()}}.}
 
 \item{grand.lines}{Whether to plot the grand-best and grand-worst
 attainment surfaces.}
@@ -164,4 +164,4 @@ DIFF$right[,3] <- -DIFF$right[,3]
 \seealso{
 \code{\link[=read_datasets]{read_datasets()}} \code{\link[=eafplot]{eafplot()}} \code{\link[=pdf_crop]{pdf_crop()}}
 }
-\concept{visualisation}
+\concept{eaf}

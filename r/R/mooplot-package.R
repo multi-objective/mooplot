@@ -10,7 +10,6 @@
 #' # TODO
 #' @keywords internal
 #' @concept multivariate
-#' @concept optimize
-#' @concept empirical attainment function
+#' @concept optimization
 "_PACKAGE"
 

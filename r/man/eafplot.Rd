@@ -14,19 +14,21 @@ eafplot(x, ...)
   groups = NULL,
   percentiles = c(0, 50, 100),
   attsurfs = NULL,
+  maximise = c(FALSE, FALSE),
+  type = "point",
   xlab = NULL,
   ylab = NULL,
   xlim = NULL,
   ylim = NULL,
   log = "",
-  type = "point",
   col = NULL,
   lty = c("dashed", "solid", "solid", "solid", "dashed"),
   lwd = 1.75,
   pch = NA,
   cex.pch = par("cex"),
   las = par("las"),
-  legend.pos = "topright",
+  legend.pos = paste0(ifelse(maximise[1L], "bottom", "top"), ifelse(rep_len(maximise,
+    2L)[2L], "left", "right")),
   legend.txt = NULL,
   extra.points = NULL,
   extra.legend = NULL,
@@ -34,7 +36,6 @@ eafplot(x, ...)
   extra.lwd = 0.5,
   extra.lty = NA,
   extra.col = "black",
-  maximise = c(FALSE, FALSE),
   xaxis.side = "below",
   yaxis.side = "left",
   axes = TRUE,
@@ -59,11 +60,16 @@ default is to plot only the median attainment curve.}
 
 \item{attsurfs}{TODO}
 
-\item{xlab, ylab, xlim, ylim, log, col, lty, lwd, pch, cex.pch, las}{Graphical
-parameters, see \code{\link[=plot.default]{plot.default()}}.}
+\item{maximise}{(\code{logical()} | \code{logical(1)}) \cr Whether the objectives must be
+maximised instead of minimised. Either a single logical value that applies
+to all objectives or a vector of logical values, with one value per
+objective.}
 
 \item{type}{(\code{character(1)})\cr string giving the type of plot desired.  The following values
 are possible, \samp{points} and \samp{area}.}
+
+\item{xlab, ylab, xlim, ylim, log, col, lty, lwd, pch, cex.pch, las}{Graphical
+parameters, see \code{\link[=plot.default]{plot.default()}}.}
 
 \item{legend.pos}{the position of the legend, see \code{\link[=legend]{legend()}}.  A value of \code{"none"} hides the legend.}
 
@@ -79,11 +85,6 @@ groups of points.}
 
 \item{extra.pch, extra.lwd, extra.lty, extra.col}{Control the graphical aspect
 of the points. See \code{\link[=points]{points()}} and \code{\link[=lines]{lines()}}.}
-
-\item{maximise}{(\code{logical()} | \code{logical(1)}) \cr Whether the objectives must be
-maximised instead of minimised. Either a single logical value that applies
-to all objectives or a vector of logical values, with one value per
-objective.}
 
 \item{xaxis.side}{On which side that xaxis is drawn. Valid values are
 "below" and "above". See \code{\link[=axis]{axis()}}.}
@@ -163,7 +164,10 @@ eafplot (SPEA2minstoptimeRichmond, xlab = expression(C[E]),
          legend.pos = "bottomright")
 }
 }
+\references{
+\insertRef{LopPaqStu09emaa}{moocore}
+}
 \seealso{
 \code{\link[moocore:read_datasets]{moocore::read_datasets()}} \code{\link[=eafdiffplot]{eafdiffplot()}} \code{\link[=pdf_crop]{pdf_crop()}}
 }
-\concept{visualisation}
+\concept{eaf}

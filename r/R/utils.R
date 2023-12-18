@@ -16,8 +16,12 @@ get_extremes <- function(xlim, ylim, maximise, log)
   ylog <- "y" %in% log
   if (xlog) xlim <- log(xlim)
   if (ylog) ylim <- log(ylim)
-  extreme1 <- if (maximise[1L]) xlim[1L] - 0.05 * diff(xlim) else xlim[2L] + 0.05 * diff(xlim)
-  extreme2 <- if (maximise[2L]) ylim[1L] - 0.05 * diff(ylim) else ylim[2L] + 0.05 * diff(ylim)
+  if (length(maximise) == 1L)
+    maximise <- rep_len(maximise, 2L)
+  dxlim <- 0.05 * diff(xlim)
+  extreme1 <- if (maximise[1L]) xlim[1L] - dxlim else xlim[2L] + dxlim
+  dylim <- 0.05 * diff(ylim)
+  extreme2 <- if (maximise[2L]) ylim[1L] - dylim else ylim[2L] + dylim
   if (xlog) extreme1 <- exp(extreme1)
   if (ylog) extreme2 <- exp(extreme2)
   c(extreme1, extreme2)

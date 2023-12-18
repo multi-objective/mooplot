@@ -15,7 +15,6 @@
 #' @param x Either a matrix of data values, or a data frame, or a list of
 #'     data frames of exactly three columns.
 #'
-#' @concept visualisation
 #' @export
 eafplot <- function(x, ...) UseMethod("eafplot")
 
@@ -105,16 +104,19 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'          las = 1, log = "y", main = "SPEA2 (Richmond)",
 #'          legend.pos = "bottomright")
 #' }
-#' @concept visualisation
+#' @references
+#' \insertRef{LopPaqStu09emaa}{moocore}
+#' @concept eaf
 #' @export
 eafplot.default <-
   function (x, sets, groups = NULL,
             percentiles = c(0,50,100),
             attsurfs = NULL,
+            maximise = c(FALSE, FALSE),
+            type = "point",
             xlab = NULL, ylab = NULL,
             xlim = NULL, ylim = NULL,
             log = "",
-            type = "point",
             col = NULL,
             lty = c("dashed", "solid", "solid", "solid", "dashed"),
             lwd = 1.75,
@@ -122,7 +124,8 @@ eafplot.default <-
             # FIXME: this allows partial matching if cex is passed, so passing cex has not effect. 
             cex.pch = par("cex"),
             las = par("las"),
-            legend.pos = "topright",
+            legend.pos = paste0(ifelse(maximise[1L], "bottom", "top"),
+              ifelse(rep_len(maximise, 2L)[2L], "left", "right")),
             legend.txt = NULL,
             # FIXME: Can we get rid of the extra. stuff? Replace it with calling points after eafplot.default in examples and eafplot.pl.
             extra.points = NULL, extra.legend = NULL,
@@ -130,7 +133,6 @@ eafplot.default <-
             extra.lwd = 0.5,
             extra.lty = NA,
             extra.col = "black",
-            maximise = c(FALSE, FALSE),
             xaxis.side = "below", yaxis.side = "left",
             axes = TRUE,
             sci.notation = FALSE,
@@ -173,6 +175,7 @@ eafplot.default <-
   if (is.null(ylim))
     ylim <- range_finite(x[, 2L])
 
+  maximise <- rep_len(maximise, 2L)
   extreme <- get_extremes(xlim, ylim, maximise, log)
 
   # FIXME: Find a better way to handle different x-y scale.
@@ -426,7 +429,6 @@ seq_intervals_labels <- function(s, first.open = FALSE, last.open = FALSE,
 
 #' @describeIn eafplot List interface for lists of data.frames or matrices
 #' @export
-#' @concept visualisation
 eafplot.list <- function(x, ...)
 {
   if (!is.list(x))

@@ -24,7 +24,6 @@ Useful links:
 \strong{Maintainer}: Manuel López-Ibáñez \email{manuel.lopez-ibanez@manchester.ac.uk} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
 
 }
-\concept{empirical attainment function}
 \concept{multivariate}
-\concept{optimize}
+\concept{optimization}
 \keyword{internal}
