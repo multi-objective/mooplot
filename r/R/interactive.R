@@ -58,7 +58,7 @@
 #'
 #'@references
 #' \insertAllCited{}
-#' @concept visualisation
+#' @concept eaf
 #' @export
 choose_eafdiffplot <- function(data_left, data_right, intervals = 5,
                                maximise = c(FALSE, FALSE),

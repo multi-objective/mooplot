@@ -83,4 +83,4 @@ boxplot(list(A1=whv_A1, A2=whv_A2), main = "Weighted hypervolume")
 \seealso{
 \code{\link[moocore:read_datasets]{moocore::read_datasets()}}, \code{\link[=eafdiffplot]{eafdiffplot()}}, \code{\link[moocore:whv_rect]{moocore::whv_rect()}}
 }
-\concept{visualisation}
+\concept{eaf}

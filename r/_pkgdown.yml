@@ -23,4 +23,8 @@ reference:
   - title: Visualization of the Empirical Attainment Function
     contents:
       - has_concept("eaf")
+  - title: Other useful functions
+    contents:
+      - pdf_crop
+      - reexports
   

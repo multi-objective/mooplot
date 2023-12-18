@@ -118,8 +118,8 @@
 #' # A more complex example
 #' DIFF <- eafdiffplot(A1, A2, col = c("white", "blue", "red"), intervals = 5,
 #'                     type = "point",
-#'                     title.left=expression("W-RoTS," ~ lambda==100 * "," ~ omega==10),
-#'                     title.right=expression("W-RoTS," ~ lambda==10 * "," ~ omega==100),
+#'                     title_left=expression("W-RoTS," ~ lambda==100 * "," ~ omega==10),
+#'                     title_right=expression("W-RoTS," ~ lambda==10 * "," ~ omega==100),
 #'                     right.panel.last={
 #'                       abline(a = 0, b = 1, col = "red", lty = "dashed")})
 #' DIFF$right[,3] <- -DIFF$right[,3]
