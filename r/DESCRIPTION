@@ -12,7 +12,7 @@ Imports:
         graphics,
         grDevices,
         matrixStats,
-        collapse,
+        collapse (>= 2.0.8),
         Rdpack
 Suggests: 
     extrafont,
@@ -26,7 +26,7 @@ URL: https://multi-objective.github.io/mooplot/r/ (doc), https://github.com/mult
 LazyLoad: true
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 Roxygen: list(markdown = TRUE)
 RdMacros: Rdpack
 Config/testthat/edition: 3

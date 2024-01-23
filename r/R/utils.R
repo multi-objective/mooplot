@@ -38,7 +38,7 @@ add_extremes <- function(x, extremes, maximise)
 range_finite <- function(x)
 {
   if (is.null(x)) return(NULL)
-  x <- .range(replace_inf(x))
+  x <- frange(x, finite=TRUE)
   if (anyNA(x)) return(NULL)
   x
 }
