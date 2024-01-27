@@ -1,12 +1,10 @@
-MOOTOOLS: Multi-Objective Optimization Toolkit 
+MOOPLOT: Multi-Objective Optimization Toolkit 
 ==============================================
 <!-- badges: start -->
-[![C build
-status](https://github.com/auto-optimization/mootools/workflows/C/badge.svg)](https://github.com/auto-optimization/mootools/actions/workflows/C.yaml)
 [![Python build
-status](https://github.com/auto-optimization/mootools/workflows/Python/badge.svg)](https://github.com/auto-optimization/mootools/actions/workflows/python.yaml)
+status](https://github.com/multi-objective/mooplot/workflows/Python/badge.svg)](https://github.com/multi-objective/mooplot/actions/workflows/python.yaml)
 [![R build
-status](https://github.com/auto-optimization/mootools/workflows/R/badge.svg)](https://github.com/auto-optimization/mootools/actions/workflows/R.yaml)
+status](https://github.com/multi-objective/mooplot/workflows/R/badge.svg)](https://github.com/multi-objective/mooplot/actions/workflows/R.yaml)
 <!-- badges: end -->
 
 nondominated
@@ -16,8 +14,8 @@ Obtain information and perform some operations on the nondominated
 sets given as input.
 
 
-  Building `nondominated'
-  -----------------------
+Building `nondominated'
+-----------------------
 
 The program has been tested on GNU/Linux using bash as shell and a
 recent version of GCC (>= 4.2). If you have success or problems using
@@ -37,16 +35,16 @@ See the GCC manual for the names of the architectures supported by
 your version of GCC.
 
 
-  Using `nondominated'
-  --------------------
+Using `nondominated'
+--------------------
 
 See the output of
 
   nondominated --help
 
 
-  License
-  -------
+License
+-------
 
 See LICENSE file or contact the author.
 
