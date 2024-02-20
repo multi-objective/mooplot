@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mooplot"
+version = "0.0.0.9999"
+authors = [
+  { name="Fergus Rooney", email="fergus.rooney@outlook.com" }, {name = "Manuel López-Ibáñez", email = "manuel.lopez-ibanez@manchester.ac.uk"}
+]
+description = "Visualizations for Multi-Objective Optimization"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+  "numpy >= 1.22.3",
+  "pandas >= 2.0.2",
+  "plotly >= 5.15.0",
+  "matplotlib >= 3.6",
+  "moocore",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://multi-objective.github.io/mooplot/"
+Documentation = "https://multi-objective.github.io/mooplot/"
+Source = "https://github.com/multi-objective/mooplot/"
+Tracker = "https://github.com/multi-objective/mooplot/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+pythonpath = [
+  "src"
+]
+testpaths = [
+    "tests"
+]
