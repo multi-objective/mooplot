@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # FIXME Seems like these similar parsing functions can be combined
 def parse_line_dash(dash, size, default):
     dash_parsed = dash if dash else default

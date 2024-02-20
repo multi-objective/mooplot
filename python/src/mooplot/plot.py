@@ -9,6 +9,7 @@ from ._utils import *
 
 _3d_margin = dict(r=5, l=5, b=20, t=20)
 
+
 def _apply_default_themes(fig):
     # This theme may be preferable as it has a white background so could make for a more "scientific" look
     fig.update_layout(
@@ -28,6 +29,7 @@ def _apply_default_themes(fig):
         linecolor="black",
         gridcolor="lightgrey",
     )
+
 
 def _get_3d_title(title):
     return {"text": title, "y": 0.9, "x": 0.45, "xanchor": "center", "yanchor": "top"}
@@ -255,13 +257,15 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
     dim = ncols - 1
     if filter_dominated:
         datasets = moocore.filter_dominated_sets(datasets)
- 
+
     type_parsed = _parse_plot_type(type, dim)
 
-    df = pd.DataFrame(datasets, columns= [f"Objective {d+1}" for d in range(dim)] + ["Set"])
+    df = pd.DataFrame(
+        datasets, columns=[f"Objective {d+1}" for d in range(dim)] + ["Set"]
+    )
     # Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.
     df["Set"] = df["Set"].astype(int).astype(str)
-    num_percentiles = df['Set'].nunique()
+    num_percentiles = df["Set"].nunique()
     if dim == 2:
         # FIXME this can be combined with plot_2d_eaf function to tidy up
         if type_parsed == "fill":
@@ -292,9 +296,7 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
             # Sort the the points by Objective 1 within each set, while keeping the set order (May be inefficient)
             for set in df["Set"].unique():
                 mask = df["Set"] == set
-                df.loc[mask] = (
-                    df.loc[mask].sort_values(by="Objective 1").values
-                )
+                df.loc[mask] = df.loc[mask].sort_values(by="Objective 1").values
 
             figure = px.line(
                 df,
