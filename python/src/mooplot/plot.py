@@ -426,9 +426,16 @@ def create_2d_eaf_plot(
                 fillcolor=colorway[fill_i],
                 name=str(select_names),
                 legendgroup=str(select_legend_group),
-                showlegend=False
-                if (is_fill and i == 0 or not is_fill and i == len(ordered_lines) - 1)
-                else True,  # Don't show extra traces in case
+                showlegend=(
+                    False
+                    if (
+                        is_fill
+                        and i == 0
+                        or not is_fill
+                        and i == len(ordered_lines) - 1
+                    )
+                    else True
+                ),  # Don't show extra traces in case
             )
         )
     return figure

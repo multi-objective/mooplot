@@ -6,6 +6,9 @@ install: build
 build:
 	python3 -m build
 
+black:
+	pre-commit run -a
+
 test:
 	tox
 
