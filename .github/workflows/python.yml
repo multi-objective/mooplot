@@ -63,6 +63,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install tox tox-gh-actions
 
+      - name: Download moocore wheels
+        run: git clone --branch=wheels https://github.com/auto-optimization/mootools.git wheelhouse
+        working-directory: python
+        
       - name: Run tox
         run: tox
         working-directory: python
@@ -91,6 +95,10 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install --upgrade build
 
+      - name: Download moocore wheels
+        run: git clone --branch=wheels https://github.com/auto-optimization/mootools.git wheelhouse
+        working-directory: python
+          
       - name: Build the packages
         run: python3 -m build
         working-directory: python
@@ -177,6 +185,10 @@ jobs:
           python -m pip install tox tox-gh-actions
         working-directory: python
 
+      - name: Download moocore wheels
+        run: git clone --branch=wheels https://github.com/auto-optimization/mootools.git wheelhouse
+        working-directory: python
+        
       - name: Run coverage using tox
         run: |
           tox -e coverage

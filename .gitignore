@@ -44,3 +44,4 @@
 
 bin/
 mooplot.Rcheck/
+python/wheelhouse/
