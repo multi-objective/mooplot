@@ -45,12 +45,6 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-        with:
-          repository: multi-objective/moocore
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: 'moocore'
-
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r }}
@@ -60,6 +54,12 @@ jobs:
       - name: Install macos dependencies (moocore)
         if: runner.os == 'macOS'
         run: brew install gsl gawk automake
+
+      - uses: actions/checkout@v4
+        with:
+          repository: multi-objective/moocore
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: 'moocore'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -121,24 +121,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Install moocore
-        run: |
-          install.packages(c("remotes", "withr"))
-          tmpdir <- withr::local_tempdir(pattern = "moocore")
-          system2("git", c("clone", "https://github.com/multi-objective/moocore.git", tmpdir))
-          remotes::install_local(file.path(tmpdir, "r"))
-        shell: Rscript {0}
-
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
           r-version: ${{ matrix.r }}
 
+      - uses: actions/checkout@v4
+        with:
+          repository: multi-objective/moocore
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: 'moocore'
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::moocore, any::covr any::xml2
+          install-pandoc: true
+          extra-packages: local::../moocore/r/, any::covr any::xml2
           needs: coverage
           working-directory: r
 
@@ -187,19 +184,16 @@ jobs:
           r-version: ${{ matrix.r }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Install moocore
-        run: |
-          install.packages(c("remotes", "withr"))
-          tmpdir <- withr::local_tempdir(pattern = "moocore")
-          system2("git", c("clone", "https://github.com/multi-objective/moocore.git", tmpdir))
-          remotes::install_local(file.path(tmpdir, "r"))
-        shell: Rscript {0}
+      - uses: actions/checkout@v4
+        with:
+          repository: multi-objective/moocore
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: 'moocore'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          install-pandoc: true
+          extra-packages: local::../moocore/r/, any::pkgdown, local::.
           needs: website
           working-directory: r
 
