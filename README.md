@@ -1,5 +1,5 @@
-MOOPLOT: Multi-Objective Optimization Toolkit
-==============================================
+mooplot: Visualizations for Multi-Objective Optimization
+========================================================
 <!-- badges: start -->
 [ [**R package**][r-mooplot-homepage] ] [ [GitHub][r-mooplot-github] ] [![Build status][r-build-badge]][r-build-link] [![Code Coverage][r-coverage-badge]][r-coverage-link]
 

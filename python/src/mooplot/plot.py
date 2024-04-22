@@ -563,7 +563,7 @@ def plot_eaf(
     template="simple_white",
     **layout_kwargs,
 ):
-    """eaf_plot() conviently plots attainment surfaces in 2d
+    """Plot attainment surfaces in 2D.
 
     Parameters
     ----------
@@ -585,10 +585,10 @@ def plot_eaf(
     trace names: list of strings
         Overide the default trace names by providing a list of strings
     line_dashes: string or list of strings
-        Select whether lines are dashed. Choices are: 'solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'. A single string sets the type for all lines. A list sets them indidually. \
+        Select whether lines are dashed. Choices are: 'solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'. A single string sets the type for all lines. A list sets them individually. \
         In case of multiple datasets ("dictionary interface"), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface
     line_width: integer, list of integer, 2d list of integers
-        Select the line width (default = 2) of the traces.   Similar interface to line_dashes, colorway etc -> Enter a single value to set all traces. For single datset, a list sets size for all setz \
+        Select the line width (default = 2) of the traces.   Similar interface to line_dashes, colorway etc -> Enter a single value to set all traces. For single datset, a list sets size for all sets \
         For a dictionary of datsets: a list sets the same value for all traces assosciated with that dataset. A list of list individually sets width for every trace in every dataset
     legend_preset: string or  list
         See "preset" argument for :func:`apply_legend_preset`

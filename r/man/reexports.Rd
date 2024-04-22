@@ -13,3 +13,4 @@ below to see their documentation.
 \describe{
   \item{moocore}{\code{\link[moocore]{read_datasets}}}
 }}
+

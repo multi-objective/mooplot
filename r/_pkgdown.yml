@@ -19,8 +19,6 @@ navbar:
       icon: fab fa-r-project
       href: https://cloud.r-project.org/package=mooplot
 reference:
-- title: Main
-  contents: mooplot-package
 - title: Visualization of the Empirical Attainment Function
   contents: has_concept("eaf")
 - title: Other useful functions

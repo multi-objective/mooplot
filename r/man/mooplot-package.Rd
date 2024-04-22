@@ -8,9 +8,6 @@
 \description{
 Visualization of multi-dimensional data arising in multi-objective optimization, including plots of the empirical attainment function (EAF) and symmetric Vorob'ev expectation and deviation.
 }
-\examples{
-# TODO
-}
 \seealso{
 Useful links:
 \itemize{
@@ -24,6 +21,4 @@ Useful links:
 \strong{Maintainer}: Manuel López-Ibáñez \email{manuel.lopez-ibanez@manchester.ac.uk} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
 
 }
-\concept{multivariate}
-\concept{optimization}
 \keyword{internal}
