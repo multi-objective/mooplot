@@ -38,5 +38,21 @@ Tracker = "https://github.com/multi-objective/mooplot/issues"
 [tool.setuptools]
 package-dir = {"" = "src"}
 
+[tool.ruff]
+# Set the maximum line length to 79.
+line-length = 79
+
+[tool.ruff.lint]
+extend-select = [
+   "D",   # pydocstyle
+]
+ignore = [
+  "D203", # one-blank-line-before-class
+  "D213", # multi-line-summary-second-line
+
+]
+[tool.ruff.format]
+docstring-code-format = true
+
 [tool.pytest.ini_options]
 doctest_optionflags = "NUMBER"

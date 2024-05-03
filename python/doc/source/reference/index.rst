@@ -2,9 +2,9 @@
 
 .. _reference:
 
-#################
-mooplot reference
-#################
+#####################
+mooplot API Reference
+#####################
 
 :Release: |version|
 :Date: |today|

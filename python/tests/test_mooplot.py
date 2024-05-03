@@ -1,3 +1,4 @@
+# ruff: noqa: D100, D101, D102, D103
 import pytest
 import numpy as np
 import moocore
@@ -15,9 +16,7 @@ import mooplot
 
 
 def test_plt_dta_types(test_datapath):
-    """
-    Check that the plot_pf() functions has the right input handling
-    """
+    """Check that the plot_pf() functions has the right input handling."""
     with pytest.raises(Exception) as expt:
         mooplot.plot_pf(datasets="Wrong input")
     assert expt.type == ValueError

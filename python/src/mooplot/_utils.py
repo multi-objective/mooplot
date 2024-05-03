@@ -1,7 +1,14 @@
 # FIXME Seems like these similar parsing functions can be combined
 def parse_line_dash(dash, size, default):
     dash_parsed = dash if dash else default
-    allowed_names = ["solid", "dot", "dash", "longdash", "dashdot", "longdashdot"]
+    allowed_names = [
+        "solid",
+        "dot",
+        "dash",
+        "longdash",
+        "dashdot",
+        "longdashdot",
+    ]
     if isinstance(dash_parsed, str):
         if dash_parsed not in allowed_names:
             raise ValueError(
@@ -18,7 +25,9 @@ def parse_line_dash(dash, size, default):
             + dash_parsed[: size % len(dash_parsed)]
         )  # Make list same length as size, repeating if its smaller
     else:
-        raise TypeError(f"type {type(dash)} not recognised for dashed line argument")
+        raise TypeError(
+            f"type {type(dash)} not recognised for dashed line argument"
+        )
     return dash_parsed
 
 
@@ -26,7 +35,9 @@ def parse_2d_line_dash(dash, size_list, default):
     dash_parsed = dash if dash else default
     if isinstance(dash_parsed, str):
         # Set all traces to be same single value
-        dash_parsed = [parse_line_dash(dash, size, default) for size in size_list]
+        dash_parsed = [
+            parse_line_dash(dash, size, default) for size in size_list
+        ]
     elif isinstance(dash_parsed, list):
         # Can individually select each trace, or set to the same for each
         if len(dash_parsed) != len(size_list):
@@ -47,7 +58,9 @@ def parse_line_width(line, size, default):
     if isinstance(line_parsed, (int, float)):
         line_parsed = [line_parsed] * size
     elif isinstance(line_parsed, list):
-        if False in [isinstance(line_i, (int, float)) for line_i in line_parsed]:
+        if False in [
+            isinstance(line_i, (int, float)) for line_i in line_parsed
+        ]:
             raise TypeError("line size wrong type, must be a number")
         line_parsed = (
             line_parsed * (size // len(line_parsed))
@@ -64,7 +77,9 @@ def parse_2d_line_width(line, size_list, default):
     parsed_2d = line if line else default
     if isinstance(parsed_2d, (int, float)):
         # Set all traces to be same single value
-        parsed_2d = [parse_line_width(parsed_2d, size, default) for size in size_list]
+        parsed_2d = [
+            parse_line_width(parsed_2d, size, default) for size in size_list
+        ]
     elif isinstance(parsed_2d, list):
         # Can individually select each trace, or set to the same for each
         if len(parsed_2d) != len(size_list):

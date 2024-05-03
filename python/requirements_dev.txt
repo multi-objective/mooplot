@@ -20,5 +20,7 @@ sphinxcontrib-napoleon
 sphinxcontrib-bibtex
 sphinx-copybutton
 sphinx-design
+sphinx-gallery
+pillow
 jupyterlab
 ipywidgets

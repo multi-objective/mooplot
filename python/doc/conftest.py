@@ -1,3 +1,4 @@
+# ruff: noqa: D100, D103
 import pytest
 import moocore
 import mooplot

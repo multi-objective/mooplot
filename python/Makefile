@@ -1,4 +1,6 @@
-.PHONY : install build test doc clean docdeps
+# This file should be almost identical to
+# https://github.com/multi-objective/moocore/blob/main/python/Makefile
+.PHONY : install build test doc clean docdeps pre-commit
 
 install: build
 	python3 -m pip install -e . --disable-pip-version-check --find-links wheelhouse
@@ -9,7 +11,7 @@ build:
 test:
 	tox
 
-black:
+pre-commit:
 	pre-commit autoupdate
 	pre-commit run -a
 

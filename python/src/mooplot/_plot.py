@@ -1,4 +1,6 @@
 import numpy as np
+
+# FIXME: Move plotly plots to submodule mooplot.plotly
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -12,6 +14,193 @@ from ._utils import (
 )
 
 _3d_margin = dict(r=5, l=5, b=20, t=20)
+
+
+def _parse_plot_type(plot_type, dimension):
+    if not isinstance(plot_type, str):
+        raise TypeError("plot 'type' must be a string")
+    plot_type = plot_type.replace(" ", "").lower().split(",")
+    if len(plot_type) > 2:
+        raise ValueError(f"Too many commas in plot 'type={plot_type}'")
+    allowed_types = ["lines", "points", "surface", "cube", "fill"]
+    selected_types = [
+        t for t in allowed_types if any(t.startswith(x) for x in plot_type)
+    ]
+
+    if dimension == 2 and (
+        "surface" in selected_types or "cube" in selected_types
+    ):
+        raise ValueError(
+            "Plot types 'surface' and 'cube' are only valid for plotting 3 objectives"
+        )
+    if "points" in selected_types:
+        if "lines" in selected_types:
+            return "lines+markers"
+        elif "surface" in selected_types:
+            return "surface+markers"
+        else:
+            return "markers"
+    elif "lines" in selected_types:
+        return "lines"
+    elif "surface" in selected_types:
+        return "surface"
+    elif "cube" in selected_types:
+        return "cube"
+    elif "fill" in selected_types:
+        return "fill"
+    else:
+        raise ValueError(f"Plot 'type={plot_type} not recognised")
+
+
+def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
+    """Plot Pareto fronts. It can produce an interactive point graph, stair step graph or 3D surface graph. It accepts 2 or 3 objectives.
+
+    Parameters
+    ----------
+    datasets : numpy array
+        The `dataset` argument must be Numpy array produced by the :func:`moocore.read_datasets()` function, i.e.,
+        an array with 3-4 columns including the objective data and set numbers.
+    type : str, optional
+        Type of plot. Any of:
+
+        - 'points' : produces a scatter-like point graph *(2 or 3 objectives)*
+        - 'lines' : produces a stepped line graph *(2 objectives only)*
+        - 'points,lines' : produces a stepped line graph with points *(2 objective only)*
+        - 'fill' : produces a stepped line graph with filled areas between lines - see :func:`plot_eaf` *(2 objective only)*
+        - 'surface' : produces a smoothed 3d surface *(3 objective only*)
+        - 'surface,points' : produces a smoothed 3d surface with datapoints plotted *(3 objective only*)
+        - 'cube' : produces a discrete cube surface *(3 objective only*)
+
+        Abbreviations such as 'p' or 'p,l' are accepted.
+    filter_dominated : bool, optional
+        Whether to automatically filter dominated points within each set. Default is True.
+    layout_kwargs : dict
+        Update features of the graph such as title axis titles, colours etc.
+        These additional parameters are passed to plotly update_layout. See here for all the layout features that can be accessed: `Layout Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/>`_
+
+    Returns
+    -------
+    plotly.graph_objects.Figure:
+        The function returns a `Plotly GO figure` object: `Plotly Figure reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/>`_
+
+        This means that the user can customise any part of the graph after it is created
+
+    Examples
+    --------
+    >>> x = moocore.read_datasets(moocore.get_dataset_path("input1.dat"))
+    >>> mooplot.plot_pf(x, type="points,lines")  # doctest: +ELLIPSIS
+    Figure({...
+
+    .. minigallery:: mooplot.plot_pf
+       :add-heading:
+
+    """
+    # FIXME: Accept a Pandas DataFrame.
+    datasets = np.asfarray(datasets)
+    ncols = datasets.shape[1]
+    if ncols < 3:
+        raise ValueError(
+            "'data' must have at least 3 columns (2 objectives + set column)"
+        )
+    if ncols > 4:
+        raise NotImplementedError(
+            "Only 2D or 3D datasets are currently supported"
+        )
+    dim = ncols - 1
+    if filter_dominated:
+        datasets = filter_dominated_within_sets(datasets)
+
+    type_parsed = _parse_plot_type(type, dim)
+
+    df = pd.DataFrame(
+        datasets, columns=[f"Objective {d+1}" for d in range(dim)] + ["Set"]
+    )
+    # Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.
+    df["Set"] = df["Set"].astype(int).astype(str)
+    num_percentiles = df["Set"].nunique()
+    if dim == 2:
+        # FIXME this can be combined with plot_2d_eaf function to tidy up
+        if type_parsed == "fill":
+            def_colours = colour.get_default_fill_colorway(num_percentiles)
+            colorway = colour.parse_colorway(
+                dict.get(layout_kwargs, "colorway", None),
+                def_colours,
+                num_percentiles,
+            )
+            fill_border_colours = colour.parse_colorway(
+                dict.get(layout_kwargs, "fill_border_colours", None),
+                def_colours,
+                num_percentiles,
+            )
+            figure = create_2d_eaf_plot(
+                datasets, colorway, fill_border_colours
+            )
+            # Make sure these arguments are not used twice
+            layout_kwargs.pop("fill_border_colours", None)
+            layout_kwargs.pop("colorway", None)
+
+        else:
+            colorway = colour.parse_colorway(
+                dict.get(layout_kwargs, "colorway", None),
+                px.colors.qualitative.Plotly,
+                num_percentiles,
+            )
+            layout_kwargs["colorway"] = colorway
+            # Sort the the points by Objective 1 within each set, while keeping the set order (May be inefficient)
+            for set in df["Set"].unique():
+                mask = df["Set"] == set
+                df.loc[mask] = (
+                    df.loc[mask].sort_values(by=df.columns[0]).values
+                )
+
+            figure = px.line(
+                df,
+                x=df.columns[0],
+                y=df.columns[1],
+                color="Set",
+                color_discrete_sequence=colorway,
+            )
+
+            maximise = [False, False]
+            # Extend lines past the figure boundaries.
+            for trace in figure.data:
+                trace.x, trace.y = add_extremes(trace.x, trace.y, maximise)
+
+            figure.update_traces(line_shape="hv", mode=type_parsed)
+
+    elif dim == 3:
+        colorway = colour.parse_colorway(
+            dict.get(layout_kwargs, "colorway", None),
+            px.colors.qualitative.Plotly,
+            num_percentiles,
+        )
+        title = layout_kwargs.pop("title", None)
+
+        if "surface" in type_parsed:
+            # Currently creates a surface with points joined for each
+            figure = _gen_3d_mesh_plot(df, type_parsed)
+        elif "markers" in type_parsed:
+            figure = px.scatter_3d(
+                df,
+                x=df.columns[0],
+                y=df.columns[1],
+                z=df.columns[2],
+                color="Set",
+                color_discrete_sequence=colorway,
+            )
+            figure.update_traces(marker_size=4)
+            figure.update_layout(margin=_3d_margin)
+        elif "cube" in type_parsed:
+            figure = _get_cube_plot(datasets)
+        else:
+            raise NotImplementedError
+        if title:
+            figure.update_layout(title=_get_3d_title(title))
+    else:
+        raise NotImplementedError
+
+    figure.update_layout(layout_kwargs)
+    return figure
 
 
 def _apply_default_themes(fig):
@@ -36,46 +225,21 @@ def _apply_default_themes(fig):
 
 
 def _get_3d_title(title):
-    return {"text": title, "y": 0.9, "x": 0.45, "xanchor": "center", "yanchor": "top"}
-
-
-def _parse_plot_type(line_type, dimension):
-    if not isinstance(line_type, str):
-        raise TypeError("Type argument must be a string")
-    type_arr = line_type.replace(" ", "").lower().split(",")
-    if len(type_arr) > 2:
-        raise ValueError("Error parsing Type command: Too many commas")
-    allowed_types = ["lines", "points", "surface", "cube", "fill"]
-    selected_types = [
-        t for t in allowed_types if any(t.startswith(x) for x in type_arr)
-    ]
-
-    if dimension == 2 and ("surface" in selected_types or "cube" in selected_types):
-        raise ValueError("Surface and cube types only valid for 3 objective plot")
-    if "points" in selected_types and "lines" in selected_types:
-        return "lines+markers"
-    elif "points" in selected_types and "surface" in selected_types:
-        return "surface+markers"
-    elif "points" in selected_types:
-        return "markers"
-    elif "lines" in selected_types:
-        return "lines"
-    elif "surface" in selected_types:
-        return "surface"
-    elif "cube" in selected_types:
-        return "cube"
-    elif "fill" in selected_types:
-        return "fill"
-    else:
-        raise ValueError(f"Type argument for 'plot_pf()' not recognised: {type}")
+    return {
+        "text": title,
+        "y": 0.9,
+        "x": 0.45,
+        "xanchor": "center",
+        "yanchor": "top",
+    }
 
 
 # Generates smooth 3d mesh plot from dataset
-def _gen_3d_mesh_plot(dataset, type):
-    num_sets = dataset["Set"].unique()
+def _gen_3d_mesh_plot(df, type):
+    num_sets = df["Set"].unique()
     fig = go.Figure()
     for set in num_sets:
-        df_one_set = dataset[dataset["Set"] == set]
+        df_one_set = df[df["Set"] == set]
         fig.add_trace(
             go.Mesh3d(
                 x=df_one_set["Objective 1"],
@@ -103,7 +267,6 @@ def _gen_3d_mesh_plot(dataset, type):
             yaxis_title="Objective 2",
             zaxis_title="Objective 3",
         ),
-        title=_get_3d_title("Surface plot of three objective dataset"),
     )
     return fig
 
@@ -186,7 +349,6 @@ def _get_cube_plot(dataset):
             yaxis_title="Objective 2",
             zaxis_title="Objective 3",
         ),
-        title=_get_3d_title("Cube plot of three objective dataset"),
     )
     return fig
 
@@ -200,158 +362,6 @@ def add_extremes(x, y, maximise):
     return np.concatenate([[best_x], x, [inf_x]]), np.concatenate(
         [[inf_y], y, [best_y]]
     )
-
-
-def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
-    """Plot Pareto fronts. It can produce an interactive point graph, stair step graph or 3D surface graph. It accepts 2 or 3 objectives.
-
-    Parameters
-    ----------
-
-    datasets : numpy array
-        The `dataset` argument must be Numpy array produced by the :func:`moocore.read_datasets()` function, i.e.,
-        an array with 3-4 columns including the objective data and set numbers.
-    type : str, optional `"points"`
-        The `type` argument can be `"points"`, `"lines"`, `"points,lines"` for two objective datasets,
-        Or `"points"`, `"surface"` or `"cube"` for 3-objectives datasets
-
-        `"points"` produces a scatter-like point graph *(2 or 3 objectives)*
-
-        `"lines"` produces a stepped line graph *(2 objectives only)*
-
-        `"points,lines"` produces a stepped line graph with points *(2 objective only)*
-
-        `"fill"` produces a stepped line graph with filled areas between lines - see :func:`plot_eaf` *(2 objective only)*
-
-        `"surface"` produces a smoothed 3d surface *(3 objective only*)
-
-        `"surface, points"` produces a smoothed 3d surface with datapoints plotted *(3 objective only*)
-
-        `"cube"` produces a discrete cube surface *(3 objective only*)
-
-        The function parses the type argument, so accepts abbrieviations such as `p` or `"p,l"`
-    filter_dominated : bool
-        Boolean value for whether to automatically filter dominated points each set. default is True
-
-    layout_kwargs : keyword arguments
-        Update features of the graph such as title axis titles, colours etc. These additional parameters are passed to \
-        plotly update_layout, See here for all the layout features that can be accessed: `Layout Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/>`_
-
-    Returns
-    -------
-    Plotly GO figure
-        The function returns a `Plotly GO figure` object: `Plotly Figure reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/>`_
-
-        This means that the user can customise any part of the graph after it is created
-
-    Examples
-    --------
-    >>> x = moocore.read_datasets(moocore.get_dataset_path("input1.dat"))
-    >>> mooplot.plot_pf(x, type="points,lines", filter_dominated = True) # doctest: +ELLIPSIS
-    Figure({...
-
-    """
-    datasets = np.asfarray(datasets)
-    ncols = datasets.shape[1]
-    if ncols < 3:
-        raise ValueError(
-            "'data' must have at least 3 columns (2 objectives + set column)"
-        )
-    if ncols > 4:
-        raise NotImplementedError("Only 2D or 3D datasets are currently supported")
-    dim = ncols - 1
-    if filter_dominated:
-        datasets = filter_dominated_within_sets(datasets)
-
-    type_parsed = _parse_plot_type(type, dim)
-
-    df = pd.DataFrame(
-        datasets, columns=[f"Objective {d+1}" for d in range(dim)] + ["Set"]
-    )
-    # Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.
-    df["Set"] = df["Set"].astype(int).astype(str)
-    num_percentiles = df["Set"].nunique()
-    if dim == 2:
-        # FIXME this can be combined with plot_2d_eaf function to tidy up
-        if type_parsed == "fill":
-            def_colours = colour.get_default_fill_colorway(num_percentiles)
-            colorway = colour.parse_colorway(
-                dict.get(layout_kwargs, "colorway", None),
-                def_colours,
-                num_percentiles,
-            )
-            fill_border_colours = colour.parse_colorway(
-                dict.get(layout_kwargs, "fill_border_colours", None),
-                def_colours,
-                num_percentiles,
-            )
-
-            figure = create_2d_eaf_plot(datasets, colorway, fill_border_colours)
-            # Make sure these arguments are not used twice
-            layout_kwargs.pop("fill_border_colours", None)
-            layout_kwargs.pop("colorway", None)
-
-        else:
-            colorway = colour.parse_colorway(
-                dict.get(layout_kwargs, "colorway", None),
-                px.colors.qualitative.Plotly,
-                num_percentiles,
-            )
-            layout_kwargs["colorway"] = colorway
-            # Sort the the points by Objective 1 within each set, while keeping the set order (May be inefficient)
-            for set in df["Set"].unique():
-                mask = df["Set"] == set
-                df.loc[mask] = df.loc[mask].sort_values(by="Objective 1").values
-
-            figure = px.line(
-                df,
-                x="Objective 1",
-                y="Objective 2",
-                color="Set",
-                title="Plot of a two objective dataset",
-                color_discrete_sequence=colorway,
-            )
-
-            maximise = [False, False]
-            # Extend lines past the figure boundaries.
-            for trace in figure.data:
-                trace.x, trace.y = add_extremes(trace.x, trace.y, maximise)
-
-            figure.update_traces(line_shape="hv", mode=type_parsed)
-
-    elif dim == 3:
-        colorway = colour.parse_colorway(
-            dict.get(layout_kwargs, "colorway", None),
-            px.colors.qualitative.Plotly,
-            num_percentiles,
-        )
-
-        if "surface" in type_parsed:
-            # Currently creates a surface with points joined for each
-            figure = _gen_3d_mesh_plot(df, type_parsed)
-        elif "markers" in type_parsed:
-            figure = px.scatter_3d(
-                df,
-                x="Objective 1",
-                y="Objective 2",
-                z="Objective 3",
-                color="Set",
-                color_discrete_sequence=colorway,
-            )
-            figure.update_traces(marker_size=4)
-            figure.update_layout(
-                margin=_3d_margin,
-                title=_get_3d_title("Point plot of three objective dataset"),
-            )
-        elif "cube" in type_parsed:
-            figure = _get_cube_plot(datasets)
-        else:
-            raise NotImplementedError
-    else:
-        raise NotImplementedError
-
-    figure.update_layout(layout_kwargs)
-    return figure
 
 
 # Create a fill plot -> Such as EAF percentile  plot.
@@ -370,7 +380,9 @@ def create_2d_eaf_plot(
     # Get a line plot and sort by the last column eg. Set number or percentile
     lines_plot = plot_pf(dataset, type="line", filter_dominated=False)
     ordered_lines = sorted(lines_plot.data, key=lambda x: int(x["name"]))
-    float_inf = np.finfo(dataset.dtype).max  # Interpreted as infinite value by plotly
+    float_inf = np.finfo(
+        dataset.dtype
+    ).max  # Interpreted as infinite value by plotly
 
     # Add an line to fill down from infinity to the last percentile
     infinity_line = dict(
@@ -392,7 +404,9 @@ def create_2d_eaf_plot(
             raise ValueError(
                 f"Names list (len {len(names)}) should equal number of different traces (len {num_percentiles})"
             )
-    line_dashes = parse_line_dash(line_dashes, num_percentiles, default="solid")
+    line_dashes = parse_line_dash(
+        line_dashes, num_percentiles, default="solid"
+    )
     line_width = parse_line_width(line_width, num_percentiles, default=2)
 
     is_fill = "fill" in type
@@ -412,7 +426,9 @@ def create_2d_eaf_plot(
             if names
             else percentile_names[name_i]
         )
-        select_legend_group = names[name_i] if names else percentile_names[name_i]
+        select_legend_group = (
+            names[name_i] if names else percentile_names[name_i]
+        )
         line_colour = (
             fill_border_colours[name_i] if type == "fill" else colorway[name_i]
         )
@@ -447,7 +463,13 @@ def create_2d_eaf_plot(
 
 
 def _combine_2d_figures(
-    datasets, names, types, colorways, fill_border_colours, line_dashes, line_widths
+    datasets,
+    names,
+    types,
+    colorways,
+    fill_border_colours,
+    line_dashes,
+    line_widths,
 ):
     # Create a single 2d graph containing mulitple different EAF plots
     num_sets = [
@@ -480,9 +502,9 @@ def _combine_2d_figures(
 
 
 def apply_legend_preset(fig, preset="centre_top_right"):
-    """Apply a preset to the legend, changing it's position, text or colour
+    """Apply a preset to the legend, changing it's position, text or colour.
 
-    For more advanced legend behaviour
+    For more advanced legend behaviour.
 
     Parameters
     ----------
@@ -493,6 +515,7 @@ def apply_legend_preset(fig, preset="centre_top_right"):
         "bottom_left","centre_top_right", "centre_top_left","centre_bottom_right", "centre_bottom_left".
 
         Set it to a list [preset_position_name, title_text, background_colour, border_colour] to change position, title text, background colour and border colour
+
     """
     colour = None
     text = None
@@ -525,7 +548,9 @@ def apply_legend_preset(fig, preset="centre_top_right"):
         centre_bottom_left=(0.025, 0.05),
     )
     position = position if position else "centre_top_right"
-    xanchor = "left" if "left" in position or "outside" in position else "right"
+    xanchor = (
+        "left" if "left" in position or "outside" in position else "right"
+    )
     yanchor = "top" if "top" in position or "outside" in position else "bottom"
 
     colour = "rgba(0,0,0,0)" if colour == "invisible" else colour
@@ -615,7 +640,9 @@ def plot_eaf(
             dataset = dataset[np.isin(dataset[:, -1], percentiles)]
         num_percentiles = len(np.unique(dataset[:, -1]))
         def_colours = colour.get_default_fill_colorway(num_percentiles)
-        colorway = colour.parse_colorway(colorway, def_colours, num_percentiles)
+        colorway = colour.parse_colorway(
+            colorway, def_colours, num_percentiles
+        )
         fill_border_colours = colour.parse_colorway(
             fill_border_colours, def_colours, num_percentiles
         )
@@ -653,9 +680,13 @@ def plot_eaf(
                     raise TypeError("Incorrect type for percentiles")
 
         if isinstance(type, str):
-            type = [type] * len(dataset)  # Set all types to be single type argument
+            type = [type] * len(
+                dataset
+            )  # Set all types to be single type argument
         elif len(type) != len(dataset):
-            raise ValueError("type list must be same length as dataset dictionary")
+            raise ValueError(
+                "type list must be same length as dataset dictionary"
+            )
 
         traces_list = []  # Extract list with names from dict
         names_list = []
@@ -682,14 +713,18 @@ def plot_eaf(
     fig.update_layout(layout_kwargs, template=template)
     if trace_names:
         # Change trace names
-        current_names = [trace["name"] for trace in fig.data if trace["showlegend"]]
+        current_names = [
+            trace["name"] for trace in fig.data if trace["showlegend"]
+        ]
 
         if len(trace_names) != len(current_names):
             raise ValueError(
                 f"Your names list of len {len(trace_names)} is different to the number of traces: {len(current_names)}"
             )
         for i, tracename in enumerate(current_names):
-            fig.update_traces(name=trace_names[i], selector=({"name": tracename}))
+            fig.update_traces(
+                name=trace_names[i], selector=({"name": tracename})
+            )
 
     return fig
 

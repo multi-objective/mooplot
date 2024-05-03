@@ -9,7 +9,7 @@ mooplot: Visualizations for Multi-Objective Optimization
    :hidden:
 
    API reference <reference/index>
-   Examples <examples/index>
+   Examples <auto_examples/index>
 
 **Version**: |version|
 
@@ -41,7 +41,7 @@ The mooplot package ...
         :img-top: _static/index_getting_started.svg
         :class-card: intro-card
         :shadow: md
-        :link: examples
+        :link: auto_examples
         :link-type: ref
 
         Detailed examples and tutorials.
