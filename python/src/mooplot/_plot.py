@@ -607,7 +607,7 @@ def plot_eaf(
         In case of multiple datasets ("dictionary interface"), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface
     fill_border_colours : list or 2d list
         The same as colorway but defining the boundaries between percentile groups. The default value is to follow colorway. You can set it to `rgb(0,0,0,0)` to make the boundaries invisible
-    trace names: list of strings
+    trace_names: list of strings
         Overide the default trace names by providing a list of strings
     line_dashes: string or list of strings
         Select whether lines are dashed. Choices are: 'solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'. A single string sets the type for all lines. A list sets them individually. \

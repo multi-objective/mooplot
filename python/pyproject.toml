@@ -51,6 +51,15 @@ ignore = [
   "D213", # multi-line-summary-second-line
 
 ]
+[tool.ruff.lint.per-file-ignores]
+"src/mooplot/colour.py" = [ "D" ]
+"examples/*" = [
+"D205", # blank line required between summary line and description
+"D400", # First line should end with a period
+"D415", # First line should end with a period, question mark, or exclamation point
+]
+
+
 [tool.ruff.format]
 docstring-code-format = true
 
