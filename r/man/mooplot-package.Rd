@@ -11,9 +11,9 @@ Visualization of multi-dimensional data arising in multi-objective optimization,
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://multi-objective.github.io/mooplot/r/ (doc)}
-  \item \url{https://github.com/multi-objective/mooplot/ (devel)}
-  \item Report bugs at \url{https://github.com/multi-objective/mooplot/issues}
+  \item \url{https://multi-objective.github.io/mooplot/r/}
+  \item \url{https://github.com/multi-objective/mooplot/}
+  \item Report bugs at \url{https://github.com/multi-objective/mooplot/issues/}
 }
 
 }

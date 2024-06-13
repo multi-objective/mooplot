@@ -22,7 +22,7 @@ Suggests:
     withr
 License: LGPL (>= 2)
 BugReports: https://github.com/multi-objective/mooplot/issues/
-URL: https://multi-objective.github.io/mooplot/r/, https://github.com/multi-objective/mooplot/r/
+URL: https://multi-objective.github.io/mooplot/r/, https://github.com/multi-objective/mooplot/
 LazyLoad: true
 LazyData: true
 Encoding: UTF-8

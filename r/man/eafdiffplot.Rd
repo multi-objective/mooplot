@@ -153,9 +153,9 @@ DIFF <- eafdiffplot(A1, A2, col = c("white", "blue", "red"), intervals = 5,
                     title_right=expression("W-RoTS," ~ lambda==10 * "," ~ omega==100),
                     right.panel.last={
                       abline(a = 0, b = 1, col = "red", lty = "dashed")})
-DIFF$right[,3] <- -DIFF$right[,3]
 
 ## Save the values to a file.
+# DIFF$right[,3] <- -DIFF$right[,3]
 # write.table(rbind(DIFF$left,DIFF$right),
 #             file = "wrots_l100w10_dat-wrots_l10w100_dat-diff.txt",
 #             quote = FALSE, row.names = FALSE, col.names = FALSE)

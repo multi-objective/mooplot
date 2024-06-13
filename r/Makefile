@@ -77,7 +77,7 @@ else
 endif
 
 clean:
-	cd $(PACKAGEDIR) && ./cleanup
+	cd $(PACKAGEDIR)
 
 pdf:
 	$(RM) $(BINDIR)/$(PACKAGE).pdf
