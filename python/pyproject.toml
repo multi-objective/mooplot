@@ -49,15 +49,14 @@ lint.ignore = [
   "D213", # multi-line-summary-second-line
 ]
 
-[tool.ruff.lint.per-file-ignores]
-"src/mooplot/colour.py" = [
-  "D",
-] # FIXME!
-"examples/*" = [
+lint.per-file-ignores."examples/*" = [
   "D205", # blank line required between summary line and description
   "D400", # First line should end with a period
   "D415", # First line should end with a period, question mark, or exclamation point
 ]
+lint.per-file-ignores."src/mooplot/colour.py" = [
+  "D",
+] # FIXME!
 
 [tool.pytest.ini_options]
 doctest_optionflags = "NUMBER"
