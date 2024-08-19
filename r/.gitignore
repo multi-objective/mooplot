@@ -1,5 +1,6 @@
 *.a
 *.o
+.Rbuildignore.backup
 .RData
 .Rhistory
 .Rproj.user
@@ -13,6 +14,3 @@ git_version
 inst/doc
 revdep/checks
 revdep/library
-src/*.o
-src/*.so
-src/Makevars

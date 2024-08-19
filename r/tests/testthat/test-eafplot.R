@@ -28,7 +28,7 @@ test_that("eafplot", {
 }
 
 eaftest("wrots_l10w100_dat", "wrots_l100w10_dat")
-eaftest("tpls", "rest")
+eaftest("tpls.xz", "rest.xz")
 eaftest("ALG_1_dat.xz", "ALG_2_dat.xz")
 eaftest("ALG_1_dat.xz", "ALG_2_dat.xz", maximise = c(TRUE, FALSE))
 eaftest("ALG_1_dat.xz", "ALG_2_dat.xz", maximise = c(FALSE, TRUE))
