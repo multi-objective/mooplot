@@ -68,7 +68,7 @@ jobs:
           needs: check
           working-directory: r
 
-      - name: Check (CRAN)
+      - name: Check (as CRAN)
         env:
           NOT_CRAN: false
         run: |
@@ -91,6 +91,11 @@ jobs:
         if: failure()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
+        working-directory: r
+
+      - name: Install package
+        run: remotes::install_local(".", force = TRUE, upgrade = "never", build_manual = TRUE, build_vignettes = TRUE)
+        shell: Rscript {0}
         working-directory: r
 
       - name: Upload check results
@@ -143,7 +148,7 @@ jobs:
         working-directory: r
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.5
         with:
           fail_ci_if_error: true
           verbose: true
