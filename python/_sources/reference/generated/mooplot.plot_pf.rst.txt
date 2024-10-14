@@ -1,0 +1,6 @@
+﻿mooplot.plot\_pf
+================
+
+.. currentmodule:: mooplot
+
+.. autofunction:: plot_pf
