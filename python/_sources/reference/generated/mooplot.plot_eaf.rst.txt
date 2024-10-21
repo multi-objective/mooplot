@@ -1,0 +1,6 @@
+﻿mooplot.plot\_eaf
+=================
+
+.. currentmodule:: mooplot
+
+.. autofunction:: plot_eaf
