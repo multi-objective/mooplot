@@ -113,7 +113,7 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
     type_parsed = _parse_plot_type(type, dim)
 
     df = pd.DataFrame(
-        datasets, columns=[f"Objective {d+1}" for d in range(dim)] + ["Set"]
+        datasets, columns=[f"Objective {d + 1}" for d in range(dim)] + ["Set"]
     )
     # Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.
     df["Set"] = df["Set"].astype(int).astype(str)
