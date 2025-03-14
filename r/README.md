@@ -10,7 +10,7 @@
 ============================================================
 
 <!-- badges: start -->
-![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
+[![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
 [![CRAN Status](https://badges.cranchecks.info/worst/moocore.svg)][r-mooplot-cran-results]
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
 [![R build status][r-build-badge]][r-build-link]
