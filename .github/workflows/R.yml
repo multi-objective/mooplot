@@ -61,7 +61,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           install-pandoc: true
-          extra-packages: local::../moocore/r/, any::rcmdcheck, any::spelling
+          extra-packages: local::../moocore/r/, any::rcmdcheck, any::spelling, any::remotes
           needs: check
           working-directory: r
 
