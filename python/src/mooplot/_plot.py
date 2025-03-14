@@ -52,7 +52,12 @@ def _parse_plot_type(plot_type, dimension):
         raise ValueError(f"Plot 'type={plot_type} not recognised")
 
 
-def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
+def plot_pf(
+    datasets,
+    type: str = "points",
+    filter_dominated: bool = True,
+    **layout_kwargs,
+):
     """Plot Pareto fronts. It can produce an interactive point graph, stair step graph or 3D surface graph. It accepts 2 or 3 objectives.
 
     Parameters
@@ -72,7 +77,7 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
         - 'cube' : produces a discrete cube surface *(3 objective only*)
 
         Abbreviations such as 'p' or 'p,l' are accepted.
-    filter_dominated : bool, optional
+    filter_dominated :
         Whether to automatically filter dominated points within each set. Default is True.
     layout_kwargs : dict
         Update features of the graph such as title axis titles, colours etc.
@@ -87,7 +92,7 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
 
     Examples
     --------
-    >>> x = moocore.read_datasets(moocore.get_dataset_path("input1.dat"))
+    >>> x = moocore.get_dataset("input1.dat")
     >>> mooplot.plot_pf(x, type="points,lines")  # doctest: +ELLIPSIS
     Figure({...
 
@@ -113,7 +118,7 @@ def plot_pf(datasets, type="points", filter_dominated=True, **layout_kwargs):
     type_parsed = _parse_plot_type(type, dim)
 
     df = pd.DataFrame(
-        datasets, columns=[f"Objective {d+1}" for d in range(dim)] + ["Set"]
+        datasets, columns=[f"Objective {d + 1}" for d in range(dim)] + ["Set"]
     )
     # Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.
     df["Set"] = df["Set"].astype(int).astype(str)
@@ -631,6 +636,14 @@ def plot_eaf(
         The function returns a `Plotly GO figure` object `Figure Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/>`_
 
         This means that the user can customise any part of the graph after it is created
+
+    Notes
+    -----
+    For more background, see :footcite:t:`LopPaqStu09emaa`.
+
+    References
+    ----------
+    .. footbibliography::
 
     """
     if isinstance(dataset, np.ndarray):
