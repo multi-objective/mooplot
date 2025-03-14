@@ -26,7 +26,7 @@ URL: https://multi-objective.github.io/mooplot/r/, https://github.com/multi-obje
 LazyLoad: true
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 RdMacros: Rdpack
 Config/testthat/edition: 3

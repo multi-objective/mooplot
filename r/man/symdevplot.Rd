@@ -19,11 +19,11 @@ symdevplot(
 )
 }
 \arguments{
-\item{x}{Either a matrix of data values, or a data frame, or a list of data
-frames of exactly three columns.  The third column gives the set (run,
-sample, ...) identifier.}
+\item{x}{\code{matrix()}|\code{data.frame()}\cr Matrix or data frame of numerical
+values, where each row gives the coordinates of a point. If \code{sets} is
+missing, the last column of \code{x} gives the sets.}
 
-\item{sets}{A vector that indicates the set of each point in \code{x}. If
+\item{sets}{\code{integer()}\cr A vector that indicates the set of each point in \code{x}. If
 missing, the last column of \code{x} is used instead.}
 
 \item{VE, threshold}{Vorob'ev expectation and threshold, e.g., as returned

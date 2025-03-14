@@ -26,7 +26,7 @@ of intervals provided. If an integer is provided, then labels for each
 interval are  computed automatically. If a character vector is
 provided, its length is taken as the number of intervals.}
 
-\item{maximise}{(\code{logical()} | \code{logical(1)}) \cr Whether the objectives must be
+\item{maximise}{\code{logical()}|\code{logical(1)}\cr Whether the objectives must be
 maximised instead of minimised. Either a single logical value that applies
 to all objectives or a vector of logical values, with one value per
 objective.}
