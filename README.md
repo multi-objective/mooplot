@@ -4,6 +4,7 @@
 [ [**R package**][r-mooplot-homepage] ] [ [GitHub][r-mooplot-github] ] [![Build status][r-build-badge]][r-build-link] [![Code Coverage][r-coverage-badge]][r-coverage-link] [![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
 [![CRAN Status](https://www.r-pkg.org/badges/version-last-release/mooplot)](https://cran.r-project.org/web/checks/check_results_mooplot.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
+
 [ [**Python package**][py-mooplot-homepage] ] [ [GitHub][py-mooplot-github] ] [![Build status][py-build-badge]][py-build-link] [![Code Coverage][py-coverage-badge]][py-coverage-link] [![PyPI - Version](https://img.shields.io/pypi/v/mooplot)][py-mooplot-pypi] [![PyPI - Downloads](https://img.shields.io/pypi/dm/mooplot?color=blue)][py-mooplot-pypi]
 <!-- badges: end -->
 
