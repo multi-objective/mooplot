@@ -1,12 +1,12 @@
-numpy >= 2.0
+setuptools>=70.1,<74 # Sync with .pre-commit-config.yaml
+numpy >= 1.23.0
 
-black >= 24.2.0
-setuptools >= 65.5.1
-pytest >= 7 # Sync with tox.ini
-pytest-cov >= 4.1.0
 pre-commit >= 3.3.2
+ruff >= 0.1.4
 
 tox >= 4.6.2 # Sync with tox.ini
+pytest >= 7 # Sync with tox.ini
+pytest-cov >= 4.1.0
 virtualenv >= 20
 build
 
@@ -16,11 +16,15 @@ jupyter
 ipykernel
 kaleido
 myst-nb
+sphinx-gallery
 sphinxcontrib-napoleon
 sphinxcontrib-bibtex
+sphinx-autodoc-typehints
 sphinx-copybutton
 sphinx-design
-sphinx-gallery
-pillow
 jupyterlab
 ipywidgets
+pillow
+
+# Gallery examples
+seaborn

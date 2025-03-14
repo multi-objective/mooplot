@@ -5,6 +5,8 @@
 #' the left EAF minus the right EAF and the right side shows the
 #' differences in the other direction.
 #'
+#' @inheritParams eafplot
+#'
 #' @param data_left,data_right Data frames corresponding to the input data of
 #'   left and right sides, respectively. Each data frame has at least three
 #'   columns, the third one being the set of each point. See also
@@ -40,8 +42,6 @@
 #'
 #' @param xlim,ylim,cex,cex.lab,cex.axis Graphical parameters, see
 #'   [plot.default()].
-#'
-#' @template arg_maximise
 #'
 #' @param grand.lines Whether to plot the grand-best and grand-worst
 #'   attainment surfaces.

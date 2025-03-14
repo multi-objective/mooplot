@@ -10,14 +10,17 @@ mooplot: Visualizations for Multi-Objective Optimization
 
    API reference <reference/index>
    Examples <auto_examples/index>
+   whatsnew/index
 
-**Version**: |version|
+**Version**: |version| (See :ref:`whatsnew`)
 
 **Date** |today|
 
 **Useful links**:
 `Source Repository <https://github.com/multi-objective/mooplot>`_ |
 `Issue Tracker <https://github.com/multi-objective/mooplot/issues>`_
+
+This webpage documents the ``mooplot`` Python package. There is also a ``mooplot`` `R package <https://multi-objective.github.io/mooplot/r>`_.
 
 The **mooplot** package implements various visualizations that are useful in multi-objective optimization. These visualizations include:
 

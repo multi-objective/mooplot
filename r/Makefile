@@ -5,7 +5,6 @@ REALVERSION=$(PACKAGEVERSION)$(REVNUM)
 BINDIR=$(CURDIR)/..
 INSTALL_FLAGS="--with-keep.source"
 PACKAGEDIR=$(CURDIR)
-RHUB_COMMON_ARGS= path='$(BINDIR)/$(PACKAGE)_$(PACKAGEVERSION).tar.gz', env_vars = c('_R_CHECK_FORCE_SUGGESTS_'='false', R_DEFAULT_SAVE_VERSION='2', R_DEFAULT_SERIALIZE_VERSION='2')
 Reval=R --slave -e
 
 define Rsed
@@ -22,7 +21,7 @@ endif
 ## Set version information:
 REVNUM = $(shell sh -c 'cat git_version 2> /dev/null')
 
-.PHONY: build check clean install pdf submit cran winbuild help gendoc pkgdown
+.PHONY: build test check clean install pdf submit cran winbuild help gendoc pkgdown
 
 help :
 	@echo 'This makefile has the following targets                  '
@@ -39,7 +38,7 @@ install: build
 	cd $(BINDIR) && R CMD INSTALL $(INSTALL_FLAGS) $(PACKAGE)_$(PACKAGEVERSION).tar.gz
 
 setup:
-	Rscript -e 'if(!require(devtools)) install.packages("devtools"); devtools::install_dev_deps(build=FALSE, upgrade="never")'
+	Rscript -e 'if(!require(devtools)) install.packages(c("devtools", "xfun")); devtools::install_deps(upgrade="never")'
 
 gendoc: $(PACKAGEDIR)/man/$(PACKAGE)-package.Rd
 
@@ -60,14 +59,25 @@ closeversion:
 
 releasebuild: clean
 	@$(MAKE) gendoc
+	cp .Rbuildignore .Rbuildignore.backup
+	cat .Rbuildignore.cran >> .Rbuildignore
 	cd $(BINDIR) &&	R CMD build $(PACKAGEDIR) && tar -atvf $(PACKAGE)_$(PACKAGEVERSION).tar.gz
+	mv .Rbuildignore.backup .Rbuildignore
+	Rscript --vanilla do.R info "$(BINDIR)/$(PACKAGE)_$(PACKAGEVERSION).tar.gz"
 
-releasecheck: cran
+releasecheck:
 	$(Reval) 'urlchecker::url_check()'
-	$(MAKE) winbuild # $(MAKE) macbuild # rhub is broken
+	$(MAKE) releasebuild
+	$(MAKE) cran_
+	$(MAKE) winbuild_ # $(MAKE) macbuild # rhub is broken
 
 cran : build
+cran cran_:
 	cd $(BINDIR) && _R_CHECK_FORCE_SUGGESTS_=false _R_OPTIONS_STRINGS_AS_FACTORS_=false R CMD check --as-cran $(PACKAGE)_$(PACKAGEVERSION).tar.gz
+
+# Using testthat nicer output
+test: clean
+	_R_CHECK_FORCE_SUGGESTS_=false NOT_CRAN=true $(Reval) 'testthat::test_local(stop_on_failure = TRUE)'
 
 check: build
 ifdef TEST
@@ -77,25 +87,20 @@ else
 endif
 
 clean:
-	cd $(PACKAGEDIR)
+	cd $(PACKAGEDIR) && true
 
 pdf:
 	$(RM) $(BINDIR)/$(PACKAGE).pdf
 	cd $(BINDIR) && R CMD Rd2pdf --no-preview --batch --output=$(PACKAGE).pdf $(PACKAGEDIR)
 
-submit:
-	@echo 'Edit cran-comments.md and run devtools::release() in R'
+submit: releasebuild
+	Rscript --vanilla do.R submit "$(BINDIR)/$(PACKAGE)_$(PACKAGEVERSION).tar.gz"
 
-remotecran: releasebuild
-	$(Reval) "rhub::check_for_cran($(RHUB_COMMON_ARGS), show_status = TRUE)"
-
-macbuild: releasebuild
-	$(Reval) "rhub::check(platform='macos-highsierra-release-cran', $(RHUB_COMMON_ARGS))"
 
 winbuild: releasebuild
+winbuild winbuild_:
 	$(Reval) "devtools::check_win_release()"
 	$(Reval) "devtools::check_win_devel()"
-	$(Reval) "rhub::check_on_windows($(RHUB_COMMON_ARGS))"
 
-covr: build
-	$(Reval) "Sys.setenv(NOT_CRAN='true');covr::report(covr::package_coverage(type='all'))"
+covr:
+	$(Reval) "Sys.setenv(NOT_CRAN='true');covr::report(covr::package_coverage(type='all', quiet=FALSE), browse=TRUE)"

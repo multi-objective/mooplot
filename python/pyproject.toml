@@ -9,12 +9,20 @@ name = "mooplot"
 version = "0.0.9999"
 description = "Visualizations for Multi-Objective Optimization"
 readme = "README.md"
+keywords = [
+  "math",
+  "Mathematics",
+  "Multi-criteria Decision-Making",
+  "operations research",
+  "Optimization",
+]
 authors = [
   { name = "Manuel López-Ibáñez", email = "manuel.lopez-ibanez@manchester.ac.uk" },
   { name = "Fergus Rooney", email = "fergus.rooney@outlook.com" },
 ]
 requires-python = ">=3.10"
 classifiers = [
+  "Intended Audience :: Science/Research",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
@@ -26,7 +34,7 @@ classifiers = [
 dependencies = [
   "matplotlib>=3.6",
   "moocore>=0.0.9999",
-  "numpy>=2",
+  "numpy>=1.23",
   "pandas>=2.0.2",
   "plotly>=5.15",
 ]
@@ -43,21 +51,25 @@ package-dir = { "" = "src" }
 line-length = 79
 format.docstring-code-format = true
 lint.extend-select = [
-  "D",
-] # pydocstyle
+  "D",    # pydocstyle
+  "D402", # no-signature
+  "D415", # ends-in-punctuation
+  "D417", # undocumented-param
+]
 lint.ignore = [
   "D203", # one-blank-line-before-class
   "D213", # multi-line-summary-second-line
 ]
-
 lint.per-file-ignores."examples/*" = [
   "D205", # blank line required between summary line and description
   "D400", # First line should end with a period
   "D415", # First line should end with a period, question mark, or exclamation point
+  "E402", # Module level import not at top of file
 ]
 lint.per-file-ignores."src/mooplot/colour.py" = [
   "D",
 ] # FIXME!
+lint.pydocstyle.convention = "numpy"
 
 [tool.pytest.ini_options]
 doctest_optionflags = "NUMBER"

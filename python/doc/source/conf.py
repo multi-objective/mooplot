@@ -22,26 +22,32 @@ else:
 
 project = "mooplot"
 _full_version = mooplot.__version__
-release = _full_version.split("+", 1)[0]
-version = ".".join(release.split(".")[:2])
+release = _full_version  # _full_version.split("+", 1)[0]
+version = _full_version  # ".".join(release.split(".")[:2])
 year = date.today().year
 # Can we get this from pyproject.toml ?
 author = "Manuel López-Ibáñez and Fergus Rooney"
-copyright = f"2023-{year}, {author}"
+copyright = f"2024-{year}, {author}"
 html_site_root = f"https://multi-objective.github.io/{project}/python/"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+html_js_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"
+]
+
 extensions = [
     "sphinx_design",  # grid directive
-    "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",  # Core Sphinx library for auto html doc generation from docstrings
-    "sphinx.ext.autosummary",  # Create neat summary tables for modules/classes/methods etc
-    "sphinx.ext.intersphinx",  # Link to other project's documentation (see mapping below)
     "sphinx.ext.viewcode",  # Add a link to the Python source code for classes, functions etc.
-    "sphinx_copybutton",  # A small sphinx extension to add a "copy" button to code blocks.
     "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",  # Link to other project's documentation (see mapping below)
     "sphinx.ext.extlinks",
+    "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",
+    "sphinx.ext.autosummary",  # Create neat summary tables for modules/classes/methods etc
+    "sphinx_copybutton",  # A small sphinx extension to add a "copy" button to code blocks.
     "sphinx.ext.mathjax",
     "myst_nb",
     "sphinxcontrib.bibtex",
@@ -49,20 +55,11 @@ extensions = [
     "matplotlib.sphinxext.plot_directive",
 ]
 
-# try:
-#     import jupyterlite_sphinx  # noqa: F401
-
-#     extensions.append("jupyterlite_sphinx")
-#     with_jupyterlite = True
-# except ImportError:
-#     # In some cases we don't want to require jupyterlite_sphinx to be installed,
-#     # e.g. the doc-min-dependencies build
-#     warnings.warn(
-#         "jupyterlite_sphinx is not installed, you need to install it "
-#         "if you want JupyterLite links to appear in each example"
-#     )
-#     with_jupyterlite = False
-
+# https://sphinx-copybutton.readthedocs.io/en/latest/use.html
+copybutton_exclude = ".linenos, .gp, .go"
+copybutton_only_copy_prompt_lines = True
+copybutton_remove_prompts = True
+copybutton_copy_empty_lines = False
 
 # -----------------------------------------------------------------------------
 # Autosummary
@@ -82,7 +79,8 @@ napoleon_use_rtype = False
 napoleon_include_init_with_doc = True
 napoleon_use_param = True
 napoleon_type_aliases = {
-    "array_like": ":term:`array_like`",
+    "numpy.typing.ArrayLike": ":py:data:`~numpy.typing.ArrayLike`",
+    "ArrayLike": ":py:data:`~numpy.typing.ArrayLike`",
 }
 
 bibtex_bibfiles = ["REFERENCES.bib"]
@@ -92,9 +90,13 @@ bibtex_default_style = "unsrt"
 # If true, '()' will be appended to :func: etc. cross-reference text.
 add_function_parentheses = True
 
-autodoc_typehints = "description"
+autodoc_typehints = "none"  # Conflicts with sphinx_autodoc_typehints
+typehints_document_rtype = True
+typehints_use_rtype = False
+typehints_defaults = "comma"
+always_use_bars_union = True
 autodoc_type_aliases = {
-    "ArrayLike": "ArrayLike",
+    "ArrayLike": ":py:data:`~numpy.typing.ArrayLike`",
 }
 
 # Options for the `::plot` directive:
@@ -105,10 +107,6 @@ autodoc_type_aliases = {
 # plot_html_show_source_link = False
 
 html_theme = "pydata_sphinx_theme"
-
-# The reST default role (used for this markup: `text`) to use for all
-# documents.
-default_role = "literal"
 
 # FIXME: Implement a version switch like NumPy.
 # Set up the version switcher.  The versions.json is stored in the doc repo.
@@ -122,15 +120,22 @@ default_role = "literal"
 #     switcher_version = f"{version}"
 
 html_theme_options = {
+    "github_url": f"https://github.com/multi-objective/{project}",
     "collapse_navigation": True,
     "header_links_before_dropdown": 6,
     #    "navigation_depth": 2,
     "show_prev_next": True,
     "use_edit_page_button": True,
-    "github_url": f"https://github.com/multi-objective/{project}",
     # Add light/dark mode and documentation version switcher:
     # "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "icon_links": [
+        {
+            "name": "PyPI",
+            "url": f"https://pypi.org/project/{project}",
+            "icon": "fa-solid fa-box",
+        },
+    ],
     # "icon_links": [
     #     {
     #         # Label for this link
@@ -144,6 +149,7 @@ html_theme_options = {
     #     }
     # ],
 }
+html_show_sourcelink = False
 # Removes, from all docs, the copyright footer.
 html_show_copyright = False
 
@@ -152,7 +158,7 @@ html_context = {
     "github_user": "multi-objective",
     "github_repo": project,
     "github_version": "main",
-    "doc_path": "doc",
+    "doc_path": "python/doc/source",
 }
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -190,7 +196,6 @@ pygments_style = "sphinx"
 
 # Intersphinx mapping
 intersphinx_mapping = {
-    "geopandas": ("https://geopandas.org/en/stable/", None),
     "matplotlib": ("https://matplotlib.org/stable/", None),
     "moocore": ("https://multi-objective.github.io/moocore/python/", None),
     "neps": ("https://numpy.org/neps/", None),
@@ -198,11 +203,8 @@ intersphinx_mapping = {
     "nx-guides": ("https://networkx.org/nx-guides/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
     "plotly": ("https://plotly.com/python-api-reference/", None),
-    "pygraphviz": ("https://pygraphviz.github.io/documentation/stable/", None),
     "python": ("https://docs.python.org/3/", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
-    "sphinx-gallery": ("https://sphinx-gallery.github.io/stable/", None),
-    "sympy": ("https://docs.sympy.org/latest/", None),
 }
 
 # From https://github.com/scikit-learn/scikit-learn/blob/main/doc/conf.py
@@ -212,13 +214,13 @@ sphinx_gallery_conf = {
     # Directory where function/class granular galleries are stored.
     "backreferences_dir": "reference/generated/backreferences",
     # Modules for which function/class level galleries are created.
-    "doc_module": ("mooplot"),
+    "doc_module": (project),
     # Regexes to match objects to exclude from implicit backreferences.
     # The default option is an empty set, i.e. exclude nothing.
     # To exclude everything, use: '.*'
     "exclude_implicit_doc": {r"pyplot\.show"},
     "show_memory": False,
-    # "reference_url": {"mooplot": None},
+    "reference_url": {project: None},
     # "subsection_order": SubSectionTitleOrder("../examples"),
     # "within_subsection_order": SKExampleTitleSortKey,
     # "binder": {

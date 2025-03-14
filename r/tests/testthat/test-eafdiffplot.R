@@ -25,7 +25,7 @@ eaftest <- function(a, b, maximise = c(FALSE, FALSE)) {
 }
 
 eaftest("wrots_l10w100_dat", "wrots_l100w10_dat")
-eaftest("tpls", "rest")
+eaftest("tpls.xz", "rest.xz")
 eaftest("ALG_1_dat.xz", "ALG_2_dat.xz")
 eaftest("wrots_l10w100_dat", "wrots_l100w10_dat")
 eaftest("wrots_l10w100_dat", "wrots_l100w10_dat", maximise = c(TRUE, FALSE))

@@ -11,11 +11,8 @@ build:
 test:
 	tox
 
-pre-commit-update:
-	pre-commit autoupdate
-	pre-commit run -a
-
 pre-commit:
+	pre-commit autoupdate
 	pre-commit run -a
 
 docdeps:
@@ -27,9 +24,12 @@ show:
 doc:
 	$(MAKE) -C doc clean html
 
+fastdoc:
+	$(MAKE) -C doc clean html-noplot
+
 clean:
 	$(MAKE) -C doc clean
 	find . -name '__pycache__' | xargs $(RM) -r
-	$(RM) -r .pytest_cache/ .tox/ build/ src/*.egg-info/
+	$(RM) -rf .pytest_cache .tox .ruff_cache build src/*.egg-info/ doc/source/reference/generated doc/source/auto_examples
 	$(RM) -r doc/source/reference/generated/
 	$(RM) .coverage coverage.xml

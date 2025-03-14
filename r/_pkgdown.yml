@@ -24,6 +24,8 @@ navbar:
     cran:
       icon: fab fa-r-project
       href: https://cloud.r-project.org/package=mooplot
+      aria-label: View on CRAN
+
 reference:
 - title: Visualization of the Empirical Attainment Function
   contents: has_concept("eaf")
