@@ -1,12 +1,22 @@
+<img src="man/figures/ALG_1_dat-ALG_2_dat.png" width="455" height="242" alt= "EAF
+   differences between two bi-objective optimizers" title= "EAF differences
+   between two bi-objective optimizers" style= "border:0; align:right; float:right;"/>
+<img src="man/figures/eafdiff-color.png" width="480"
+   height="240" alt="EAF differences between two variants of W-RoTS (color)"
+   title="EAF differences between two variants of W-RoTS (color)"
+   style="border:0; align:right; float:right; clear:right"/>
+
 **mooplot**: Visualizations for Multi-Objective Optimization
 ============================================================
 
 <!-- badges: start -->
-[![Build status][r-build-badge]][r-build-link]
-[![Code Coverage][r-coverage-badge]][r-coverage-link]
 ![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
-[![CRAN Status](https://www.r-pkg.org/badges/version-last-release/mooplot)](https://cran.r-project.org/web/checks/check_results_mooplot.html)
+[![CRAN Status](https://badges.cranchecks.info/worst/moocore.svg)][r-mooplot-cran-results]
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
+[![R build status][r-build-badge]][r-build-link]
+[![Code Coverage][r-coverage-badge]][r-coverage-link]
+[![r-universe version](https://multi-objective.r-universe.dev/badges/mooplot)](https://multi-objective.r-universe.dev/mooplot)
+[![r-universe build status](https://github.com/r-universe/multi-objective/actions/workflows/build.yml/badge.svg)](https://github.com/r-universe/multi-objective/actions/workflows/build.yml)
 <!-- badges: end -->
 
 [ [**Homepage**][r-mooplot-homepage] ]  [ [**GitHub**][r-mooplot-github] ]
@@ -23,6 +33,8 @@
 
 Introduction
 ============
+
+This webpage documents the `mooplot` R package. There is also a [`mooplot` Python package](https://multi-objective.github.io/mooplot/python/)
 
 The **mooplot** package implements various visualizations that are useful in
 multi-objective optimization. These visualizations include:
@@ -86,12 +98,12 @@ GitHub (Development version)
 ----------------------------
 
 If you wish to try the development version, you can install it by executing the
-following commands within the R console:
+following command within the R console:
 
-```R
-    R> install.packages("devtools")
-    R> devtools::install_github("multi-objective/mooplot")
+```r
+install.packages('moooplot', repos = c('https://multi-objective.r-universe.dev', 'https://cloud.r-project.org'))
 ```
+
 
 Usage
 -----
@@ -106,12 +118,6 @@ Once the **mooplot** package is installed, the following R commands will give mo
     example(eafplot)
     example(eafdiffplot) # This one takes some time
 ```
-
-
-Python
-------
-
-There is also a Python `mooplot` package: https://multi-objective.github.io/mooplot/python
 
 
 License
@@ -146,6 +152,7 @@ this work so I can mention them to my funding agent and tenure committee.
 [r-build-link]: https://github.com/multi-objective/mooplot/actions/workflows/R.yaml
 [r-coverage-badge]: https://codecov.io/gh/multi-objective/mooplot/branch/main/graph/badge.svg?flag=R
 [r-coverage-link]: https://app.codecov.io/gh/multi-objective/mooplot/tree/main/r
+[r-mooplot-cran-results]: https://cran.r-project.org/web/checks/check_results_mooplot.html
 [r-mooplot-cran]: https://cran.r-project.org/package=mooplot
 [r-mooplot-github]: https://github.com/multi-objective/mooplot/tree/main/r#readme
 [r-mooplot-homepage]: https://multi-objective.github.io/mooplot/r/

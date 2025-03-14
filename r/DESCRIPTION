@@ -5,8 +5,9 @@ Version: 0.1.0
 Authors@R: c(person("Manuel", "López-Ibáñez", role = c("aut", "cre"),
                     email = "manuel.lopez-ibanez@manchester.ac.uk",
                     comment = c(ORCID = "0000-0001-9974-1295")),
-              person("Luís", "Paquete", role = "aut"),
-              person("Mickaël", "Binois", role = "ctb"))
+             person("Carlos", "Fonseca", role = "ctb"),
+             person("Luís", "Paquete", role = "ctb"),
+             person("Mickaël", "Binois", role = "ctb"))
 Description: Visualization of multi-dimensional data arising in multi-objective optimization, including plots of the empirical attainment function (EAF), M. López-Ibáñez, L. Paquete, and T. Stützle (2010) <doi:10.1007/978-3-642-02538-9_9>, and symmetric Vorob'ev expectation and deviation, M. Binois, D. Ginsbourger, O. Roustant (2015) <doi:10.1016/j.ejor.2014.07.032>, among others.
 Depends: R (>= 4.0)
 Imports:

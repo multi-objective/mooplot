@@ -21,7 +21,7 @@ endif
 ## Set version information:
 REVNUM = $(shell sh -c 'cat git_version 2> /dev/null')
 
-.PHONY: build test check clean install pdf submit cran winbuild help gendoc pkgdown
+.PHONY: build test check clean install pdf submit cran winbuild help gendoc pkgdown figures
 
 help :
 	@echo 'This makefile has the following targets                  '
@@ -48,6 +48,9 @@ NAMESPACE $(PACKAGEDIR)/man/$(PACKAGE)-package.Rd: $(PACKAGEDIR)/R/*.R
 pkgdown: gendoc
 	$(Reval) 'pkgdown::build_site(run_dont_run = TRUE)'
 
+figures:
+	Rscript tools/create-figures.R
+
 build:
 	@$(MAKE) gendoc
 	cd $(BINDIR) && R CMD build $(PACKAGEDIR)
@@ -56,9 +59,11 @@ closeversion:
 	git push origin :refs/tags/v$(PACKAGEVERSION) # Remove any existing tag
 	git tag -f -a v$(PACKAGEVERSION) -m "Version $(PACKAGEVERSION)"
 	git push --tags
+#	r --interactive -e 'usethis::use_version()'
 
 releasebuild: clean
 	@$(MAKE) gendoc
+	@$(MAKE) figures
 	cp .Rbuildignore .Rbuildignore.backup
 	cat .Rbuildignore.cran >> .Rbuildignore
 	cd $(BINDIR) &&	R CMD build $(PACKAGEDIR) && tar -atvf $(PACKAGE)_$(PACKAGEVERSION).tar.gz

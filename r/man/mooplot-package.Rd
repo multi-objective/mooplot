@@ -6,7 +6,7 @@
 \alias{mooplot-package}
 \title{mooplot: Graphical Visualizations for Multi-Objective Optimization}
 \description{
-Visualization of multi-dimensional data arising in multi-objective optimization, including plots of the empirical attainment function (EAF) and symmetric Vorob'ev expectation and deviation.
+Visualization of multi-dimensional data arising in multi-objective optimization, including plots of the empirical attainment function (EAF), M. López-Ibáñez, L. Paquete, and T. Stützle (2010) \doi{10.1007/978-3-642-02538-9_9}, and symmetric Vorob'ev expectation and deviation, M. Binois, D. Ginsbourger, O. Roustant (2015) \doi{10.1016/j.ejor.2014.07.032}, among others.
 }
 \seealso{
 Useful links:
@@ -19,6 +19,16 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Manuel López-Ibáñez \email{manuel.lopez-ibanez@manchester.ac.uk} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
+
+Authors:
+\itemize{
+  \item Luís Paquete
+}
+
+Other contributors:
+\itemize{
+  \item Mickaël Binois [contributor]
+}
 
 }
 \keyword{internal}
