@@ -48,11 +48,11 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'   to all objectives or a vector of logical values, with one value per
 #'   objective.
 #'
-#' @param xaxis.side On which side that xaxis is drawn. Valid values are
-#'   "below" and "above". See [axis()].
+#' @param xaxis.side On which side the x-axis is drawn. Valid values are
+#'   `"below"` and `"above"`. See [axis()].
 #'
-#' @param yaxis.side On which side that yaxis is drawn. Valid values are "left"
-#'   and "right". See [axis()].
+#' @param yaxis.side On which side the y-axis is drawn. Valid values are
+#'   `"left"` and `"right"`. See [axis()].
 #'
 #' @param axes A logical value indicating whether both axes should be drawn
 #'   on the plot.
@@ -61,7 +61,7 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'
 #' @param ... Other graphical parameters to [plot.default()].
 #'
-#' @return  the attainment surfaces computed (invisibly).
+#' @return  The attainment surfaces computed (invisibly).
 #'
 #' @seealso   [moocore::read_datasets()] [eafdiffplot()] [pdf_crop()]
 #'
@@ -108,6 +108,8 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'          legend.pos = "bottomright")
 #' }
 #' @references
+#' \insertRef{Grunert01}{moocore}
+#'
 #' \insertRef{LopPaqStu09emaa}{moocore}
 #' @concept eaf
 #' @export
@@ -142,8 +144,8 @@ eafplot.default <-
             ... )
 {
   type <- match.arg(type, c("point", "area"))
-  xaxis.side <- match.arg(xaxis.side, c("below", "above"))
-  yaxis.side <- match.arg(yaxis.side, c("left", "right"))
+  xaxis_side <- match.arg(xaxis.side, c("below", "above"))
+  yaxis_side <- match.arg(yaxis.side, c("left", "right"))
   maximise <- as.logical(maximise)
   if (missing(sets)) {
     sets <- x[, ncol(x)]
@@ -211,8 +213,8 @@ eafplot.default <-
        xlim = xlim, ylim = ylim, log = log, axes = FALSE, las = las,
        panel.first = ({
          if (axes) {
-           plot_eaf_axis(xaxis.side, xlab, las = las, sci.notation = sci.notation)
-           plot_eaf_axis(yaxis.side, ylab, las = las, sci.notation = sci.notation,
+           plot_eaf_axis(xaxis_side, xlab, las = las, sci.notation = sci.notation)
+           plot_eaf_axis(yaxis_side, ylab, las = las, sci.notation = sci.notation,
                          # FIXME: eafplot uses 2.2, why the difference?
                          line = 2.75)
          }
@@ -342,7 +344,8 @@ axis_side <- function(side)
     below = 1L,
     left  = 2L,
     above = 3L,
-    right = 4L)
+    right = 4L,
+    stop("Unknown side '", side, "'"))
 }
 
 plot_eaf_axis <- function(side, lab, las,
@@ -366,8 +369,8 @@ plot_eaf_axis <- function(side, lab, las,
   ##   ## Now do the minor ticks, at 1/10 of each power of 10 interval
   ##   ##at.minor <- 2:9 * rep(c(10^c(1:max.pow)) / 10, each = length(2:9))
   ##   at.minor <- 1:10 * rep(c(10^c(1:max.pow)) / 10, each = length(1:10))
-  ##   axis (yaxis.side, at = at.minor, tcl = -0.25, labels = FALSE, las=las)
-  ##   axis (yaxis.side, at = at.minor, labels = FALSE, tck=1,
+  ##   axis (yaxis_side, at = at.minor, tcl = -0.25, labels = FALSE, las=las)
+  ##   axis (yaxis_side, at = at.minor, labels = FALSE, tck=1,
   ##         col='lightgray', lty='dotted', lwd=par("lwd"))
   ## }
 

@@ -35,10 +35,10 @@
 #'   (`"points"`) or whether to color the areas that have at least a
 #'   certain value (`"area"`).
 #'
-#'@param legend.pos The position of the legend. See [legend()].  A value of
+#' @param legend.pos The position of the legend. See [legend()].  A value of
 #'   `"none"` hides the legend.
 #'
-#'@param title_left,title_right Title for left and right panels, respectively.
+#' @param title_left,title_right Title for left and right panels, respectively.
 #'
 #' @param xlim,ylim,cex,cex.lab,cex.axis Graphical parameters, see
 #'   [plot.default()].
@@ -129,6 +129,10 @@
 #' #             file = "wrots_l100w10_dat-wrots_l10w100_dat-diff.txt",
 #' #             quote = FALSE, row.names = FALSE, col.names = FALSE)
 #'
+#' @references
+#' \insertRef{Grunert01}{moocore}
+#'
+#' \insertRef{LopPaqStu09emaa}{moocore}
 #' @concept eaf
 #' @export
 eafdiffplot <-
@@ -325,8 +329,8 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
 {
   type <- match.arg (type, c("point", "area"))
   side <- match.arg (side, c("left", "right"))
-  xaxis.side <- if (side == "left") "below" else "above"
-  yaxis.side <- if (side == "left") "left" else "right"
+  xaxis_side <- if (side == "left") "below" else "above"
+  yaxis_side <- if (side == "left") "left" else "right"
 
   # We do not paint with the same color as the background since this
   # will override the grid lines.
@@ -349,8 +353,8 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
   plot(xlim, ylim, type = "n", xlab = "", ylab = "",
        xlim = xlim, ylim = ylim, log = log, axes = FALSE, las = las,
        panel.first = ({
-         plot_eaf_axis (xaxis.side, xlab, las = las, sci.notation = sci.notation)
-         plot_eaf_axis (yaxis.side, ylab, las = las, sci.notation = sci.notation,
+         plot_eaf_axis (xaxis_side, xlab, las = las, sci.notation = sci.notation)
+         plot_eaf_axis (yaxis_side, ylab, las = las, sci.notation = sci.notation,
                         line = 2.2)
 
          if (nrow(eafdiff)) {

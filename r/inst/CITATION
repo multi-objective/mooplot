@@ -1,6 +1,6 @@
 bibentry(
   bibtype = "incollection",
-  header = "To cite package 'eaf' in publications, please use",
+  header = "To cite package 'mooplot' in publications, please use",
   title = "Exploratory Analysis of Stochastic Local Search Algorithms in Biobjective Optimization",
   author = c(person("Manuel", "López-Ibáñez"),
              person("Luis", "Paquete"),

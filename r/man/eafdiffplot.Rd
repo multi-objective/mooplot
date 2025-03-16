@@ -161,6 +161,11 @@ DIFF <- eafdiffplot(A1, A2, col = c("white", "blue", "red"), intervals = 5,
 #             quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 }
+\references{
+\insertRef{Grunert01}{moocore}
+
+\insertRef{LopPaqStu09emaa}{moocore}
+}
 \seealso{
 \code{\link[=read_datasets]{read_datasets()}} \code{\link[=eafplot]{eafplot()}} \code{\link[=pdf_crop]{pdf_crop()}}
 }
