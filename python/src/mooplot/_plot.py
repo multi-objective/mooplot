@@ -475,16 +475,16 @@ def _combine_2d_figures(
     return combined_figure
 
 
-def apply_legend_preset(fig, preset="centre_top_right"):
+def apply_legend_preset(fig, preset: str = "centre_top_right"):
     """Apply a preset to the legend, changing it's position, text or colour.
 
     For more advanced legend behaviour.
 
     Parameters
     ----------
-    fig : plotly GO figure
+    fig :
         Figure to apply preset to
-    preset : string or list
+    preset :
         If `preset` is a string, this will change the position of the legend. It must be one of the following: "outside_top_right", "outside_top_left", "top_right", "bottom_right", "top_left", \
         "bottom_left","centre_top_right", "centre_top_left","centre_bottom_right", "centre_bottom_left".
 
@@ -550,60 +550,56 @@ def apply_legend_preset(fig, preset="centre_top_right"):
 
 
 def plot_eaf(
-    dataset,
-    type="fill",
-    percentiles=[],
-    colorway=[],
-    fill_border_colours=[],
-    trace_names=[],
-    line_dashes="solid",
-    line_width=[],
-    legend_preset="centre_top_right",
-    template="simple_white",
+    dataset: ArrayLike,
+    type: str = "fill",
+    percentiles: list = [],
+    colorway: list = [],
+    fill_border_colours: list = [],
+    trace_names: list = [],
+    line_dashes: str = "solid",
+    line_width: list = [],
+    legend_preset: str = "centre_top_right",
+    template: str = "simple_white",
     **layout_kwargs,
-):
+) -> go.Figure:
     """Plot attainment surfaces in 2D.
 
     Parameters
     ----------
-    dataset : numpy.ndarray
+    dataset :
         The `dataset` argument must be Numpy array of EAF values (2 objectives and percentile marker), or it can be a dictionary of such values. \
         The dictionary must have this format: {'alg_name_1' : dataset1, 'alg_name_2' : dataset2}.
-    percentiles : list or 2d list
+    percentiles :
         A list of percentiles to plot. These must exist in the dataset argument. If multiple datasets are provided, this can also be a list of lists - \
         selecting percentile groups for each algorithm (dictionary interface)
-    type: string or list of strings
+    type :
         The type argument can be "fill", "points", "lines" to define the plot type (See :func:`plot_pf` for more details). If multiple datasets are used (dictionary interface) \
         then this can be a list of types (equal to the number of different datasets provided).
-    colorway : list
+    colorway :
         Colorway is a single colour, or list of colours, for the percentile groups. The colours can be CSS colours such as 'black', 8-digit hexedecimal RGBA integers \
         or strings of RGBA values such as `rgba(1,1,0,0.5)`. Default is "black". You can use the :func:`colour.discrete_colour_gradient` to create a gradient between two colours \
         In case of multiple datasets ("dictionary interface"), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface
-    fill_border_colours : list or 2d list
+    fill_border_colours :
         The same as colorway but defining the boundaries between percentile groups. The default value is to follow colorway. You can set it to `rgb(0,0,0,0)` to make the boundaries invisible
-    trace_names: list of strings
+    trace_names :
         Overide the default trace names by providing a list of strings
-    line_dashes: string or list of strings
+    line_dashes :
         Select whether lines are dashed. Choices are: 'solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'. A single string sets the type for all lines. A list sets them individually. \
         In case of multiple datasets ("dictionary interface"), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface
-    line_width: integer, list of integer, 2d list of integers
+    line_width :
         Select the line width (default = 2) of the traces.   Similar interface to line_dashes, colorway etc -> Enter a single value to set all traces. For single datset, a list sets size for all sets \
         For a dictionary of datsets: a list sets the same value for all traces assosciated with that dataset. A list of list individually sets width for every trace in every dataset
-    legend_preset: string or  list
+    legend_preset :
         See "preset" argument for :func:`apply_legend_preset`
-    template: String or Plotly template
-        Choose layout template for the plot - see `Plotly template tutorial <https://plotly.com/python/templates/>`_
-
-        Default is "simple_white"
-    layout_kwargs : keyword arguments
+    template :
+        Choose layout template for the plot - see `Plotly template tutorial <https://plotly.com/python/templates/>`_ .  Default is "simple_white"
+    layout_kwargs :
         Update features of the graph such as title axis titles, colours etc. These additional parameters are passed to \
         plotly update_layout, See here for all the layout features that can be accessed: `Layout Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/>`_
 
     Returns
     -------
-    Plotly GO figure
         The function returns a `Plotly GO figure` object `Figure Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/>`_
-
         This means that the user can customise any part of the graph after it is created
 
     Notes

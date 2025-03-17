@@ -19,6 +19,7 @@ sphinx >= 6.0
 pydata_sphinx_theme
 jupyter
 ipykernel
+intersphinx-registry
 kaleido
 myst-nb
 sphinx-gallery

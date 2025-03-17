@@ -1,0 +1,10 @@
+[
+    {
+        "version": "stable",
+        "url": "https://multi-objective-gallery.github.io/mooplot/python/"
+    },
+    {
+        "version": "dev",
+        "url": "https://multi-objective-gallery.github.io/mooplot/python/"
+    }
+]
