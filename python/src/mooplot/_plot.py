@@ -576,8 +576,8 @@ def plot_eaf(
         The type argument can be "fill", "points", "lines" to define the plot type (See :func:`plot_pf` for more details). If multiple datasets are used (dictionary interface) \
         then this can be a list of types (equal to the number of different datasets provided).
     colorway :
-        Colorway is a single colour, or list of colours, for the percentile groups. The colours can be CSS colours such as 'black', 8-digit hexedecimal RGBA integers \
-        or strings of RGBA values such as `rgba(1,1,0,0.5)`. Default is "black". You can use the :func:`colour.discrete_colour_gradient` to create a gradient between two colours \
+        Colorway is a single colour, or list of colours, for the percentile groups. The colours can be CSS colours such as 'black', 8-digit hexadecimal RGBA integers \
+        or strings of RGBA values such as ``rgba(1,1,0,0.5)``. Default is "black". You can use functions ``colour.discrete_colour_gradient`` to create a gradient between two colours \
         In case of multiple datasets ("dictionary interface"), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface
     fill_border_colours :
         The same as colorway but defining the boundaries between percentile groups. The default value is to follow colorway. You can set it to `rgb(0,0,0,0)` to make the boundaries invisible
@@ -590,7 +590,7 @@ def plot_eaf(
         Select the line width (default = 2) of the traces.   Similar interface to line_dashes, colorway etc -> Enter a single value to set all traces. For single datset, a list sets size for all sets \
         For a dictionary of datsets: a list sets the same value for all traces assosciated with that dataset. A list of list individually sets width for every trace in every dataset
     legend_preset :
-        See "preset" argument for :func:`apply_legend_preset`
+        See "preset" argument for function ``apply_legend_preset()``
     template :
         Choose layout template for the plot - see `Plotly template tutorial <https://plotly.com/python/templates/>`_ .  Default is "simple_white"
     layout_kwargs :
