@@ -13,6 +13,7 @@ EAFs
 Flowshop
 GD
 GPs
+Ginsbourger
 Hausdorff
 Hypervolume
 IGD
@@ -25,10 +26,12 @@ Makespan
 Metaheuristics
 Mickael
 Mickaël
+NumPy
 ORCID
 Paquete
 Preuss
 Quemy
+Roustant
 Roxygen
 SPEA
 Stützle
@@ -36,6 +39,8 @@ TPLS
 TR
 Tabu
 TabuCol
+TinyTeX
+Vanzyl
 Vanzyl's
 Vorob'ev
 behavior
@@ -49,6 +54,6 @@ colors
 doi
 hypervolume
 libre
+matrixStats
 metaheuristic
 nondominated
-TinyTeX
