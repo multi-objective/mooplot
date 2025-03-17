@@ -1,3 +1,40 @@
+def _parse_plot_type(plot_type: str, dimension: int):
+    if not isinstance(plot_type, str):
+        raise TypeError("plot 'type' must be a string")
+    plot_type = plot_type.replace(" ", "").lower().split(",")
+    if len(plot_type) > 2:
+        raise ValueError(f"Too many commas in plot 'type={plot_type}'")
+    allowed_types = ["lines", "points", "surface", "cube", "fill"]
+    selected_types = [
+        t for t in allowed_types if any(t.startswith(x) for x in plot_type)
+    ]
+
+    if dimension == 2 and (
+        "surface" in selected_types or "cube" in selected_types
+    ):
+        raise ValueError(
+            "Plot types 'surface' and 'cube' are only valid for plotting 3 objectives"
+        )
+
+    if "points" in selected_types:
+        if "lines" in selected_types:
+            return "lines+markers"
+        elif "surface" in selected_types:
+            return "surface+markers"
+        else:
+            return "markers"
+    elif "lines" in selected_types:
+        return "lines"
+    elif "surface" in selected_types:
+        return "surface"
+    elif "cube" in selected_types:
+        return "cube"
+    elif "fill" in selected_types:
+        return "fill"
+    else:
+        raise ValueError(f"Plot 'type={plot_type} not recognised")
+
+
 # FIXME Seems like these similar parsing functions can be combined
 def parse_line_dash(dash, size, default):
     dash_parsed = dash if dash else default

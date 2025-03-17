@@ -33,7 +33,7 @@ classifiers = [
 ]
 dependencies = [
   "matplotlib>=3.6",
-  "moocore>=0.0.9999",
+  "moocore>=0.1.4",
   "numpy>=1.23",
   "pandas>=2.0.2",
   "plotly>=5.15",

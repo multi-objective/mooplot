@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import numpy as np
 from matplotlib import colors
 import re
@@ -5,28 +7,10 @@ import re
 # FIXME add tests for this module
 
 
-class colour_gradient:
-    gradient = []
-    _col_a = ""
-    _col_b = ""
+def RGBA_arr_to_string(rgba_arr) -> list:
+    """RGBA array to RGBA string.
 
-    def __init__(self, colour_a, colour_b):
-        self._col_a = colour_a
-        self._col_b = colour_b
-
-    def create_gradient(self, steps):
-        self.gradient = discrete_colour_gradient(
-            self._col_a, self._col_b, steps
-        )
-        if not isinstance(self.gradient, list):
-            self.gradient = [self.gradient]
-        return self.gradient
-
-
-def RGBA_arr_to_string(rgba_arr):
-    """RGBA array to RGBA string
-
-    Convert a matrix of RGBA values to list of rgba strings. If the input array has only one row, then return single string
+    Convert a matrix of RGBA values to list of rgba strings. If the input array has only one row, then return single string.
 
     Parameters
     ----------
@@ -36,14 +20,14 @@ def RGBA_arr_to_string(rgba_arr):
 
     Returns
     -------
-    list
-        A list of `rgba(w,x,y,z)` strings compatible with a plotly colorscale
+        A list of `rgba(w,x,y,z)` strings compatible with a plotly colorscale.
 
     """
     if len(rgba_arr.shape) != 1:
         rgba_strings = []
         rgba_arr = np.asarray(rgba_arr)
         for i in range(rgba_arr.shape[0]):
+            # FIXME: Why not do the round to rgba_arr?
             rgba = np.round(rgba_arr[i], 4)
             rgba_strings.append(
                 f"rgba({rgba[0]},{rgba[1]},{rgba[2]},{rgba[3]})"
@@ -53,19 +37,20 @@ def RGBA_arr_to_string(rgba_arr):
         return f"rgba({rgba_arr[0]},{rgba_arr[1]},{rgba_arr[2]},{rgba_arr[3]})"
 
 
-def parse_colour_to_nparray(colour, strings=False):
-    """Parse a single colour argument to a (1,4) numpy array representing its RGBA values
-    This can be used to manipulate the values before converting it back to RGBA string using :func:`RGBA_arr_to_string`
+def parse_colour_to_nparray(colour, strings: bool = False):
+    """Parse a single colour argument to a (1,4) numpy array representing its RGBA values.
+
+    This can be used to manipulate the values before converting it back to RGBA string using :func:`RGBA_arr_to_string`.
 
     Parameters
     ----------
-    colour : Named CSS colour, RGBA string or 8 character hex RGBA integer
+    colour : Named CSS colour, RGBA string or 8 character hex RGBA integer.
         A colour argument can be one of the following:
-            Named CSS colour string: "red" or "hotpink"
-            RGBA string: "rgba(0.2, 0.5, 0.1, 0.5)"
-            8 character hex RGBA integer: 0x1234abcde
-    strings : boolean
-        If strings=True then the argument will return a list of 'rgba(w,x,y,z)' strings instead of a numpy array
+            - Named CSS colour string: "red" or "hotpink"
+            - RGBA string: "rgba(0.2, 0.5, 0.1, 0.5)"
+            - 8 character hex RGBA integer: 0x1234abcde
+    strings :
+        If ``strings=True`` then the argument will return a list of ``'rgba(w,x,y,z)'`` strings instead of a numpy array
 
     Returns
     -------
@@ -86,20 +71,17 @@ def parse_colour_to_nparray(colour, strings=False):
 
         if colors.is_color_like(colour):
             # Allow CSS colour strings such as "blue" or "hotpink"
-            rgba_colour = np.array(
-                list(colors.to_rgba(colour)), dtype=np.float64
-            )
+            rgba_colour = np.array(list(colors.to_rgba(colour)), dtype=float)
         elif rgba_matches:
             # Parse strings such as rgba(0, 1, 2,3 ), removing the whitespace
             rgba_colour = np.array(
-                [x.strip() for x in list(rgba_matches[0])], dtype=np.float64
+                [x.strip() for x in list(rgba_matches[0])], dtype=float
             )
         elif rgb_matches:
             # Convert RGB match to RGBA by appending alpha=1
-            rgb_matches = list(rgb_matches[0])
-            rgb_matches.append("1")
+            rgb_matches = list(rgb_matches[0]) + ["1"]
             rgba_colour = np.array(
-                [x.strip() for x in rgb_matches], dtype=np.float64
+                [x.strip() for x in rgb_matches], dtype=float
             )
         else:
             raise ValueError(
@@ -125,109 +107,113 @@ def parse_colour_to_nparray(colour, strings=False):
 
 
 def discrete_opacity_gradient(
-    colour, num_steps, start_opacity=0.0, end_opacity=1.0
-):
+    colour: str,
+    steps: int,
+    start_opacity: float = 0.0,
+    end_opacity: float = 1.0,
+) -> list:
     """Create opacity gradient colour list for use in plotly colorscales.
 
-        Linearly interpolates between starting and ending opacity.
+    Linearly interpolates between starting and ending opacity.
 
     Parameters
     ----------
-    color : string
-        The name of a standard CSS colour
-    steps : integer
-        Number of steps between the start and end opacity. Also the size of the list returned
-    start_opacity, end_opacity : floats
-        Choose what the starting and ending values of opacity are for the list of colours (between 0 and 1)
+    colour :
+        The name of a standard CSS colour.
+    steps :
+        Number of steps between the start and end opacity. Also the size of the list returned.
+    start_opacity, end_opacity :
+        Choose what the starting and ending values of opacity are for the list of colours (between 0 and 1).
 
     Returns
     -------
-    list
         A list of RGBA string values compatible with plotly colorscales, interpolating opacity between two values
-    # TODO FIXME add examples of this in the styling tutorial
 
     """
     rgba_color = parse_colour_to_nparray(colour)
-
     # Create a 2d array of colours, where the alpha value is linearly interpolated from the start to end value
-    gradient = np.tile(rgba_color, ((num_steps, 1)))
-    gradient[:, -1] = np.linspace(start_opacity, end_opacity, num=num_steps)
-
+    gradient = np.tile(rgba_color, ((steps, 1)))
+    gradient[:, -1] = np.linspace(start_opacity, end_opacity, num=steps)
     gradient_strings = RGBA_arr_to_string(gradient)
     return gradient_strings
 
 
-def discrete_colour_gradient(colour_a, colour_b, num_steps):
-    """Create colour gradient list for use in plotly colorscales
-    Linearly interpolates between two colours using a define amount of steps
+def discrete_colour_gradient(colour_a: str, colour_b: str, steps: int) -> list:
+    """Create colour gradient list for use in plotly colorscales.
+
+    Linearly interpolates between two colours using a define amount of steps.
 
     Parameters
     ----------
-    color_a, color_b : string
+    colour_a, colour_b :
         The names of standard CSS colours to create a gradient
-    steps : integer
+    steps :
         Number of steps between between the starting and ending colour. Also the size of the list returned
 
     Returns
     -------
-    list
         A list of RGBA string values compatible with plotly colorscales
 
     """
     a_rgba = parse_colour_to_nparray(colour_a)
+    if steps <= 1:
+        # If no gradient, return first colour
+        return RGBA_arr_to_string(a_rgba)
+
     b_rgba = parse_colour_to_nparray(colour_b)
-    colour_gradient = np.ndarray((num_steps, 4))
-    if num_steps <= 1:
-        return RGBA_arr_to_string(
-            a_rgba
-        )  # If no gradient, return first colour
-    for step in range(num_steps):
+    colour_gradient = np.ndarray((steps, 4))
+
+    for step in range(steps):
         difference = b_rgba - a_rgba
-        colour_gradient[step, :] = a_rgba + step * (
-            difference / (num_steps - 1)
-        )
-    colour_gradient_strings = RGBA_arr_to_string(colour_gradient)
-    return colour_gradient_strings
+        colour_gradient[step, :] = a_rgba + step * (difference / (steps - 1))
+    return RGBA_arr_to_string(colour_gradient)
 
 
-def get_default_fill_colorway(num_steps):
-    return discrete_opacity_gradient("black", num_steps, start_opacity=0.6)
+def get_default_fill_colorway(steps):
+    return discrete_opacity_gradient("black", steps=steps, start_opacity=0.6)
 
 
-def get_2d_colorway_from_colour(num_steps, colour):
+def get_2d_colorway_from_colour(steps, colour):
     # Input single colour, return 2d list of colours populated with same colour
     colour = parse_colour_to_nparray(colour, strings=True)
-    colour_list = []
-    for steps in num_steps:
-        colour_list.append([colour] * steps)
+    colour_list = [[colour] * step for step in steps]
     return colour_list
 
 
+class ColourGradient:
+    def __init__(self, colour_a, colour_b):
+        self._col_a = colour_a
+        self._col_b = colour_b
+
+    def create_gradient(self, steps):
+        self.gradient = discrete_colour_gradient(
+            self._col_a, self._col_b, steps
+        )
+        if not isinstance(self.gradient, list):
+            self.gradient = [self.gradient]
+        return self.gradient
+
+
 # Parse different types of colorway arguments into an acceptable format, or choose default
-def parse_colorway(
-    colorway,
-    default,
-    length,
-):
-    parsed_colorway = colorway if colorway else default
-    if isinstance(parsed_colorway, str) or isinstance(parsed_colorway, int):
-        parsed_colorway = parse_colour_to_nparray(colorway, strings=True)
-        parsed_colorway = [parsed_colorway] * length
-    elif isinstance(parsed_colorway, list):
-        parsed_colorway = [
-            parse_colour_to_nparray(col, strings=True)
-            for col in parsed_colorway
+def parse_colorway(colorway, default, length):
+    colorway = colorway if colorway else default
+    if isinstance(colorway, str) or isinstance(colorway, int):
+        colorway = parse_colour_to_nparray(colorway, strings=True)
+        colorway = [colorway] * length
+    elif isinstance(colorway, list):
+        colorway = [
+            parse_colour_to_nparray(col, strings=True) for col in colorway
         ]
         # If list smaller than expected, repeat it until it reaches length
-        parsed_colorway = (
-            parsed_colorway * (length // len(parsed_colorway))
-            + parsed_colorway[: length % len(parsed_colorway)]
+        colorway = (
+            colorway * (length // len(colorway))
+            + colorway[: length % len(colorway)]
         )
     else:
         raise TypeError(
             "Colorway argument needs to be string, int or list of (string or int)"
         )
-    return parsed_colorway
+    return colorway
 
 
 # Parse "list of list" colourway arguments
@@ -259,52 +245,52 @@ def parse_2d_colorway(colorway, default, size_list):
 def get_example_gradients(num_steps, choice="scientific"):
     example_gradients = {
         "arctic_exploration": {
-            "frosty_blue": colour_gradient(0x93C5FDFF, 0x3693E1FF),
-            "icy_cyan": colour_gradient(0xA8E6CFFF, 0x5EB5A6FF),
-            "glacier_teal": colour_gradient(0x6CC3D5FF, 0x408C9EFF),
-            "snowy_white": colour_gradient(0xF0F8FFFF, 0xC8E1EAFF),
-            "arctic_blue": colour_gradient(0x65C1ECFF, 0x3088ABFF),
-            "polar_silver": colour_gradient(0xCFD8DCFF, 0x89979FFF),
-            "frozen_gray": colour_gradient(0xABB9C2FF, 0x6C7D86FF),
-            "cold_ice": colour_gradient(0xB5D9EBFF, 0x7FA8D4FF),
-            "crisp_blue": colour_gradient(0x6DAAD5FF, 0x3773A0FF),
-            "arctic_sky": colour_gradient(0x9EC9E8FF, 0x4B80A7FF),
+            "frosty_blue": ColourGradient(0x93C5FDFF, 0x3693E1FF),
+            "icy_cyan": ColourGradient(0xA8E6CFFF, 0x5EB5A6FF),
+            "glacier_teal": ColourGradient(0x6CC3D5FF, 0x408C9EFF),
+            "snowy_white": ColourGradient(0xF0F8FFFF, 0xC8E1EAFF),
+            "arctic_blue": ColourGradient(0x65C1ECFF, 0x3088ABFF),
+            "polar_silver": ColourGradient(0xCFD8DCFF, 0x89979FFF),
+            "frozen_gray": ColourGradient(0xABB9C2FF, 0x6C7D86FF),
+            "cold_ice": ColourGradient(0xB5D9EBFF, 0x7FA8D4FF),
+            "crisp_blue": ColourGradient(0x6DAAD5FF, 0x3773A0FF),
+            "arctic_sky": ColourGradient(0x9EC9E8FF, 0x4B80A7FF),
         },
         "scientific": {
-            "gray_to_black": colour_gradient(0x808080FF, 0x000000FF),
-            "blue_to_gray": colour_gradient(0x1F77B4FF, 0x808080FF),
-            "green_to_gray": colour_gradient(0x2CA02CFF, 0x808080FF),
-            "orange_to_gray": colour_gradient(0xFF7F0EFF, 0x808080FF),
-            "purple_to_gray": colour_gradient(0x9467BDFF, 0x808080FF),
-            "teal_to_gray": colour_gradient(0x17BECFFF, 0x808080FF),
-            "red_to_gray": colour_gradient(0xD62728FF, 0x808080FF),
-            "pink_to_gray": colour_gradient(0xE377C2FF, 0x808080FF),
-            "brown_to_gray": colour_gradient(0x8C564BFF, 0x808080FF),
-            "blue_to_cyan": colour_gradient(0x1F77B4FF, 0x17BECFFF),
+            "gray_to_black": ColourGradient(0x808080FF, 0x000000FF),
+            "blue_to_gray": ColourGradient(0x1F77B4FF, 0x808080FF),
+            "green_to_gray": ColourGradient(0x2CA02CFF, 0x808080FF),
+            "orange_to_gray": ColourGradient(0xFF7F0EFF, 0x808080FF),
+            "purple_to_gray": ColourGradient(0x9467BDFF, 0x808080FF),
+            "teal_to_gray": ColourGradient(0x17BECFFF, 0x808080FF),
+            "red_to_gray": ColourGradient(0xD62728FF, 0x808080FF),
+            "pink_to_gray": ColourGradient(0xE377C2FF, 0x808080FF),
+            "brown_to_gray": ColourGradient(0x8C564BFF, 0x808080FF),
+            "blue_to_cyan": ColourGradient(0x1F77B4FF, 0x17BECFFF),
         },
         "contrast": {
-            "frosty_blue": colour_gradient(0x93C5FDFF, 0x3693E1FF),
-            "vibrant_green": colour_gradient(0x00FF00FF, 0x00CC00FF),
-            "intense_purple": colour_gradient(0x9B59B6FF, 0x5D328BFF),
-            "brilliant_orange": colour_gradient(0xFFA500FF, 0xFF8000FF),
-            "deep_cyan": colour_gradient(0x17BECFFF, 0x008B8BFF),
-            "hot_pink": colour_gradient(0xFF69B4FF, 0xFF1493FF),
-            "bright_turquoise": colour_gradient(0x40E0D0FF, 0x00CED1FF),
-            "fiery_red": colour_gradient(0xFF0000FF, 0xCC0000FF),
-            "luminous_lime": colour_gradient(0x00FF00FF, 0x32CD32FF),
-            "electric_yellow": colour_gradient(0xFFFF00FF, 0xFFCC00FF),
+            "frosty_blue": ColourGradient(0x93C5FDFF, 0x3693E1FF),
+            "vibrant_green": ColourGradient(0x00FF00FF, 0x00CC00FF),
+            "intense_purple": ColourGradient(0x9B59B6FF, 0x5D328BFF),
+            "brilliant_orange": ColourGradient(0xFFA500FF, 0xFF8000FF),
+            "deep_cyan": ColourGradient(0x17BECFFF, 0x008B8BFF),
+            "hot_pink": ColourGradient(0xFF69B4FF, 0xFF1493FF),
+            "bright_turquoise": ColourGradient(0x40E0D0FF, 0x00CED1FF),
+            "fiery_red": ColourGradient(0xFF0000FF, 0xCC0000FF),
+            "luminous_lime": ColourGradient(0x00FF00FF, 0x32CD32FF),
+            "electric_yellow": ColourGradient(0xFFFF00FF, 0xFFCC00FF),
         },
         "warm": {
-            "red_to_yellow": colour_gradient(0xFF0000FF, 0xFFFF00FF),
-            "orange_to_yellow": colour_gradient(0xFFA500FF, 0xFFFF00FF),
-            "orange_to_red": colour_gradient(0xFFA500FF, 0xFF0000FF),
-            "brown_to_orange": colour_gradient(0x8B4513FF, 0xFFA500FF),
-            "red_to_brown": colour_gradient(0xFF0000FF, 0x8B4513FF),
-            "yellow_to_brown": colour_gradient(0xFFFF00FF, 0x8B4513FF),
-            "red_to_pink": colour_gradient(0xFF0000FF, 0xFF69B4FF),
-            "orange_to_pink": colour_gradient(0xFFA500FF, 0xFF69B4FF),
-            "yellow_to_red": colour_gradient(0xFFFF00FF, 0xFF0000FF),
-            "yellow_to_orange": colour_gradient(0xFFFF00FF, 0xFFA500FF),
+            "red_to_yellow": ColourGradient(0xFF0000FF, 0xFFFF00FF),
+            "orange_to_yellow": ColourGradient(0xFFA500FF, 0xFFFF00FF),
+            "orange_to_red": ColourGradient(0xFFA500FF, 0xFF0000FF),
+            "brown_to_orange": ColourGradient(0x8B4513FF, 0xFFA500FF),
+            "red_to_brown": ColourGradient(0xFF0000FF, 0x8B4513FF),
+            "yellow_to_brown": ColourGradient(0xFFFF00FF, 0x8B4513FF),
+            "red_to_pink": ColourGradient(0xFF0000FF, 0xFF69B4FF),
+            "orange_to_pink": ColourGradient(0xFFA500FF, 0xFF69B4FF),
+            "yellow_to_red": ColourGradient(0xFFFF00FF, 0xFF0000FF),
+            "yellow_to_orange": ColourGradient(0xFFFF00FF, 0xFFA500FF),
         },
     }
 

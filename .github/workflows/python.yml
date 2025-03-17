@@ -136,6 +136,10 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install --upgrade build
 
+      - name: Install optipng
+        run: |
+          sudo apt -y install optipng
+
       - name: Download moocore wheels
         run: git clone --branch=wheels https://github.com/multi-objective/moocore.git wheelhouse
         working-directory: python

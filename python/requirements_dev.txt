@@ -1,5 +1,10 @@
 setuptools>=70.1,<74 # Sync with .pre-commit-config.yaml
-numpy >= 1.23.0
+matplotlib>=3.6
+moocore>=0.1.4
+numpy>=1.23
+pandas>=2.0.2
+plotly>=5.15
+
 
 pre-commit >= 3.3.2
 ruff >= 0.1.4
@@ -17,6 +22,7 @@ ipykernel
 kaleido
 myst-nb
 sphinx-gallery
+memory_profiler
 sphinxcontrib-napoleon
 sphinxcontrib-bibtex
 sphinx-autodoc-typehints

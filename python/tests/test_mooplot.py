@@ -6,15 +6,6 @@ import moocore
 import mooplot
 
 
-# FIXME: For some reason this stopped working!!!
-# def test_docstrings():
-#     import doctest
-#     doctest.FLOAT_EPSILON = 1e-9
-#     # Run doctests for "moocore" module and fail if one of the docstring tests is incorrect.
-#     # Pass in the "moocore" module so that the docstrings don't have to import every time
-#     doctest.testmod(mooplot, raise_on_error=True, extraglobs={"mooplot": mooplot})
-
-
 def test_plt_dta_types(test_datapath):
     """Check that the plot_pf() functions has the right input handling."""
     with pytest.raises(Exception) as expt:

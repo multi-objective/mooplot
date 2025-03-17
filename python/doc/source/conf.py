@@ -8,17 +8,16 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import os
+import sys
 from datetime import date
 import mooplot
 
 
-# Set plotly renderer to capture _repr_html_ for sphinx-gallery
-try:
-    import plotly.io
-except ImportError:
-    pass
-else:
-    plotly.io.renderers.default = "sphinx_gallery"
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "sphinxext"))
 
 project = "mooplot"
 _full_version = mooplot.__version__
@@ -49,7 +48,6 @@ extensions = [
     "sphinx.ext.autosummary",  # Create neat summary tables for modules/classes/methods etc
     "sphinx_copybutton",  # A small sphinx extension to add a "copy" button to code blocks.
     "sphinx.ext.mathjax",
-    "myst_nb",
     "sphinxcontrib.bibtex",
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
@@ -123,6 +121,7 @@ html_theme_options = {
     "github_url": f"https://github.com/multi-objective/{project}",
     "collapse_navigation": True,
     "header_links_before_dropdown": 6,
+    "navigation_with_keys": False,
     #    "navigation_depth": 2,
     "show_prev_next": True,
     "use_edit_page_button": True,
@@ -184,7 +183,6 @@ exclude_patterns = [
     "auto_examples/*.ipynb",
     "auto_examples/*.py",
 ]
-suppress_warnings = ["mystnb.unknown_mime_type"]
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -207,6 +205,15 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
 }
 
+image_scrapers = ("matplotlib",)
+
+# Set plotly renderer to capture _repr_html_ for sphinx-gallery
+try:
+    import plotly
+    import plotly.io
+except ImportError:
+    plotly = None
+
 # From https://github.com/scikit-learn/scikit-learn/blob/main/doc/conf.py
 sphinx_gallery_conf = {
     "examples_dirs": "../../examples",
@@ -219,10 +226,13 @@ sphinx_gallery_conf = {
     # The default option is an empty set, i.e. exclude nothing.
     # To exclude everything, use: '.*'
     "exclude_implicit_doc": {r"pyplot\.show"},
-    "show_memory": False,
+    "show_memory": True,
     "reference_url": {project: None},
     # "subsection_order": SubSectionTitleOrder("../examples"),
-    # "within_subsection_order": SKExampleTitleSortKey,
+    "within_subsection_order": "FileNameSortKey",
+    "image_scrapers": image_scrapers,
+    "reset_modules": ("matplotlib", "seaborn", "sg_doc_build.reset_others"),
+    "compress_images": ("images", "thumbnails"),
     # "binder": {
     #     "org": "scikit-learn",
     #     "repo": "scikit-learn",
@@ -234,12 +244,9 @@ sphinx_gallery_conf = {
     # avoid generating too many cross links
     "inspect_global_variables": False,
     "remove_config_comments": True,
+    # capture raw HTML or, if not present, __repr__ of last expression in each
+    # code block.
+    "capture_repr": ("_repr_html_", "__repr__"),
     "matplotlib_animations": True,
-    # "plot_gallery": "True",
     # "recommender": {"enable": True, "n_examples": 5, "min_df": 12},
-    # "reset_modules": ("matplotlib", "seaborn"),
 }
-# if with_jupyterlite:
-#     sphinx_gallery_conf["jupyterlite"] = {
-#         "notebook_modification_function": notebook_modification_function
-#     }
