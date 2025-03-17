@@ -9,16 +9,16 @@ import mooplot
 def test_plt_dta_types(test_datapath):
     """Check that the plot_pf() functions has the right input handling."""
     with pytest.raises(Exception) as expt:
-        mooplot.plot_pf(datasets="Wrong input")
+        mooplot.plot_pf("Wrong input")
     assert expt.type is ValueError
     with pytest.raises(Exception) as expt:
-        mooplot.plot_pf(datasets=np.ndarray(shape=(5, 1)))
+        mooplot.plot_pf(np.ndarray(shape=(5, 1)))
     assert expt.type is ValueError
     with pytest.raises(Exception) as expt:
-        mooplot.plot_pf(datasets=np.ndarray(shape=(5, 5)))
+        mooplot.plot_pf(np.ndarray(shape=(5, 5)))
     assert expt.type is NotImplementedError
 
-    X = moocore.read_datasets(moocore.get_dataset_path("input1.dat"))
+    X = moocore.get_dataset("input1.dat")
     with pytest.raises(Exception) as expt:
         mooplot.plot_pf(X, type="Bugel horn")
     assert expt.type is ValueError

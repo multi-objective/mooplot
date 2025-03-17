@@ -36,7 +36,7 @@ dependencies = [
   "moocore>=0.1.4",
   "numpy>=1.23",
   "pandas>=2.0.2",
-  "plotly>=5.15",
+  "plotly<6",
 ]
 urls.Documentation = "https://multi-objective.github.io/mooplot/python"
 urls.Homepage = "https://multi-objective.github.io/mooplot/python"
