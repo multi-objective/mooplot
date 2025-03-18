@@ -4,6 +4,8 @@
 [ [**R package**][r-mooplot-homepage] ] [ [GitHub][r-mooplot-github] ] [![Build status][r-build-badge]][r-build-link] [![Code Coverage][r-coverage-badge]][r-coverage-link] [![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
 [![CRAN Status](https://www.r-pkg.org/badges/version-last-release/mooplot)](https://cran.r-project.org/web/checks/check_results_mooplot.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
+[![r-universe version][r-universe-version-badge]](https://multi-objective.r-universe.dev/mooplot)
+[![r-universe build status][r-universe-build-badge]](https://github.com/r-universe/multi-objective/actions/workflows/build.yml)
 
 [ [**Python package**][py-mooplot-homepage] ] [ [GitHub][py-mooplot-github] ] [![Build status][py-build-badge]][py-build-link] [![Code Coverage][py-coverage-badge]][py-coverage-link] [![PyPI - Version](https://img.shields.io/pypi/v/mooplot)][py-mooplot-pypi] [![PyPI - Downloads](https://img.shields.io/pypi/dm/mooplot?color=blue)][py-mooplot-pypi]
 <!-- badges: end -->
@@ -57,3 +59,5 @@ Each component is documented in the `README.md` file found under each folder.
 [r-mooplot-cran]: https://cran.r-project.org/package=mooplot
 [r-mooplot-github]: https://github.com/multi-objective/mooplot/tree/main/r#readme
 [r-mooplot-homepage]: https://multi-objective.github.io/mooplot/r/
+[r-universe-version-badge]: https://multi-objective.r-universe.dev/badges/mooplot
+[r-universe-build-badge]: https://github.com/r-universe/multi-objective/actions/workflows/build.yml/badge.svg
