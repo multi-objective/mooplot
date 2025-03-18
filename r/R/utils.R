@@ -29,9 +29,9 @@ get_extremes <- function(xlim, ylim, maximise, log)
 
 add_extremes <- function(x, extremes, maximise)
 {
-  best1 <- if (maximise[1]) max else min
-  best2 <- if (maximise[2]) max else min
-  rbind(c(best1(x[,1]), extremes[2]), x, c(extremes[1], best2(x[,2])))
+  best1 <- if (maximise[1L]) max else min
+  best2 <- if (maximise[2L]) max else min
+  rbind(c(best1(x[,1L]), extremes[2L]), x, c(extremes[1L], best2(x[,2L])))
 }
 
 # FIXME: Accept ...
@@ -59,3 +59,6 @@ points_steps <- function(x)
 }
 
 nunique <- collapse::fnunique
+
+has_file_extension <- function(filename, extension)
+  grepl(paste0('[.]', extension, '$'), filename, ignore.case = TRUE)

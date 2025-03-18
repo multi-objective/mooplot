@@ -12,16 +12,16 @@ pdf_crop(
 )
 }
 \arguments{
-\item{filename}{Filename of a PDF file to crop. The file will be overwritten.}
+\item{filename}{(\code{character(1)})\cr Filename of a PDF file to crop. The file will be overwritten.}
 
-\item{mustWork}{If \code{TRUE}, then give an error if the file cannot be cropped.}
+\item{mustWork}{(\code{logical1})\cr If \code{TRUE}, then give an error if the file cannot be cropped.}
 
-\item{pdfcrop}{Path to the \code{pdfcrop} utility.}
+\item{pdfcrop}{(\code{character(1)})\cr Path to the \code{pdfcrop} utility.}
 
-\item{embed_fonts}{(\code{logical(1)}) If \code{TRUE}, use \code{\link[grDevices:embedFonts]{grDevices::embedFonts()}} to embed fonts.}
+\item{embed_fonts}{(\code{logical(1)})\cr If \code{TRUE}, use \code{\link[grDevices:embedFonts]{grDevices::embedFonts()}} to embed fonts.}
 }
 \value{
-Nothing
+No return value, called for side effects
 }
 \description{
 Remove whitespace margins using \url{https://ctan.org/pkg/pdfcrop} and
@@ -43,15 +43,15 @@ As an alternative, saving the PDF with \code{\link[grDevices:cairo]{grDevices::c
 already embed the fonts.
 }
 \examples{
-\dontrun{
 extdata_path <- system.file(package = "moocore", "extdata")
 A1 <- read_datasets(file.path(extdata_path, "wrots_l100w10_dat"))
 A2 <- read_datasets(file.path(extdata_path, "wrots_l10w100_dat"))
-pdf(file = "eaf.pdf", onefile = TRUE, width = 5, height = 4)
-eafplot(list(A1 = A1, A2 = A2), percentiles = 50, sci.notation=TRUE)
+filename <- tempfile("eafplot", fileext=".pdf")
+pdf(file = filename, onefile = TRUE, width = 5, height = 4)
+eafplot(list(A1 = A1, A2 = A2), percentiles = 50, sci.notation = TRUE)
 dev.off()
-pdf_crop("eaf.pdf")
-}
+try(pdf_crop(filename)) # This may fail if pdfcrop is not installed.
+
 }
 \seealso{
 \code{\link[grDevices:embedFonts]{grDevices::embedFonts()}} \code{\link[extrafont:embed_fonts]{extrafont::embed_fonts()}} \code{\link[grDevices:cairo]{grDevices::cairo_pdf()}}

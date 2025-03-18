@@ -5,19 +5,30 @@
 #' Vorob'ev expectation and a realization of the (random) attained set.
 #'
 #' @inheritParams moocore::vorobT
+#'
 #' @param VE,threshold Vorob'ev expectation and threshold, e.g., as returned
 #'   by [moocore::vorobT()].
-#' @param nlevels number of levels in which is divided the range of the
+#'
+#' @param nlevels (`integer(1)`)\cr Number of levels in which is divided the range of the
 #'   symmetric deviation.
-#' @param ve.col plotting parameters for the Vorob'ev expectation.
+#'
+#' @param ve.col Plotting parameters for the Vorob'ev expectation.
+#'
 #' @param xlim,ylim,main Graphical parameters, see
-#'   [`plot.default()`][graphics::plot.default()].
-#' @param legend.pos the position of the legend, see
+#' [`plot.default()`][graphics::plot.default()].
+#'
+#' @param legend.pos The position of the legend, see
 #'   [`legend()`][graphics::legend()]. A value of `"none"` hides the legend.
-#' @param col.fun function that creates a vector of `n` colors, see
+#'
+#' @param col.fun Function that creates a vector of `n` colors, see
 #'   [`heat.colors()`][grDevices::heat.colors()].
+#'
+#' @return No return value, called for side effects
+#'
 #' @author Mickael Binois
+#'
 #' @seealso    [moocore::vorobT()] [moocore::vorobDev()] [eafplot()]
+#'
 #' @examples
 #' data(CPFs, package = "moocore")
 #' res <- moocore::vorobT(CPFs, reference = c(2, 200))
@@ -85,12 +96,12 @@ symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
 
   las <- par("las")
   sci.notation <- FALSE
-  nlevels <- min(length(unique.default(sets)) - 1, nlevels)
-
+  nlevels <- min(length(unique.default(sets)) - 1L, nlevels)
+  seq_levs <- round(seq(0, 100, length.out = nlevels), 4L)
   threshold <- round(threshold, 4L)
-  seq.levs <- round(seq(0, 100, length.out = nlevels), 4L)
-  levs <- sort.int(unique.default(c(threshold, seq.levs)))
-  attsurfs <- eaf_as_list(eaf(x, sets, percentiles = levs, maximise = maximise))
+  levs <- sort.int(unique.default(c(threshold, seq_levs)))
+  attsurfs <- moocore::eaf_as_list(
+    moocore::eaf(x, sets, percentiles = levs, maximise = maximise))
 
   # Denote p_n the attainment probability, the value of the symmetric
   # difference function is p_n if p_n < alpha (Vorob'ev threshold) and 1 - p_n
@@ -102,10 +113,10 @@ symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
   # with the following colors:
   #
   # [0, 25) [25, 50) [50, 75) [25, 50) [0, 25)
-  max.interval <- max(which(seq.levs < max(100 - threshold, threshold)))
-  colscale <- seq.levs[1:max.interval]
+  max_interval <- max(which(seq_levs < max(100 - threshold, threshold)))
+  colscale <- seq_levs[1:max_interval]
   # Reversed so that darker colors are associated to higher values
-  names(colscale) <- rev(col.fun(max.interval))
+  names(colscale) <- rev(col.fun(max_interval))
   cols <- c(names(colscale[colscale < threshold]),
             rev(names(colscale[1:max(which(colscale < 100 - threshold))])),
             "#FFFFFF") # To have white after worst case
@@ -130,11 +141,11 @@ symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
                              col = ve.col, lty = 1, lwd = 2)
        })
 
-  # Use first.open to print "(0,X)", because the color for 0 is white.
-  intervals <- seq_intervals_labels(seq.levs, first.open = TRUE)
-  intervals <- intervals[seq_len(max.interval)]
+  # Use first_open to print "(0,X)", because the color for 0 is white.
+  intervals <- seq_intervals_labels(seq_levs, first_open = TRUE)
+  intervals <- intervals[seq_len(max_interval)]
   names(intervals) <- names(colscale)
-  #names(intervals) <- names(colscale[1:max.interval])
+  #names(intervals) <- names(colscale[1:max_interval])
   if (is.na(pmatch(legend.pos, "none")))
     legend(legend.pos, legend = c("VE", intervals), fill = c(ve.col, names(intervals)),
            bg="white", bty="n", xjust=0, yjust=0, cex=0.9)

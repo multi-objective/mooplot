@@ -37,14 +37,14 @@ columns, the third one being the set of each point. See also
 \item{col}{A character vector of three colors for the magnitude of the
 differences of 0, 0.5, and 1. Intermediate colors are computed
 automatically given the value of \code{intervals}. Alternatively, a function
-such as \code{\link[viridisLite:viridis]{viridisLite::viridis()}} that generates a colormap given an integer
-argument.}
+such as \code{\link[viridisLite:viridis]{viridisLite::viridis()}} that generates a colormap given an
+integer argument.}
 
-\item{intervals}{(\code{integer(1)}|\code{character()}) \cr The
-absolute range of the differences \eqn{[0, 1]} is partitioned into the number
-of intervals provided. If an integer is provided, then labels for each
-interval are  computed automatically. If a character vector is
-provided, its length is taken as the number of intervals.}
+\item{intervals}{(\code{integer(1)}|\code{character()})\cr The absolute range of the
+differences \eqn{[0, 1]} is partitioned into the number of intervals
+provided. If an integer is provided, then labels for each interval are
+computed automatically. If a character vector is provided, its length is
+taken as the number of intervals.}
 
 \item{percentiles}{The percentiles of the EAF of each side that will be
 plotted as attainment surfaces. \code{NA} does not plot any. See
@@ -53,14 +53,14 @@ plotted as attainment surfaces. \code{NA} does not plot any. See
 \item{full.eaf}{Whether to plot the EAF of each side instead of the
 differences between the EAFs.}
 
-\item{type}{Whether the EAF differences are plotted as points
-(\code{"points"}) or whether to color the areas that have at least a
+\item{type}{(\code{"points"}|\code{"area"})\cr Whether the EAF differences are plotted
+as points (\code{"points"}) or whether to color the areas that have at least a
 certain value (\code{"area"}).}
 
-\item{legend.pos}{The position of the legend. See \code{\link[=legend]{legend()}}.  A value of
-\code{"none"} hides the legend.}
+\item{legend.pos}{(\code{character(1)})\cr The position of the legend. See
+\code{\link[=legend]{legend()}}.  A value of \code{"none"} hides the legend.}
 
-\item{maximise}{\code{logical()}|\code{logical(1)}\cr Whether the objectives must be
+\item{maximise}{(\code{logical()}|\code{logical(1)})\cr Whether the objectives must be
 maximised instead of minimised. Either a single logical value that applies
 to all objectives or a vector of logical values, with one value per
 objective.}
@@ -94,28 +94,26 @@ the left EAF minus the right EAF and the right side shows the
 differences in the other direction.
 }
 \details{
-This function calculates the differences between the EAFs of two
-data sets, and plots on the left the differences in favour
-of the left data set, and on the right the differences in favour of
-the right data set. By default, it also plots the grand best and worst
-attainment surfaces, that is, the 0\%- and 100\%-attainment surfaces
-over all data. These two surfaces delimit the area where differences
-may exist. In addition, it also plots the 50\%-attainment surface of
-each data set.
+This function calculates the differences between the EAFs of two data
+sets, and plots on the left the differences in favour of the left data
+set, and on the right the differences in favour of the right data set. By
+default, it also plots the grand best and worst attainment surfaces, that
+is, the 0\%- and 100\%-attainment surfaces over all data. These two surfaces
+delimit the area where differences may exist. In addition, it also plots
+the 50\%-attainment surface of each data set.
 
-With \code{type = "point"}, only the points where there is a change in
-the value of the EAF difference are plotted. This means that for areas
-where the EAF differences stays constant, the region will appear in
-white even if the value of the differences in that region is
-large. This explains "white holes" surrounded by black
-points.
+With \code{type = "point"}, only the points where there is a change in the
+value of the EAF difference are plotted. This means that for areas where
+the EAF differences stays constant, the region will appear in white even
+if the value of the differences in that region is large. This explains
+"white holes" surrounded by black points.
 
-With \code{type = "area"}, the area where the EAF differences has a
-certain value is plotted.  The idea for the algorithm to compute the
-areas was provided by Carlos M. Fonseca.  The implementation uses R
-polygons, which some PDF viewers may have trouble rendering correctly
-(See
-\url{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-are-there-unwanted-borders}). Plots (should) look correct when printed.
+With \code{type = "area"}, the area where the EAF differences has a certain
+value is plotted.  The idea for the algorithm to compute the areas was
+provided by Carlos M. Fonseca.  The implementation uses R polygons, which
+some PDF viewers may have trouble rendering correctly (See
+\url{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-are-there-unwanted-borders}).
+Plots (should) look correct when printed.
 
 Large differences that appear when using \code{type = "point"} may
 seem to disappear when using \code{type = "area"}. The explanation is

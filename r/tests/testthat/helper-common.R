@@ -9,7 +9,9 @@ maximise2str <- function(maximise) {
   paste0(ifelse(maximise[1L],"max", "min"),
     ifelse(maximise[2L],"max", "min"))
 }
-canonical_name <- function(s) gsub("_dat", "", gsub(".xz", "", s, fixed=TRUE), fixed = TRUE)
+
+canonical_name <- function(s)
+  gsub("_dat", "", gsub(".xz", "", s, fixed=TRUE), fixed = TRUE)
 
 ## help_plot <- function(A, B)
 ## {

@@ -51,30 +51,34 @@ data frames of exactly three columns.}
 
 \item{...}{Other graphical parameters to \code{\link[=plot.default]{plot.default()}}.}
 
-\item{sets}{(\code{numeric()})\cr Vector indicating which set each point belongs to.}
+\item{sets}{Vector indicating which set each point belongs to. Will be coerced to a factor.}
 
-\item{groups}{This may be used to plot profiles of different algorithms on the same plot.}
+\item{groups}{This may be used to plot data for different algorithms on
+the same plot. Will be coerced to a factor.}
 
-\item{percentiles}{(\code{numeric()}) Vector indicating which percentile should be plot. The
-default is to plot only the median attainment curve.}
+\item{percentiles}{(\code{numeric()})\cr Vector indicating which percentile
+should be plot. The default is to plot only the median attainment curve.}
 
 \item{attsurfs}{TODO}
 
-\item{maximise}{\code{logical()}|\code{logical(1)}\cr Whether the objectives must be
+\item{maximise}{(\code{logical()}|\code{logical(1)})\cr Whether the objectives must be
 maximised instead of minimised. Either a single logical value that applies
 to all objectives or a vector of logical values, with one value per
 objective.}
 
-\item{type}{(\code{character(1)})\cr string giving the type of plot desired.  The following values
-are possible, \samp{points} and \samp{area}.}
+\item{type}{(\code{"point"}|\code{"area"})\cr Type of plot.}
 
 \item{xlab, ylab, xlim, ylim, log, col, lty, lwd, pch, cex.pch, las}{Graphical
 parameters, see \code{\link[=plot.default]{plot.default()}}.}
 
-\item{legend.pos}{the position of the legend, see \code{\link[=legend]{legend()}}.  A value of \code{"none"} hides the legend.}
+\item{legend.pos}{(\code{character(1)}|\code{list()}|\code{data.frame()})\cr Position of
+the legend.  This may be xy coordinates or a keyword ("bottomright",
+"bottom", "bottomleft", "left", "topleft", "top", "topright", "right",
+"center"). See Details in \code{\link[=legend]{legend()}}.  A value of "none" hides the legend.}
 
-\item{legend.txt}{a character or expression vector to appear in the
-legend. If \code{NULL}, appropriate labels will be generated.}
+\item{legend.txt}{(\code{expression()}|\code{character()})\cr Character or expression
+vector to appear in the legend. If \code{NULL}, appropriate labels will be
+generated.}
 
 \item{extra.points}{A list of matrices or data.frames with
 two-columns. Each element of the list defines a set of points, or
@@ -86,13 +90,11 @@ groups of points.}
 \item{extra.pch, extra.lwd, extra.lty, extra.col}{Control the graphical aspect
 of the points. See \code{\link[=points]{points()}} and \code{\link[=lines]{lines()}}.}
 
-\item{xaxis.side}{On which side the x-axis is drawn. Valid values are
-\code{"below"} and \code{"above"}. See \code{\link[=axis]{axis()}}.}
+\item{xaxis.side}{(\code{"below"}|\code{"above"})\cr On which side the x-axis is drawn.  See \code{\link[=axis]{axis()}}.}
 
-\item{yaxis.side}{On which side the y-axis is drawn. Valid values are
-\code{"left"} and \code{"right"}. See \code{\link[=axis]{axis()}}.}
+\item{yaxis.side}{(\code{"left"}|\code{"right"})\cr On which side the y-axis is drawn. See \code{\link[=axis]{axis()}}.}
 
-\item{axes}{A logical value indicating whether both axes should be drawn
+\item{axes}{(\code{logical(1)})\cr A logical value indicating whether both axes should be drawn
 on the plot.}
 
 \item{sci.notation}{Generate prettier labels}
@@ -106,13 +108,13 @@ attainment surfaces for certain percentiles or as points.
 }
 \details{
 This function can be used to plot random sets of points like those obtained
-by different runs of biobjective stochastic optimisation algorithms.  An EAF
+by different runs of biobjective stochastic optimisation algorithms \citep{LopPaqStu09emaa}.  An EAF
 curve represents the boundary separating points that are known to be
 attainable (that is, dominated in Pareto sense) in at least a fraction
-(quantile) of the runs from those that are not. The median EAF represents
+(quantile) of the runs from those that are not \citep{Grunert01}. The median EAF represents
 the curve where the fraction of attainable points is 50\%.  In single
 objective optimisation the function can be used to plot the profile of
-solution quality over time of a collection of runs of a stochastic optimizer.
+solution quality over time of a collection of runs of a stochastic optimizer. \citep{LopVerDreDoe2025}.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -162,12 +164,14 @@ eafplot (SPEA2minstoptimeRichmond, xlab = expression(C[E]),
          ylab = "Minimum idle time (minutes)", maximise = c(FALSE, TRUE),
          las = 1, log = "y", main = "SPEA2 (Richmond)",
          legend.pos = "bottomright")
+
+data(tpls50x20_1_MWT, package="moocore")
+eafplot(tpls50x20_1_MWT[, c(2,3)], sets = tpls50x20_1_MWT[,4L],
+        groups = tpls50x20_1_MWT[["algorithm"]])
 }
 }
 \references{
-\insertRef{Grunert01}{moocore}
-
-\insertRef{LopPaqStu09emaa}{moocore}
+\insertAllCited{}
 }
 \seealso{
 \code{\link[moocore:read_datasets]{moocore::read_datasets()}} \code{\link[=eafdiffplot]{eafdiffplot()}} \code{\link[=pdf_crop]{pdf_crop()}}

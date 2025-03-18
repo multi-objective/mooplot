@@ -4,13 +4,13 @@
 #' attainment surfaces for certain percentiles or as points.
 #'
 #' This function can be used to plot random sets of points like those obtained
-#' by different runs of biobjective stochastic optimisation algorithms.  An EAF
+#' by different runs of biobjective stochastic optimisation algorithms \citep{LopPaqStu09emaa}.  An EAF
 #' curve represents the boundary separating points that are known to be
 #' attainable (that is, dominated in Pareto sense) in at least a fraction
-#' (quantile) of the runs from those that are not. The median EAF represents
+#' (quantile) of the runs from those that are not \citep{Grunert01}. The median EAF represents
 #' the curve where the fraction of attainable points is 50%.  In single
 #' objective optimisation the function can be used to plot the profile of
-#' solution quality over time of a collection of runs of a stochastic optimizer.
+#' solution quality over time of a collection of runs of a stochastic optimizer. \citep{LopVerDreDoe2025}.
 #'
 #' @param x Either a matrix of data values, or a data frame, or a list of
 #'     data frames of exactly three columns.
@@ -20,18 +20,29 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 
 #' @describeIn eafplot Main function
 #'
-#' @param groups This may be used to plot profiles of different algorithms on the same plot.
-#' @param sets (`numeric()`)\cr Vector indicating which set each point belongs to.
-#' @param percentiles (`numeric()`) Vector indicating which percentile should be plot. The
-#'   default is to plot only the median attainment curve.
-#' @param attsurfs   TODO
-#' @param type (`character(1)`)\cr string giving the type of plot desired.  The following values
-#'   are possible, \samp{points} and \samp{area}.
+#' @param sets Vector indicating which set each point belongs to. Will be coerced to a factor.
+#'
+#' @param groups This may be used to plot data for different algorithms on
+#'   the same plot. Will be coerced to a factor.
+#'
+#' @param percentiles (`numeric()`)\cr Vector indicating which percentile
+#'   should be plot. The default is to plot only the median attainment curve.
+#'
+#' @param attsurfs TODO
+#'
+#' @param type (`"point"`|`"area"`)\cr Type of plot.
+#'
 #' @param xlab,ylab,xlim,ylim,log,col,lty,lwd,pch,cex.pch,las Graphical
 #'   parameters, see [plot.default()].
-#' @param legend.pos the position of the legend, see [legend()].  A value of `"none"` hides the legend.
-#' @param legend.txt a character or expression vector to appear in the
-#'   legend. If `NULL`, appropriate labels will be generated.
+#'
+#' @param legend.pos (`character(1)`|`list()`|`data.frame()`)\cr Position of
+#'   the legend.  This may be xy coordinates or a keyword ("bottomright",
+#'   "bottom", "bottomleft", "left", "topleft", "top", "topright", "right",
+#'   "center"). See Details in [legend()].  A value of "none" hides the legend.
+#'
+#' @param legend.txt (`expression()`|`character()`)\cr Character or expression
+#'   vector to appear in the legend. If `NULL`, appropriate labels will be
+#'   generated.
 #'
 #' @param extra.points A list of matrices or data.frames with
 #'   two-columns. Each element of the list defines a set of points, or
@@ -43,18 +54,16 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #' @param extra.legend A character vector providing labels for the
 #'   groups of points.
 #'
-#' @param maximise `logical()`|`logical(1)`\cr Whether the objectives must be
+#' @param maximise (`logical()`|`logical(1)`)\cr Whether the objectives must be
 #'   maximised instead of minimised. Either a single logical value that applies
 #'   to all objectives or a vector of logical values, with one value per
 #'   objective.
 #'
-#' @param xaxis.side On which side the x-axis is drawn. Valid values are
-#'   `"below"` and `"above"`. See [axis()].
+#' @param xaxis.side (`"below"`|`"above"`)\cr On which side the x-axis is drawn.  See [axis()].
 #'
-#' @param yaxis.side On which side the y-axis is drawn. Valid values are
-#'   `"left"` and `"right"`. See [axis()].
+#' @param yaxis.side (`"left"`|`"right"`)\cr On which side the y-axis is drawn. See [axis()].
 #'
-#' @param axes A logical value indicating whether both axes should be drawn
+#' @param axes (`logical(1)`)\cr A logical value indicating whether both axes should be drawn
 #'   on the plot.
 #'
 #' @param sci.notation Generate prettier labels
@@ -106,11 +115,13 @@ eafplot <- function(x, ...) UseMethod("eafplot")
 #'          ylab = "Minimum idle time (minutes)", maximise = c(FALSE, TRUE),
 #'          las = 1, log = "y", main = "SPEA2 (Richmond)",
 #'          legend.pos = "bottomright")
+#'
+#' data(tpls50x20_1_MWT, package="moocore")
+#' eafplot(tpls50x20_1_MWT[, c(2,3)], sets = tpls50x20_1_MWT[,4L],
+#'         groups = tpls50x20_1_MWT[["algorithm"]])
 #' }
 #' @references
-#' \insertRef{Grunert01}{moocore}
-#'
-#' \insertRef{LopPaqStu09emaa}{moocore}
+#' \insertAllCited{}
 #' @concept eaf
 #' @export
 eafplot.default <-
@@ -165,13 +176,13 @@ eafplot.default <-
   if (is.null(ylab))
     ylab <- if (!is.null(colnames(x)[2L])) colnames(x)[2L] else "objective 2"
 
-  if (!is.null (attsurfs)) {
-    # Don't we need to apply maximise?
-    attsurfs <- lapply(attsurfs, function(x) as.matrix(x[, c(1L,2L), drop=FALSE]))
-  } else {
+  if (is.null (attsurfs)) {
     attsurfs <- eaf(x, sets, percentiles = percentiles, maximise = maximise, groups = groups)
     attsurfs <- eaf_as_list(attsurfs)
     #    attsurfs <- lapply(attsurfs, matrix_maximise, maximise = maximise)
+  } else {
+    # Don't we need to apply maximise?
+    attsurfs <- lapply(attsurfs, function(x) as.matrix(x[, c(1L,2L), drop=FALSE]))
   }
 
   # FIXME: We should take the range from the attsurfs to not make x mandatory.
@@ -415,7 +426,7 @@ plot_eaf_full_area <- function(attsurfs, extreme, maximise, col)
 # seq_intervals_labels(seq(0,1, length.out=5), digits = 1)
 # "[0.0, 0.2)" "[0.2, 0.4)" "[0.4, 0.6)" "[0.6, 0.8)" "[0.8, 1.0]"
 # FIXME: Add examples and tests
-seq_intervals_labels <- function(s, first.open = FALSE, last.open = FALSE,
+seq_intervals_labels <- function(s, first_open = FALSE, last_open = FALSE,
                                  digits = NULL)
 {
   # FIXME:  This should use:
@@ -423,9 +434,9 @@ seq_intervals_labels <- function(s, first.open = FALSE, last.open = FALSE,
   s <- formatC(s, digits = digits, format = if (is.null(digits)) "g" else "f")
   if (length(s) < 2) stop ("sequence must have at least 2 values")
   intervals <- paste0("[", s[-length(s)], ", ", s[-1], ")")
-  if (first.open)
+  if (first_open)
     substr(intervals[1], 0, 1) <- "("
-  if (!last.open) {
+  if (!last_open) {
     len <- nchar(intervals[length(intervals)])
     substr(intervals[length(intervals)], len, len+1) <- "]"
   }

@@ -11,11 +11,9 @@
 
 <!-- badges: start -->
 [![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
-[![CRAN Status](https://badges.cranchecks.info/worst/moocore.svg)][r-mooplot-cran-results]
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
 [![R build status][r-build-badge]][r-build-link]
 [![Code Coverage][r-coverage-badge]][r-coverage-link]
-[![r-universe version](https://multi-objective.r-universe.dev/badges/mooplot)](https://multi-objective.r-universe.dev/mooplot)
 [![r-universe build status](https://github.com/r-universe/multi-objective/actions/workflows/build.yml/badge.svg)](https://github.com/r-universe/multi-objective/actions/workflows/build.yml)
 <!-- badges: end -->
 

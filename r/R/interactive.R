@@ -7,26 +7,15 @@
 #' [moocore::choose_eafdiff()] may be used in a non-interactive context.
 #'
 #' @inheritParams eafdiffplot
-# @param data.left,data.right Data frames corresponding to the input data of
-#   left and right sides, respectively. Each data frame has at least three
-#   columns, the third one being the set of each point. See also
-#   [read_datasets()].
-#
-# @param intervals (`integer(1)`|`character()`) \cr The absolute range of the
-#   differences \eqn{[0, 1]} is partitioned into the number of intervals
-#   provided. If an integer is provided, then labels for each interval are
-#   computed automatically. If a character vector is provided, its length is
-#   taken as the number of intervals.
 #'
 #' @param ... Other graphical parameters are passed down to
 #'   [eafdiffplot()].
 #'
-#'
-#' @return `matrix` where the first 4 columns give the coordinates of two
+#' @return `matrix()` where the first 4 columns give the coordinates of two
 #'   corners of each rectangle and the last column. In both cases, the last
 #'   column gives the positive differences in favor of the chosen side.
 #'
-#' @seealso    [moocore::read_datasets()], [eafdiffplot()], [moocore::whv_rect()]
+#' @seealso  [moocore::read_datasets()], [eafdiffplot()], [moocore::whv_rect()]
 #'
 #' @examples
 #'
@@ -56,7 +45,7 @@
 #' boxplot(list(A1=whv_A1, A2=whv_A2), main = "Weighted hypervolume")
 #' }
 #'
-#'@references
+#' @references
 #' \insertAllCited{}
 #' @concept eaf
 #' @export

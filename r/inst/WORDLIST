@@ -47,6 +47,9 @@ behavior
 behaviors
 bibtex
 biobjective
+bottomleft
+bottomright
+center
 cleanups
 color
 colormap
@@ -57,3 +60,5 @@ libre
 matrixStats
 metaheuristic
 nondominated
+topleft
+topright

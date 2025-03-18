@@ -29,19 +29,22 @@ missing, the last column of \code{x} is used instead.}
 \item{VE, threshold}{Vorob'ev expectation and threshold, e.g., as returned
 by \code{\link[moocore:Vorob]{moocore::vorobT()}}.}
 
-\item{nlevels}{number of levels in which is divided the range of the
+\item{nlevels}{(\code{integer(1)})\cr Number of levels in which is divided the range of the
 symmetric deviation.}
 
-\item{ve.col}{plotting parameters for the Vorob'ev expectation.}
+\item{ve.col}{Plotting parameters for the Vorob'ev expectation.}
 
 \item{xlim, ylim, main}{Graphical parameters, see
 \code{\link[graphics:plot.default]{plot.default()}}.}
 
-\item{legend.pos}{the position of the legend, see
+\item{legend.pos}{The position of the legend, see
 \code{\link[graphics:legend]{legend()}}. A value of \code{"none"} hides the legend.}
 
-\item{col.fun}{function that creates a vector of \code{n} colors, see
+\item{col.fun}{Function that creates a vector of \code{n} colors, see
 \code{\link[grDevices:palettes]{heat.colors()}}.}
+}
+\value{
+No return value, called for side effects
 }
 \description{
 The symmetric deviation function is the probability for a given target in

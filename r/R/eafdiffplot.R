@@ -15,14 +15,14 @@
 #' @param col A character vector of three colors for the magnitude of the
 #'   differences of 0, 0.5, and 1. Intermediate colors are computed
 #'   automatically given the value of `intervals`. Alternatively, a function
-#'   such as [viridisLite::viridis()] that generates a colormap given an integer
-#'   argument.
+#'   such as [viridisLite::viridis()] that generates a colormap given an
+#'   integer argument.
 #'
-#' @param intervals (`integer(1)`|`character()`) \cr The
-#'   absolute range of the differences \eqn{[0, 1]} is partitioned into the number
-#'   of intervals provided. If an integer is provided, then labels for each
-#'   interval are  computed automatically. If a character vector is
-#'   provided, its length is taken as the number of intervals.
+#' @param intervals (`integer(1)`|`character()`)\cr The absolute range of the
+#'   differences \eqn{[0, 1]} is partitioned into the number of intervals
+#'   provided. If an integer is provided, then labels for each interval are
+#'   computed automatically. If a character vector is provided, its length is
+#'   taken as the number of intervals.
 #'
 #' @param percentiles The percentiles of the EAF of each side that will be
 #'   plotted as attainment surfaces. `NA` does not plot any. See
@@ -31,12 +31,12 @@
 #' @param full.eaf Whether to plot the EAF of each side instead of the
 #'   differences between the EAFs.
 #'
-#' @param type Whether the EAF differences are plotted as points
-#'   (`"points"`) or whether to color the areas that have at least a
+#' @param type (`"points"`|`"area"`)\cr Whether the EAF differences are plotted
+#'   as points (`"points"`) or whether to color the areas that have at least a
 #'   certain value (`"area"`).
 #'
-#' @param legend.pos The position of the legend. See [legend()].  A value of
-#'   `"none"` hides the legend.
+#' @param legend.pos (`character(1)`)\cr The position of the legend. See
+#'   [legend()].  A value of `"none"` hides the legend.
 #'
 #' @param title_left,title_right Title for left and right panels, respectively.
 #'
@@ -58,28 +58,27 @@
 #'   [plot.default()].
 #'
 #' @details
-#'   This function calculates the differences between the EAFs of two
-#'   data sets, and plots on the left the differences in favour
-#'   of the left data set, and on the right the differences in favour of
-#'   the right data set. By default, it also plots the grand best and worst
-#'   attainment surfaces, that is, the 0%- and 100%-attainment surfaces
-#'   over all data. These two surfaces delimit the area where differences
-#'   may exist. In addition, it also plots the 50%-attainment surface of
-#'   each data set.
 #'
-#'   With `type = "point"`, only the points where there is a change in
-#'   the value of the EAF difference are plotted. This means that for areas
-#'   where the EAF differences stays constant, the region will appear in
-#'   white even if the value of the differences in that region is
-#'   large. This explains "white holes" surrounded by black
-#'   points.
+#'   This function calculates the differences between the EAFs of two data
+#'   sets, and plots on the left the differences in favour of the left data
+#'   set, and on the right the differences in favour of the right data set. By
+#'   default, it also plots the grand best and worst attainment surfaces, that
+#'   is, the 0%- and 100%-attainment surfaces over all data. These two surfaces
+#'   delimit the area where differences may exist. In addition, it also plots
+#'   the 50%-attainment surface of each data set.
 #'
-#'   With `type = "area"`, the area where the EAF differences has a
-#'   certain value is plotted.  The idea for the algorithm to compute the
-#'   areas was provided by Carlos M. Fonseca.  The implementation uses R
-#'   polygons, which some PDF viewers may have trouble rendering correctly
-#'   (See
-#'   \url{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-are-there-unwanted-borders}). Plots (should) look correct when printed.
+#'   With `type = "point"`, only the points where there is a change in the
+#'   value of the EAF difference are plotted. This means that for areas where
+#'   the EAF differences stays constant, the region will appear in white even
+#'   if the value of the differences in that region is large. This explains
+#'   "white holes" surrounded by black points.
+#'
+#'   With `type = "area"`, the area where the EAF differences has a certain
+#'   value is plotted.  The idea for the algorithm to compute the areas was
+#'   provided by Carlos M. Fonseca.  The implementation uses R polygons, which
+#'   some PDF viewers may have trouble rendering correctly (See
+#'   \url{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-are-there-unwanted-borders}).
+#'   Plots (should) look correct when printed.
 #'
 #'   Large differences that appear when using `type = "point"` may
 #'   seem to disappear when using `type = "area"`. The explanation is
@@ -160,7 +159,7 @@ eafdiffplot <-
   # FIXME: check that it is either an integer or a character vector.
   if (length(intervals) == 1L) {
     intervals <- seq_intervals_labels(
-      round(seq(0, 1 , length.out = 1 + intervals), 4L), digits = 1L)
+      round(seq(0, 1, length.out = 1 + intervals), 4L), digits = 1L)
   }
   if (is.function(col)) { # It is a color-map, like viridis()
     col <- col(length(intervals))
