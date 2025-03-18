@@ -52,16 +52,10 @@ jobs:
           http-user-agent: ${{ matrix.http-user-agent }}
           use-public-rspm: true
 
-      - uses: actions/checkout@v4
-        with:
-          repository: multi-objective/moocore
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: 'moocore'
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           install-pandoc: true
-          extra-packages: local::../moocore/r/, any::rcmdcheck, any::spelling, any::remotes
+          extra-packages: any::moocore, any::rcmdcheck, any::spelling, any::remotes
           needs: check
           working-directory: r
 
@@ -122,16 +116,10 @@ jobs:
           use-public-rspm: true
           r-version: ${{ matrix.r }}
 
-      - uses: actions/checkout@v4
-        with:
-          repository: multi-objective/moocore
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: 'moocore'
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           install-pandoc: true
-          extra-packages: local::../moocore/r/, any::covr any::xml2
+          extra-packages: any::moocore, any::covr any::xml2
           needs: coverage
           working-directory: r
 
@@ -186,16 +174,10 @@ jobs:
           r-version: ${{ matrix.r }}
           use-public-rspm: true
 
-      - uses: actions/checkout@v4
-        with:
-          repository: multi-objective/moocore
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: 'moocore'
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           install-pandoc: true
-          extra-packages: local::../moocore/r/, any::pkgdown, local::.
+          extra-packages: any::moocore, any::pkgdown, local::.
           needs: website
           working-directory: r
 
