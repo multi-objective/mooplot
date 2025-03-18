@@ -29,6 +29,7 @@ TAGS
 ^pkgdown$
 ^svn_version
 ^testing
+^tools/create-figures.R
 ^v2
 ^web
 ^windows$
