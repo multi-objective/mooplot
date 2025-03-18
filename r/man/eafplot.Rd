@@ -97,24 +97,26 @@ of the points. See \code{\link[=points]{points()}} and \code{\link[=lines]{lines
 \item{axes}{(\code{logical(1)})\cr A logical value indicating whether both axes should be drawn
 on the plot.}
 
-\item{sci.notation}{Generate prettier labels}
+\item{sci.notation}{(\code{logical(1)})\cr Generate prettier labels}
 }
 \value{
 The attainment surfaces computed (invisibly).
 }
 \description{
-Computes and plots the Empirical Attainment Function, either as
+Computes and plots the Empirical Attainment Function (EAF), either as
 attainment surfaces for certain percentiles or as points.
 }
 \details{
 This function can be used to plot random sets of points like those obtained
-by different runs of biobjective stochastic optimisation algorithms \citep{LopPaqStu09emaa}.  An EAF
-curve represents the boundary separating points that are known to be
-attainable (that is, dominated in Pareto sense) in at least a fraction
-(quantile) of the runs from those that are not \citep{Grunert01}. The median EAF represents
-the curve where the fraction of attainable points is 50\%.  In single
-objective optimisation the function can be used to plot the profile of
-solution quality over time of a collection of runs of a stochastic optimizer. \citep{LopVerDreDoe2025}.
+by different runs of biobjective stochastic optimisation algorithms
+\citep{LopPaqStu09emaa}{moocore}.  An EAF curve represents the boundary
+separating points that are known to be attainable (that is, dominated in
+Pareto sense) in at least a fraction (quantile) of the runs from those that
+are not \citep{Grunert01}{moocore}. The median EAF represents the curve
+where the fraction of attainable points is 50\%.  In single objective
+optimisation the function can be used to plot the profile of solution
+quality over time of a collection of runs of a stochastic
+optimizer \citep{LopVerDreDoe2025}{mooplot}.
 }
 \section{Methods (by class)}{
 \itemize{

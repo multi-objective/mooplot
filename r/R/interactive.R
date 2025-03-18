@@ -3,7 +3,7 @@
 #' Creates the same plot as [eafdiffplot()] but waits for the user to click in
 #' one of the sides. Then it returns the rectangles the give the differences in
 #' favour of the chosen side. These rectangles may be used for interactive
-#' decision-making as shown in \citet{DiaLop2020ejor}. The function
+#' decision-making as shown in \citet{DiaLop2020ejor}{moocore}. The function
 #' [moocore::choose_eafdiff()] may be used in a non-interactive context.
 #'
 #' @inheritParams eafdiffplot
