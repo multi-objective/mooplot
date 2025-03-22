@@ -356,8 +356,6 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
 
            # Colors are correct for !full.eaf && type == "area"
            if (full.eaf || type == "point") {
-             diff_values <- eafdiff[,3L]
-             eafdiff <- eafdiff[, c(1L,2L), drop=FALSE]
              # FIXME: This is wrong, we should color (0.0, 1] with col[1], then (1, 2]
              # with col[1], etc, so that we never color the value 0.0 but we always
              # color the maximum value color without having to force it.
@@ -365,10 +363,12 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
              # Why flooring and not ceiling? If a point has value 2.05, it should
              # be painted with color 2 rather than 3.
              # +1 because col[1] is white ([0,1)).
-             diff_values <- floor(diff_values) + 1
+             diff_values <- floor(eafdiff[,3L]) + 1
              if (nunique(diff_values) > length(col)) {
-               stop ("Too few colors: length(unique(diff_values)) > length(col)")
+               stop ("Too few colors: there are ", nunique(diff_values),
+                 " unique values but only ", length(col), " colors")
              }
+             eafdiff <- eafdiff[, c(1L,2L), drop=FALSE]
            }
            if (type == "area") {
              if (full.eaf) {
