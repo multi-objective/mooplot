@@ -1,15 +1,5 @@
+fail_fast: true
 repos:
-  - repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.4.3.9005
-    hooks:
-      - id: parsable-R
-      - id: no-browser-statement
-      - id: no-print-statement
-      - id: no-debug-statement
-      - id: deps-in-desc
-        args: [--root=r/]
-        exclude: 'do.R'
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -28,11 +18,27 @@ repos:
     rev: "1.5.0"
     hooks:
       - id: tox-ini-fmt
+
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: "v2.5.1"
     hooks:
       - id: pyproject-fmt
         additional_dependencies: ["tox>=4.12.1"]
+
+  - repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.4.3.9005
+    hooks:
+      - id: parsable-R
+      - id: no-browser-statement
+      - id: no-print-statement
+      - id: no-debug-statement
+      - id: deps-in-desc
+        args: [--root=r/]
+        exclude: 'do.R'
+      - id: roxygenize
+        args: [--root=r/]
+        additional_dependencies:
+          - Rdpack
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.11.0
