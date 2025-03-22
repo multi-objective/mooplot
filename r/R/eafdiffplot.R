@@ -189,13 +189,6 @@ eafdiffplot <-
     data_right <- transform_maximise(data_right, maximise)
   }
 
-  compute_attsurfs <- function(x, cumsizes, percentiles, maximise) {
-    x <- compute_eaf_call(x, cumsizes = cumsizes, percentiles = percentiles)
-    if (any(maximise))
-      x[,-ncol(x)] <- transform_maximise(x[, -ncol(x), drop=FALSE], maximise)
-    eaf_as_list(x)
-  }
-
   attsurfs_left <- attsurfs_right <- list()
   if (!any(is.na(percentiles))) {
     attsurfs_left <- compute_attsurfs(data_left, cumsizes_left, percentiles = percentiles, maximise = maximise)
@@ -262,7 +255,7 @@ eafdiffplot <-
 
   # FIXME: This does not generate empty space between the two plots, but the
   # plots are not squared.
-  layout(matrix(1:2, ncol=2L, byrow=TRUE), respect=TRUE)
+  layout(matrix(c(1L,2L), ncol=2L, byrow=TRUE), respect=TRUE)
   bottommar <- 5L
   topmar   <- 4L
   leftmar  <- 4L
@@ -364,7 +357,7 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
            # Colors are correct for !full.eaf && type == "area"
            if (full.eaf || type == "point") {
              diff_values <- eafdiff[,3L]
-             eafdiff <- eafdiff[, 1L:2L, drop=FALSE]
+             eafdiff <- eafdiff[, c(1L,2L), drop=FALSE]
              # FIXME: This is wrong, we should color (0.0, 1] with col[1], then (1, 2]
              # with col[1], etc, so that we never color the value 0.0 but we always
              # color the maximum value color without having to force it.
@@ -406,6 +399,7 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
              ## The maximum value should also be painted.
              diff_values[diff_values > length(col)] <- length(col)
              eafdiff <- eafdiff[order(diff_values, decreasing = FALSE), , drop=FALSE]
+             diff_values <- diff_values[order(diff_values, decreasing = FALSE)]
              points(eafdiff[,1L], eafdiff[,2L], col = col[diff_values], type = "p", pch=20)
            }
          }
@@ -418,4 +412,12 @@ plot_eafdiff_side <- function (eafdiff, attsurfs = list(),
   plot_eaf_full_lines(attsurfs, extreme, maximise, col = col, lty = lty, lwd = lwd)
   mtext(title, 1, line = 3.5, cex = par("cex.lab"), las = 0, font = 2)
   box()
+}
+
+compute_attsurfs <- function(x, cumsizes, percentiles, maximise)
+{
+  x <- compute_eaf_call(x, cumsizes = cumsizes, percentiles = percentiles)
+  if (any(maximise))
+    x[,-ncol(x)] <- transform_maximise(x[, -ncol(x), drop=FALSE], maximise)
+  eaf_as_list(x)
 }
