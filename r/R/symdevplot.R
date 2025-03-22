@@ -96,10 +96,10 @@ symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
 
   las <- par("las")
   sci.notation <- FALSE
-  nlevels <- min(length(unique.default(sets)) - 1L, nlevels)
+  nlevels <- min(nunique(sets) - 1L, nlevels)
   seq_levs <- round(seq(0, 100, length.out = nlevels), 4L)
   threshold <- round(threshold, 4L)
-  levs <- sort.int(unique.default(c(threshold, seq_levs)))
+  levs <- collapse::funique(c(threshold, seq_levs), sort=TRUE)
   attsurfs <- moocore::eaf_as_list(
     moocore::eaf(x, sets, percentiles = levs, maximise = maximise))
 
