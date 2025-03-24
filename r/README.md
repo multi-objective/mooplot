@@ -11,10 +11,12 @@
 
 <!-- badges: start -->
 [![CRAN version](https://www.r-pkg.org/badges/version-last-release/mooplot)][r-mooplot-cran]
+[![CRAN Status](https://badges.cranchecks.info/worst/mooplot.svg)][r-mooplot-cran-results]
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mooplot)][r-mooplot-cran]
 [![R build status][r-build-badge]][r-build-link]
 [![Code Coverage][r-coverage-badge]][r-coverage-link]
-[![r-universe build status](https://github.com/r-universe/multi-objective/actions/workflows/build.yml/badge.svg)](https://github.com/r-universe/multi-objective/actions/workflows/build.yml)
+[![r-universe version][r-universe-version-badge]](https://multi-objective.r-universe.dev/mooplot)
+[![r-universe build status][r-universe-build-badge]](https://github.com/r-universe/multi-objective/actions/workflows/build.yml)
 <!-- badges: end -->
 
 [ [**Homepage**][r-mooplot-homepage] ]  [ [**GitHub**][r-mooplot-github] ]
@@ -154,3 +156,5 @@ this work so I can mention them to my funding agent and tenure committee.
 [r-mooplot-cran]: https://cran.r-project.org/package=mooplot
 [r-mooplot-github]: https://github.com/multi-objective/mooplot/tree/main/r#readme
 [r-mooplot-homepage]: https://multi-objective.github.io/mooplot/r/
+[r-universe-version-badge]: https://multi-objective.r-universe.dev/badges/mooplot
+[r-universe-build-badge]: https://github.com/r-universe/multi-objective/actions/workflows/build.yml/badge.svg
