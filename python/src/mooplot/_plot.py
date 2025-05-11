@@ -54,12 +54,12 @@ def plot_pf(
         Whether to automatically filter dominated points within each set. Default is ``True``.
     layout_kwargs :
         Update features of the graph such as title axis titles, colours etc.
-        These additional parameters are passed to plotly update_layout. See here for all the layout features that can be accessed: `Layout Plotly reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/>`_
+        These additional parameters are passed to plotly :meth:`plotly.graph_objects.Figure.update_layout`.
+        See :class:`plotly.graph_objects.Layout`.
 
     Returns
     -------
-        A `Plotly GO figure` object: `Plotly Figure reference <https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/>`_
-        This means that the user can customise any part of the graph after it is created
+        Graphical object. The user can customise any part of the graph after it is created.
 
     Examples
     --------
@@ -99,13 +99,11 @@ def plot_pf(
         if type_parsed == "fill":
             def_colours = colour.get_default_fill_colorway(num_percentiles)
             colorway = colour.parse_colorway(
-                dict.get(layout_kwargs, "colorway", None),
-                def_colours,
+                dict.get(layout_kwargs, "colorway", def_colours),
                 num_percentiles,
             )
             fill_border_colours = colour.parse_colorway(
-                dict.get(layout_kwargs, "fill_border_colours", None),
-                def_colours,
+                dict.get(layout_kwargs, "fill_border_colours", def_colours),
                 num_percentiles,
             )
             figure = create_2d_eaf_plot(data, colorway, fill_border_colours)
@@ -115,14 +113,15 @@ def plot_pf(
 
         else:
             colorway = colour.parse_colorway(
-                dict.get(layout_kwargs, "colorway", None),
-                px.colors.qualitative.Plotly,
+                dict.get(
+                    layout_kwargs, "colorway", px.colors.qualitative.Plotly
+                ),
                 num_percentiles,
             )
             layout_kwargs["colorway"] = colorway
             # Sort the the points by Objective 1 within each set, while keeping the set order (May be inefficient)
-            for set in df["Set"].unique():
-                mask = df["Set"] == set
+            for s in df["Set"].unique():
+                mask = df["Set"] == s
                 df.loc[mask] = (
                     df.loc[mask].sort_values(by=df.columns[0]).values
                 )
@@ -135,6 +134,7 @@ def plot_pf(
                 color_discrete_sequence=colorway,
             )
 
+            # FIXME: This should be configurable.
             maximise = [False, False]
             # Extend lines past the figure boundaries.
             for trace in figure.data:
@@ -144,8 +144,7 @@ def plot_pf(
 
     elif dim == 3:
         colorway = colour.parse_colorway(
-            dict.get(layout_kwargs, "colorway", None),
-            px.colors.qualitative.Plotly,
+            dict.get(layout_kwargs, "colorway", px.colors.qualitative.Plotly),
             num_percentiles,
         )
         title = layout_kwargs.pop("title", None)
@@ -340,7 +339,7 @@ def add_extremes(x, y, maximise):
 
 # Create a fill plot -> Such as EAF percentile  plot.
 # If a figure is given, update the figure instead of creating a new one
-# If no name is given, the last column eg. Percentile is chosen. Names can be a list or a
+# If no name is given, the last column eg. Percentile is chosen.
 def create_2d_eaf_plot(
     dataset,
     colorway,
@@ -350,8 +349,9 @@ def create_2d_eaf_plot(
     names=None,
     line_dashes=None,
     line_width=None,
-):
+) -> go.Figure:
     # Get a line plot and sort by the last column eg. Set number or percentile
+    # FIXME: remove this recursion.
     lines_plot = plot_pf(dataset, type="line", filter_dominated=False)
     ordered_lines = sorted(lines_plot.data, key=lambda x: int(x["name"]))
     float_inf = np.finfo(
@@ -359,11 +359,9 @@ def create_2d_eaf_plot(
     ).max  # Interpreted as infinite value by plotly
 
     # Add an line to fill down from infinity to the last percentile
-    infinity_line = dict(
-        x=np.array([0, float_inf]),
-        y=np.array([float_inf, float_inf]),
+    ordered_lines.append(
+        dict(x=np.array([0, float_inf]), y=np.array([float_inf, float_inf]))
     )
-    ordered_lines.append(infinity_line)
     percentile_names = np.unique(dataset[:, -1]).astype(int)
     num_percentiles = len(percentile_names)
 
@@ -395,14 +393,13 @@ def create_2d_eaf_plot(
         fill_i = i - 1 if i > 0 else i  #
         name_i = fill_i if is_fill else min(i, num_percentiles - 1)
 
-        select_names = (
-            f"{names[name_i]} - {percentile_names[name_i]}"
-            if names
-            else percentile_names[name_i]
-        )
-        select_legend_group = (
-            names[name_i] if names else percentile_names[name_i]
-        )
+        if names:
+            select_names = f"{names[name_i]} - {percentile_names[name_i]}"
+            select_legend_group = names[name_i]
+        else:
+            select_names = percentile_names[name_i]
+            select_legend_group = percentile_names[name_i]
+
         line_colour = (
             fill_border_colours[name_i] if type == "fill" else colorway[name_i]
         )
@@ -414,7 +411,7 @@ def create_2d_eaf_plot(
                 fill="none" if (i == 0 or not is_fill) else "tonexty",
                 line={
                     "shape": "hv",
-                    "dash": f"{line_dashes[name_i]}",
+                    "dash": line_dashes[name_i],
                     "color": line_colour,
                     "width": line_width[name_i],
                 },
@@ -619,10 +616,11 @@ def plot_eaf(
         num_percentiles = len(np.unique(dataset[:, -1]))
         def_colours = colour.get_default_fill_colorway(num_percentiles)
         colorway = colour.parse_colorway(
-            colorway, def_colours, num_percentiles
+            colorway if colorway else def_colours, num_percentiles
         )
         fill_border_colours = colour.parse_colorway(
-            fill_border_colours, def_colours, num_percentiles
+            fill_border_colours if fill_border_colours else def_colours,
+            num_percentiles,
         )
 
         fig = create_2d_eaf_plot(
@@ -637,7 +635,7 @@ def plot_eaf(
             legend_title_text="Percentile",
             xaxis_title="Objective 0",
             yaxis_title="Objective 1",
-            title="2d Empirical Attainment Function",
+            title="2D Empirical Attainment Function",
         )
 
     elif isinstance(dataset, dict):
@@ -658,9 +656,8 @@ def plot_eaf(
                     raise TypeError("Incorrect type for percentiles")
 
         if isinstance(type, str):
-            type = [type] * len(
-                dataset
-            )  # Set all types to be single type argument
+            # Set all types to be single type argument
+            type = [type] * len(dataset)
         elif len(type) != len(dataset):
             raise ValueError(
                 "type list must be same length as dataset dictionary"

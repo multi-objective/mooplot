@@ -24,3 +24,9 @@ fig
 # Plot a two objective dataset with points and lines
 fig = mooplot.plot_pf(data, type="p,l")
 fig
+
+
+# %%
+# Filled areas
+fig = mooplot.plot_pf(data, type="fill")
+fig

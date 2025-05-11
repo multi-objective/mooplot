@@ -195,8 +195,7 @@ class ColourGradient:
 
 
 # Parse different types of colorway arguments into an acceptable format, or choose default
-def parse_colorway(colorway, default, length):
-    colorway = colorway if colorway else default
+def parse_colorway(colorway, length):
     if isinstance(colorway, str) or isinstance(colorway, int):
         colorway = parse_colour_to_nparray(colorway, strings=True)
         colorway = [colorway] * length
@@ -221,17 +220,15 @@ def parse_2d_colorway(colorway, default, size_list):
     parsed_2d = colorway if colorway else default
     if isinstance(parsed_2d, str):
         # Set all traces to be same single value
-        parsed_2d = [
-            parse_colorway(parsed_2d, default, size) for size in size_list
-        ]
+        parsed_2d = [parse_colorway(parsed_2d, size) for size in size_list]
     elif isinstance(parsed_2d, list):
-        # Can individually select each trace, or set to the same for each
+        # Can individually select each trace, or set to the same for each.
         if len(parsed_2d) != len(size_list):
             raise ValueError(
                 "2d colorway list should be same length as number of traces"
             )
         parsed_2d = [
-            parse_colorway(color_i, default, size_list[i])
+            parse_colorway(color_i if color_i else default, size_list[i])
             for i, color_i in enumerate(parsed_2d)
         ]
     else:
