@@ -16,7 +16,7 @@ Imports:
         grDevices,
         graphics,
         matrixStats,
-        moocore
+        moocore (>= 0.1.5)
 Suggests:
     extrafont,
     viridisLite,

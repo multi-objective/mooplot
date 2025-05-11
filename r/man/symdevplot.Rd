@@ -7,7 +7,7 @@
 symdevplot(
   x,
   sets,
-  VE,
+  ve,
   threshold,
   nlevels = 11,
   ve.col = "blue",
@@ -26,8 +26,8 @@ missing, the last column of \code{x} gives the sets.}
 \item{sets}{\code{integer()}\cr A vector that indicates the set of each point in \code{x}. If
 missing, the last column of \code{x} is used instead.}
 
-\item{VE, threshold}{Vorob'ev expectation and threshold, e.g., as returned
-by \code{\link[moocore:Vorob]{moocore::vorobT()}}.}
+\item{ve, threshold}{Vorob'ev expectation and threshold, e.g., as returned
+by \code{\link[moocore:Vorob]{moocore::vorob_t()}}.}
 
 \item{nlevels}{(\code{integer(1)})\cr Number of levels in which is divided the range of the
 symmetric deviation.}
@@ -53,7 +53,7 @@ Vorob'ev expectation and a realization of the (random) attained set.
 }
 \examples{
 data(CPFs, package = "moocore")
-res <- moocore::vorobT(CPFs, reference = c(2, 200))
+res <- moocore::vorob_t(CPFs, reference = c(2, 200))
 print(res$threshold)
 
 ## Display Vorob'ev expectation and attainment function
@@ -65,19 +65,19 @@ eafplot(CPFs[,1:2], sets = CPFs[,3], percentiles = c(0, 25, 50, 75, 100, res$thr
 # Second style
 eafplot(CPFs[,1:2], sets = CPFs[,3], percentiles = c(0, 20, 40, 60, 80, 100),
         col = gray(seq(0.8, 0.1, length.out = 6)^0.5), type = "area",
-        legend.pos = "bottomleft", extra.points = res$VE, extra.col = "cyan",
+        legend.pos = "bottomleft", extra.points = res$ve, extra.col = "cyan",
         extra.legend = "VE", extra.lty = "solid", extra.pch = NA, extra.lwd = 2,
         main = substitute(paste("Empirical attainment function, ",beta,"* = ", a, "\%"),
                           list(a = formatC(res$threshold, digits = 2, format = "f"))))
 # Vorob'ev deviation
-VD <- moocore::vorobDev(CPFs, reference = c(2, 200), VE = res$VE)
+VD <- moocore::vorob_dev(CPFs, reference = c(2, 200), ve = res$ve)
 # Display the symmetric deviation function.
-symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11)
+symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 11)
 # Levels are adjusted automatically if too large.
-symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 200, legend.pos = "none")
+symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 200, legend.pos = "none")
 
 # Use a different palette.
-symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11, col.fun = heat.colors)
+symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 11, col.fun = heat.colors)
 
 }
 \references{
@@ -89,7 +89,7 @@ Gaussian process models, University of Bern, PhD thesis.
 \insertRef{Molchanov2005theory}{moocore}
 }
 \seealso{
-\code{\link[moocore:Vorob]{moocore::vorobT()}} \code{\link[moocore:Vorob]{moocore::vorobDev()}} \code{\link[=eafplot]{eafplot()}}
+\code{\link[moocore:Vorob]{moocore::vorob_t()}} \code{\link[moocore:Vorob]{moocore::vorob_dev()}} \code{\link[=eafplot]{eafplot()}}
 }
 \author{
 Mickael Binois

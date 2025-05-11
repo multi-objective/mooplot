@@ -4,10 +4,10 @@
 #' the objective space to belong to the symmetric difference between the
 #' Vorob'ev expectation and a realization of the (random) attained set.
 #'
-#' @inheritParams moocore::vorobT
+#' @inheritParams moocore::vorob_t
 #'
-#' @param VE,threshold Vorob'ev expectation and threshold, e.g., as returned
-#'   by [moocore::vorobT()].
+#' @param ve,threshold Vorob'ev expectation and threshold, e.g., as returned
+#'   by [moocore::vorob_t()].
 #'
 #' @param nlevels (`integer(1)`)\cr Number of levels in which is divided the range of the
 #'   symmetric deviation.
@@ -27,11 +27,11 @@
 #'
 #' @author Mickael Binois
 #'
-#' @seealso    [moocore::vorobT()] [moocore::vorobDev()] [eafplot()]
+#' @seealso    [moocore::vorob_t()] [moocore::vorob_dev()] [eafplot()]
 #'
 #' @examples
 #' data(CPFs, package = "moocore")
-#' res <- moocore::vorobT(CPFs, reference = c(2, 200))
+#' res <- moocore::vorob_t(CPFs, reference = c(2, 200))
 #' print(res$threshold)
 #'
 #' ## Display Vorob'ev expectation and attainment function
@@ -43,19 +43,19 @@
 #' # Second style
 #' eafplot(CPFs[,1:2], sets = CPFs[,3], percentiles = c(0, 20, 40, 60, 80, 100),
 #'         col = gray(seq(0.8, 0.1, length.out = 6)^0.5), type = "area",
-#'         legend.pos = "bottomleft", extra.points = res$VE, extra.col = "cyan",
+#'         legend.pos = "bottomleft", extra.points = res$ve, extra.col = "cyan",
 #'         extra.legend = "VE", extra.lty = "solid", extra.pch = NA, extra.lwd = 2,
 #'         main = substitute(paste("Empirical attainment function, ",beta,"* = ", a, "%"),
 #'                           list(a = formatC(res$threshold, digits = 2, format = "f"))))
 #' # Vorob'ev deviation
-#' VD <- moocore::vorobDev(CPFs, reference = c(2, 200), VE = res$VE)
+#' VD <- moocore::vorob_dev(CPFs, reference = c(2, 200), ve = res$ve)
 #' # Display the symmetric deviation function.
-#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11)
+#' symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 11)
 #' # Levels are adjusted automatically if too large.
-#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 200, legend.pos = "none")
+#' symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 200, legend.pos = "none")
 #'
 #' # Use a different palette.
-#' symdevplot(CPFs, VE = res$VE, threshold = res$threshold, nlevels = 11, col.fun = heat.colors)
+#' symdevplot(CPFs, ve = res$ve, threshold = res$threshold, nlevels = 11, col.fun = heat.colors)
 #'
 #' @references
 #'
@@ -72,7 +72,7 @@
 # surfaces and does not create the plot nor the legend (but returns the info
 # needed to create a legend), so that one can use the function to add stuff to
 # another plot.
-symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
+symdevplot <- function(x, sets, ve, threshold, nlevels = 11,
                        ve.col = "blue", xlim = NULL, ylim = NULL,
                        legend.pos = "topright", main = "Symmetric deviation function",
                        col.fun = function(n) gray(seq(0, 0.9, length.out = n)^2))
@@ -137,7 +137,7 @@ symdevplot <- function(x, sets, VE, threshold, nlevels = 11,
          plot_eaf_axis (xaxis_side, xlab, las = las, sci.notation = sci.notation)
          plot_eaf_axis (yaxis_side, ylab, las = las, sci.notation = sci.notation,
                         line = 2.2)
-         plot_eaf_full_lines(list(VE), extreme, maximise,
+         plot_eaf_full_lines(list(ve), extreme, maximise,
                              col = ve.col, lty = 1, lwd = 2)
        })
 
