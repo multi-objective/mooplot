@@ -8,6 +8,9 @@ get_xylim <- function(lim, maximise, x)
   lim
 }
 
+get_extremes_ggplot <- function(maximise)
+  c(if (maximise[1L]) -Inf else Inf, if (maximise[2L]) -Inf else Inf)
+
 get_extremes <- function(xlim, ylim, maximise, log)
 {
   if (length(log) && log != "")
@@ -38,7 +41,7 @@ add_extremes <- function(x, extremes, maximise)
 range_finite <- function(x)
 {
   if (is.null(x)) return(NULL)
-  x <- frange(x, finite=TRUE)
+  x <- collapse::frange(x, finite=TRUE)
   if (anyNA(x)) return(NULL)
   x
 }
@@ -62,3 +65,6 @@ nunique <- collapse::fnunique
 
 has_file_extension <- function(filename, extension)
   grepl(paste0('[.]', extension, '$'), filename, ignore.case = TRUE)
+
+starts_or_ends_with <- function(x, substr)
+  startsWith(x, substr) | endsWith(x, substr)
