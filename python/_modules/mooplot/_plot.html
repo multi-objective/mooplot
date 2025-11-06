@@ -1,0 +1,1214 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mooplot._plot &#8212; mooplot 0.0.9999-git documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_override.css?v=56ba3ac6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/hide_links.css?v=60d22a59" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=12975111"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mooplot/_plot';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://multi-objective.github.io/mooplot/python/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'stable';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.9999" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">mooplot 0.0.9999-git documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../whatsnew/index.html">
+    What’s new
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/multi-objective/mooplot" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/mooplot" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../whatsnew/index.html">
+    What’s new
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/multi-objective/mooplot" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/mooplot" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mooplot._plot</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for mooplot._plot</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span>  <span class="c1"># For type hints</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># FIXME: Move plotly plots to submodule mooplot.plotly</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moocore</span><span class="w"> </span><span class="kn">import</span> <span class="n">filter_dominated_within_sets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">colour</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">parse_line_dash</span><span class="p">,</span>
+    <span class="n">parse_2d_line_dash</span><span class="p">,</span>
+    <span class="n">parse_line_width</span><span class="p">,</span>
+    <span class="n">parse_2d_line_width</span><span class="p">,</span>
+    <span class="n">_parse_plot_type</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">_3d_margin</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="plot_pf">
+<a class="viewcode-back" href="../../reference/generated/mooplot.plot_pf.html#mooplot.plot_pf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_pf</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;points&quot;</span><span class="p">,</span>
+    <span class="n">filter_dominated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">layout_kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot Pareto fronts.</span>
+
+<span class="sd">    This function can produce an interactive point graph, stair step graph or 3D surface graph. It accepts 2 or 3 objectives.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data :</span>
+<span class="sd">        Array of numerical values, maybe created by :func:`moocore.read_datasets()`,</span>
+<span class="sd">        where each row gives the coordinates of a point</span>
+<span class="sd">        in objective space and the last column defines the sets to which each row of ``data`` belongs.</span>
+<span class="sd">    type :</span>
+<span class="sd">        Type of plot. Any of:</span>
+
+<span class="sd">        - &#39;points&#39; : produces a scatter-like point graph *(2 or 3 objectives)*</span>
+<span class="sd">        - &#39;lines&#39; : produces a stepped line graph *(2 objectives only)*</span>
+<span class="sd">        - &#39;points,lines&#39; : produces a stepped line graph with points *(2 objective only)*</span>
+<span class="sd">        - &#39;fill&#39; : produces a stepped line graph with filled areas between lines. See :func:`plot_eaf` *(2 objective only)*</span>
+<span class="sd">        - &#39;surface&#39; : produces a smoothed 3d surface *(3 objective only*)</span>
+<span class="sd">        - &#39;surface,points&#39; : produces a smoothed 3d surface with datapoints plotted *(3 objective only*)</span>
+<span class="sd">        - &#39;cube&#39; : produces a discrete cube surface *(3 objective only*)</span>
+
+<span class="sd">        Abbreviations such as ``&#39;p&#39;`` or ``&#39;p,l&#39;`` are accepted.</span>
+<span class="sd">    filter_dominated :</span>
+<span class="sd">        Whether to automatically filter dominated points within each set. Default is ``True``.</span>
+<span class="sd">    layout_kwargs :</span>
+<span class="sd">        Update features of the graph such as title axis titles, colours etc.</span>
+<span class="sd">        These additional parameters are passed to plotly update_layout. See here for all the layout features that can be accessed: `Layout Plotly reference &lt;https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/&gt;`_</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A `Plotly GO figure` object: `Plotly Figure reference &lt;https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/&gt;`_</span>
+<span class="sd">        This means that the user can customise any part of the graph after it is created</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = moocore.get_dataset(&quot;input1.dat&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; mooplot.plot_pf(x, type=&quot;points,lines&quot;)  # doctest: +ELLIPSIS</span>
+<span class="sd">    Figure({...</span>
+
+<span class="sd">    .. minigallery:: mooplot.plot_pf</span>
+<span class="sd">       :add-heading:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># FIXME: Accept a Pandas DataFrame.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ncols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ncols</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;data&#39; must have at least 3 columns (2 objectives + set column)&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">ncols</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;Only 2D or 3D datasets are currently supported&quot;</span>
+        <span class="p">)</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">filter_dominated</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">filter_dominated_within_sets</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">type_parsed</span> <span class="o">=</span> <span class="n">_parse_plot_type</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Objective </span><span class="si">{</span><span class="n">d</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Convert set num to string without decimal points, plotly interprets ints as discrete colour sequences.</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">num_percentiles</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># FIXME this can be combined with plot_2d_eaf function to tidy up</span>
+        <span class="k">if</span> <span class="n">type_parsed</span> <span class="o">==</span> <span class="s2">&quot;fill&quot;</span><span class="p">:</span>
+            <span class="n">def_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">get_default_fill_colorway</span><span class="p">(</span><span class="n">num_percentiles</span><span class="p">)</span>
+            <span class="n">colorway</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">,</span> <span class="s2">&quot;colorway&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">def_colours</span><span class="p">,</span>
+                <span class="n">num_percentiles</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">fill_border_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">,</span> <span class="s2">&quot;fill_border_colours&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">def_colours</span><span class="p">,</span>
+                <span class="n">num_percentiles</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">create_2d_eaf_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">colorway</span><span class="p">,</span> <span class="n">fill_border_colours</span><span class="p">)</span>
+            <span class="c1"># Make sure these arguments are not used twice</span>
+            <span class="n">layout_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fill_border_colours&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">layout_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;colorway&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">colorway</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">,</span> <span class="s2">&quot;colorway&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Plotly</span><span class="p">,</span>
+                <span class="n">num_percentiles</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">layout_kwargs</span><span class="p">[</span><span class="s2">&quot;colorway&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">colorway</span>
+            <span class="c1"># Sort the the points by Objective 1 within each set, while keeping the set order (May be inefficient)</span>
+            <span class="k">for</span> <span class="nb">set</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">set</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+                <span class="p">)</span>
+
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+                <span class="n">df</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">,</span>
+                <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">colorway</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">maximise</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+            <span class="c1"># Extend lines past the figure boundaries.</span>
+            <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">figure</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">trace</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">add_extremes</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">maximise</span><span class="p">)</span>
+
+            <span class="n">figure</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">line_shape</span><span class="o">=</span><span class="s2">&quot;hv&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">type_parsed</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">colorway</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">,</span> <span class="s2">&quot;colorway&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Plotly</span><span class="p">,</span>
+            <span class="n">num_percentiles</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">layout_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;surface&quot;</span> <span class="ow">in</span> <span class="n">type_parsed</span><span class="p">:</span>
+            <span class="c1"># Currently creates a surface with points joined for each</span>
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">_gen_3d_mesh_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">type_parsed</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">&quot;markers&quot;</span> <span class="ow">in</span> <span class="n">type_parsed</span><span class="p">:</span>
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_3d</span><span class="p">(</span>
+                <span class="n">df</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">,</span>
+                <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">colorway</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">figure</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">marker_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">figure</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="n">_3d_margin</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">&quot;cube&quot;</span> <span class="ow">in</span> <span class="n">type_parsed</span><span class="p">:</span>
+            <span class="n">figure</span> <span class="o">=</span> <span class="n">_get_cube_plot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+            <span class="n">figure</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_get_3d_title</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="n">figure</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_apply_default_themes</span><span class="p">(</span><span class="n">fig</span><span class="p">):</span>
+    <span class="c1"># This theme may be preferable as it has a white background so could make for a more &quot;scientific&quot; look</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">plot_bgcolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span>
+        <span class="n">mirror</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">ticks</span><span class="o">=</span><span class="s2">&quot;outside&quot;</span><span class="p">,</span>
+        <span class="n">showline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">linecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">gridcolor</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span>
+        <span class="n">mirror</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">ticks</span><span class="o">=</span><span class="s2">&quot;outside&quot;</span><span class="p">,</span>
+        <span class="n">showline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">linecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">gridcolor</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_3d_title</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">,</span>
+        <span class="s2">&quot;xanchor&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;yanchor&quot;</span><span class="p">:</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="c1"># Generates smooth 3d mesh plot from dataset</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_gen_3d_mesh_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+    <span class="n">num_sets</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+    <span class="k">for</span> <span class="nb">set</span> <span class="ow">in</span> <span class="n">num_sets</span><span class="p">:</span>
+        <span class="n">df_one_set</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">set</span><span class="p">]</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Mesh3d</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 2&quot;</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 3&quot;</span><span class="p">],</span>
+                <span class="n">opacity</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Set &quot;</span> <span class="o">+</span> <span class="nb">set</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;markers&quot;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_scatter3d</span><span class="p">(</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 2&quot;</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">df_one_set</span><span class="p">[</span><span class="s2">&quot;Objective 3&quot;</span><span class="p">],</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Set &quot;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s2">&quot; points&quot;</span><span class="p">,</span>
+                <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+            <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">margin</span><span class="o">=</span><span class="n">_3d_margin</span><span class="p">,</span>
+        <span class="n">legend_title_text</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">,</span>
+        <span class="n">scene</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 2&quot;</span><span class="p">,</span>
+            <span class="n">zaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 3&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_cube_points</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+    <span class="n">ds_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">cube_num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ds_cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cube_num</span> <span class="o">=</span> <span class="n">cube_num</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="c1"># i,j,k represent binary digits that are counted up from 0 to 7 for each cube</span>
+        <span class="c1"># these are multiplied by the co-ordinates of the orignal point to create 8 total points</span>
+        <span class="c1"># Each point is a corner of a cube</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">((</span><span class="n">row</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="n">ds_cube</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">ds_cube</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">ds_cube</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">ds_cube</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">ds_cube</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">cube_num</span>
+
+    <span class="k">return</span> <span class="n">ds_cube</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_tri_indexs</span><span class="p">(</span><span class="n">num_cubes</span><span class="p">):</span>
+    <span class="c1"># Each number in i,j,k represents an index of a point</span>
+    <span class="c1"># Each column of i,j,k forms a triangle from three points</span>
+    <span class="c1"># This pre-configuration forms a cube from 12 triangles</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="c1"># tri_index is a numpy array that contains indexs for n number of cubes</span>
+    <span class="n">tri_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="n">num_cubes</span> <span class="o">*</span> <span class="mi">12</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">tri_index</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cubes</span><span class="p">):</span>
+        <span class="c1"># Copy the triangle index preconfiguration to every cube</span>
+        <span class="n">tri_index</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">12</span> <span class="p">:</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tri_index</span>
+
+
+<span class="c1"># Returns a cube point. This is</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_cube_plot</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+    <span class="n">np_cubes</span> <span class="o">=</span> <span class="n">_get_cube_points</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;Objective 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Objective 2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Objective 3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Set&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Cube Number&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">cube_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np_cubes</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">cube_df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">set_n_df</span> <span class="o">=</span> <span class="n">cube_df</span><span class="p">[</span><span class="n">cube_df</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">]</span>
+        <span class="n">num_cubes</span> <span class="o">=</span> <span class="n">set_n_df</span><span class="p">[</span><span class="s2">&quot;Cube Number&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+        <span class="c1"># Define the corners of all triangles in all cubes</span>
+        <span class="n">cube_indexs</span> <span class="o">=</span> <span class="n">_get_tri_indexs</span><span class="p">(</span><span class="n">num_cubes</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Mesh3d</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">set_n_df</span><span class="p">[</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">set_n_df</span><span class="p">[</span><span class="s2">&quot;Objective 2&quot;</span><span class="p">],</span>
+                <span class="n">z</span><span class="o">=</span><span class="n">set_n_df</span><span class="p">[</span><span class="s2">&quot;Objective 3&quot;</span><span class="p">],</span>
+                <span class="n">i</span><span class="o">=</span><span class="n">cube_indexs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span>
+                <span class="n">j</span><span class="o">=</span><span class="n">cube_indexs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span>
+                <span class="n">k</span><span class="o">=</span><span class="n">cube_indexs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:],</span>
+                <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Set </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">margin</span><span class="o">=</span><span class="n">_3d_margin</span><span class="p">,</span>
+        <span class="n">legend_title_text</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">,</span>
+        <span class="n">scene</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 2&quot;</span><span class="p">,</span>
+            <span class="n">zaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 3&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_extremes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">maximise</span><span class="p">):</span>
+    <span class="n">best_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">maximise</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">best_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">maximise</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">inf_x</span> <span class="o">=</span> <span class="n">dtype</span><span class="o">.</span><span class="n">min</span> <span class="k">if</span> <span class="n">maximise</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">dtype</span><span class="o">.</span><span class="n">max</span>
+    <span class="n">inf_y</span> <span class="o">=</span> <span class="n">dtype</span><span class="o">.</span><span class="n">min</span> <span class="k">if</span> <span class="n">maximise</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">dtype</span><span class="o">.</span><span class="n">max</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">best_x</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">inf_x</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+        <span class="p">[[</span><span class="n">inf_y</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">best_y</span><span class="p">]]</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># Create a fill plot -&gt; Such as EAF percentile  plot.</span>
+<span class="c1"># If a figure is given, update the figure instead of creating a new one</span>
+<span class="c1"># If no name is given, the last column eg. Percentile is chosen. Names can be a list or a</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_2d_eaf_plot</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">colorway</span><span class="p">,</span>
+    <span class="n">fill_border_colours</span><span class="p">,</span>
+    <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span>
+    <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_dashes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="c1"># Get a line plot and sort by the last column eg. Set number or percentile</span>
+    <span class="n">lines_plot</span> <span class="o">=</span> <span class="n">plot_pf</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">filter_dominated</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ordered_lines</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lines_plot</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]))</span>
+    <span class="n">float_inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">max</span>  <span class="c1"># Interpreted as infinite value by plotly</span>
+
+    <span class="c1"># Add an line to fill down from infinity to the last percentile</span>
+    <span class="n">infinity_line</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">float_inf</span><span class="p">]),</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">float_inf</span><span class="p">,</span> <span class="n">float_inf</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="n">ordered_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">infinity_line</span><span class="p">)</span>
+    <span class="n">percentile_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">num_percentiles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">percentile_names</span><span class="p">)</span>
+
+    <span class="c1"># If figure argument is given, add to an existing figure, else create new</span>
+    <span class="c1"># figure.</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">figure</span> <span class="k">if</span> <span class="n">figure</span> <span class="k">else</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">names</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_percentiles</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_percentiles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Names list (len </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span><span class="si">}</span><span class="s2">) should equal number of different traces (len </span><span class="si">{</span><span class="n">num_percentiles</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="p">)</span>
+    <span class="n">line_dashes</span> <span class="o">=</span> <span class="n">parse_line_dash</span><span class="p">(</span>
+        <span class="n">line_dashes</span><span class="p">,</span> <span class="n">num_percentiles</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span>
+    <span class="p">)</span>
+    <span class="n">line_width</span> <span class="o">=</span> <span class="n">parse_line_width</span><span class="p">(</span><span class="n">line_width</span><span class="p">,</span> <span class="n">num_percentiles</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">is_fill</span> <span class="o">=</span> <span class="s2">&quot;fill&quot;</span> <span class="ow">in</span> <span class="nb">type</span>
+    <span class="n">choose_mode</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;lines&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;lines&quot;</span> <span class="ow">in</span> <span class="nb">type</span> <span class="ow">or</span> <span class="n">is_fill</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">(</span><span class="s2">&quot;markers&quot;</span> <span class="k">if</span> <span class="s2">&quot;points&quot;</span> <span class="ow">in</span> <span class="nb">type</span> <span class="k">else</span> <span class="s2">&quot;lines&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ordered_lines</span><span class="p">):</span>
+        <span class="c1"># In fill graphs the first two traces should be the same colour</span>
+        <span class="c1"># In non-fill graphs the last</span>
+        <span class="n">fill_i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span>  <span class="c1">#</span>
+        <span class="n">name_i</span> <span class="o">=</span> <span class="n">fill_i</span> <span class="k">if</span> <span class="n">is_fill</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">num_percentiles</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">select_names</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">percentile_names</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">names</span>
+            <span class="k">else</span> <span class="n">percentile_names</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">select_legend_group</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">names</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span> <span class="k">if</span> <span class="n">names</span> <span class="k">else</span> <span class="n">percentile_names</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">line_colour</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">fill_border_colours</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span> <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;fill&quot;</span> <span class="k">else</span> <span class="n">colorway</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">figure</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">line</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">line</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">choose_mode</span><span class="p">,</span>
+                <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;none&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_fill</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;tonexty&quot;</span><span class="p">,</span>
+                <span class="n">line</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="s2">&quot;hv&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;dash&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line_dashes</span><span class="p">[</span><span class="n">name_i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">line_colour</span><span class="p">,</span>
+                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">line_width</span><span class="p">[</span><span class="n">name_i</span><span class="p">],</span>
+                <span class="p">},</span>
+                <span class="n">fillcolor</span><span class="o">=</span><span class="n">colorway</span><span class="p">[</span><span class="n">fill_i</span><span class="p">],</span>
+                <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">select_names</span><span class="p">),</span>
+                <span class="n">legendgroup</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">select_legend_group</span><span class="p">),</span>
+                <span class="n">showlegend</span><span class="o">=</span><span class="p">(</span>
+                    <span class="kc">False</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="n">is_fill</span>
+                        <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">is_fill</span>
+                        <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ordered_lines</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">True</span>
+                <span class="p">),</span>  <span class="c1"># Don&#39;t show extra traces in case</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_combine_2d_figures</span><span class="p">(</span>
+    <span class="n">datasets</span><span class="p">,</span>
+    <span class="n">names</span><span class="p">,</span>
+    <span class="n">types</span><span class="p">,</span>
+    <span class="n">colorways</span><span class="p">,</span>
+    <span class="n">fill_border_colours</span><span class="p">,</span>
+    <span class="n">line_dashes</span><span class="p">,</span>
+    <span class="n">line_widths</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="c1"># Create a single 2d graph containing multiple different EAF plots</span>
+    <span class="n">num_sets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="nb">set</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="nb">set</span> <span class="ow">in</span> <span class="n">datasets</span>
+    <span class="p">]</span>  <span class="c1"># A list containing the number of traces in each plot</span>
+    <span class="c1"># FIXME fix this colour thing</span>
+    <span class="n">def_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">get_example_gradients</span><span class="p">(</span><span class="n">num_sets</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;scientific&quot;</span><span class="p">)</span>
+    <span class="n">def_line</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">get_2d_colorway_from_colour</span><span class="p">(</span><span class="n">num_sets</span><span class="p">,</span> <span class="s2">&quot;rgba(0,0,0,0.7)&quot;</span><span class="p">)</span>
+
+    <span class="n">line_dashes</span> <span class="o">=</span> <span class="n">parse_2d_line_dash</span><span class="p">(</span><span class="n">line_dashes</span><span class="p">,</span> <span class="n">num_sets</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">)</span>
+    <span class="n">colourway</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_2d_colorway</span><span class="p">(</span><span class="n">colorways</span><span class="p">,</span> <span class="n">def_colours</span><span class="p">,</span> <span class="n">num_sets</span><span class="p">)</span>
+    <span class="n">fill_border_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_2d_colorway</span><span class="p">(</span>
+        <span class="n">fill_border_colours</span><span class="p">,</span> <span class="n">def_line</span><span class="p">,</span> <span class="n">num_sets</span>
+    <span class="p">)</span>
+    <span class="n">line_widths</span> <span class="o">=</span> <span class="n">parse_2d_line_width</span><span class="p">(</span><span class="n">line_widths</span><span class="p">,</span> <span class="n">num_sets</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">combined_figure</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+        <span class="n">combined_figure</span> <span class="o">=</span> <span class="n">create_2d_eaf_plot</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="p">,</span>
+            <span class="n">colourway</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">fill_border_colours</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">figure</span><span class="o">=</span><span class="n">combined_figure</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">line_dashes</span><span class="o">=</span><span class="n">line_dashes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">line_width</span><span class="o">=</span><span class="n">line_widths</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">combined_figure</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_legend_preset</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">preset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;centre_top_right&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a preset to the legend, changing it&#39;s position, text or colour.</span>
+
+<span class="sd">    For more advanced legend behaviour.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fig :</span>
+<span class="sd">        Figure to apply preset to</span>
+<span class="sd">    preset :</span>
+<span class="sd">        If `preset` is a string, this will change the position of the legend. It must be one of the following: &quot;outside_top_right&quot;, &quot;outside_top_left&quot;, &quot;top_right&quot;, &quot;bottom_right&quot;, &quot;top_left&quot;, \</span>
+<span class="sd">        &quot;bottom_left&quot;,&quot;centre_top_right&quot;, &quot;centre_top_left&quot;,&quot;centre_bottom_right&quot;, &quot;centre_bottom_left&quot;.</span>
+
+<span class="sd">        Set it to a list [preset_position_name, title_text, background_colour, border_colour] to change position, title text, background colour and border colour</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">colour</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">border_colour</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preset</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">preset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">preset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">colour</span> <span class="o">=</span> <span class="n">preset</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">border_colour</span> <span class="o">=</span> <span class="n">preset</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preset</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">preset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">preset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+        <span class="n">colour</span> <span class="o">=</span> <span class="n">preset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;colour&quot;</span><span class="p">)</span>
+        <span class="n">border_colour</span> <span class="o">=</span> <span class="n">preset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;border_colour&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preset</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">preset</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;preset argument type not recognised&quot;</span><span class="p">)</span>
+
+    <span class="n">pos_presets</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">outside_top_right</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">outside_top_left</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">top_right</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">bottom_right</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">top_left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">bottom_left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">centre_top_right</span><span class="o">=</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">),</span>
+        <span class="n">centre_top_left</span><span class="o">=</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">),</span>
+        <span class="n">centre_bottom_right</span><span class="o">=</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span>
+        <span class="n">centre_bottom_left</span><span class="o">=</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">position</span> <span class="k">if</span> <span class="n">position</span> <span class="k">else</span> <span class="s2">&quot;centre_top_right&quot;</span>
+    <span class="n">xanchor</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="s2">&quot;left&quot;</span> <span class="ow">in</span> <span class="n">position</span> <span class="ow">or</span> <span class="s2">&quot;outside&quot;</span> <span class="ow">in</span> <span class="n">position</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+    <span class="p">)</span>
+    <span class="n">yanchor</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span> <span class="k">if</span> <span class="s2">&quot;top&quot;</span> <span class="ow">in</span> <span class="n">position</span> <span class="ow">or</span> <span class="s2">&quot;outside&quot;</span> <span class="ow">in</span> <span class="n">position</span> <span class="k">else</span> <span class="s2">&quot;bottom&quot;</span>
+
+    <span class="n">colour</span> <span class="o">=</span> <span class="s2">&quot;rgba(0,0,0,0)&quot;</span> <span class="k">if</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;invisible&quot;</span> <span class="k">else</span> <span class="n">colour</span>
+    <span class="n">border_colour</span> <span class="o">=</span> <span class="s2">&quot;rgba(0,0,0,0)&quot;</span> <span class="k">if</span> <span class="n">colour</span> <span class="o">==</span> <span class="s2">&quot;invisible&quot;</span> <span class="k">else</span> <span class="n">border_colour</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">pos_presets</span><span class="p">[</span><span class="n">position</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">pos_presets</span><span class="p">[</span><span class="n">position</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">xanchor</span><span class="o">=</span><span class="n">xanchor</span><span class="p">,</span>
+            <span class="n">yanchor</span><span class="o">=</span><span class="n">yanchor</span><span class="p">,</span>
+            <span class="n">bgcolor</span><span class="o">=</span><span class="n">colour</span><span class="p">,</span>
+            <span class="n">bordercolor</span><span class="o">=</span><span class="n">border_colour</span><span class="p">,</span>
+            <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">border_colour</span> <span class="k">else</span> <span class="mf">2.5</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">or</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">title_text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="plot_eaf">
+<a class="viewcode-back" href="../../reference/generated/mooplot.plot_eaf.html#mooplot.plot_eaf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_eaf</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fill&quot;</span><span class="p">,</span>
+    <span class="n">percentiles</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">colorway</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">fill_border_colours</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">trace_names</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">line_dashes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;solid&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">legend_preset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;centre_top_right&quot;</span><span class="p">,</span>
+    <span class="n">template</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;simple_white&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">layout_kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot attainment surfaces in 2D.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset :</span>
+<span class="sd">        The `dataset` argument must be Numpy array of EAF values (2 objectives and percentile marker), or it can be a dictionary of such values. \</span>
+<span class="sd">        The dictionary must have this format: {&#39;alg_name_1&#39; : dataset1, &#39;alg_name_2&#39; : dataset2}.</span>
+<span class="sd">    percentiles :</span>
+<span class="sd">        A list of percentiles to plot. These must exist in the dataset argument. If multiple datasets are provided, this can also be a list of lists - \</span>
+<span class="sd">        selecting percentile groups for each algorithm (dictionary interface)</span>
+<span class="sd">    type :</span>
+<span class="sd">        The type argument can be &quot;fill&quot;, &quot;points&quot;, &quot;lines&quot; to define the plot type (See :func:`plot_pf` for more details). If multiple datasets are used (dictionary interface) \</span>
+<span class="sd">        then this can be a list of types (equal to the number of different datasets provided).</span>
+<span class="sd">    colorway :</span>
+<span class="sd">        Colorway is a single colour, or list of colours, for the percentile groups. The colours can be CSS colours such as &#39;black&#39;, 8-digit hexadecimal RGBA integers \</span>
+<span class="sd">        or strings of RGBA values such as ``rgba(1,1,0,0.5)``. Default is &quot;black&quot;. You can use functions ``colour.discrete_colour_gradient`` to create a gradient between two colours \</span>
+<span class="sd">        In case of multiple datasets (&quot;dictionary interface&quot;), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface</span>
+<span class="sd">    fill_border_colours :</span>
+<span class="sd">        The same as colorway but defining the boundaries between percentile groups. The default value is to follow colorway. You can set it to `rgb(0,0,0,0)` to make the boundaries invisible</span>
+<span class="sd">    trace_names :</span>
+<span class="sd">        Overide the default trace names by providing a list of strings</span>
+<span class="sd">    line_dashes :</span>
+<span class="sd">        Select whether lines are dashed. Choices are: &#39;solid&#39;, &#39;dot&#39;, &#39;dash&#39;, &#39;longdash&#39;, &#39;dashdot&#39;, &#39;longdashdot&#39;. A single string sets the type for all lines. A list sets them individually. \</span>
+<span class="sd">        In case of multiple datasets (&quot;dictionary interface&quot;), you can use a single list to set the value for each set of lines, or a 2d list to set a value for each line within a surface</span>
+<span class="sd">    line_width :</span>
+<span class="sd">        Select the line width (default = 2) of the traces.   Similar interface to line_dashes, colorway etc -&gt; Enter a single value to set all traces. For single datset, a list sets size for all sets \</span>
+<span class="sd">        For a dictionary of datsets: a list sets the same value for all traces assosciated with that dataset. A list of list individually sets width for every trace in every dataset</span>
+<span class="sd">    legend_preset :</span>
+<span class="sd">        See &quot;preset&quot; argument for function ``apply_legend_preset()``</span>
+<span class="sd">    template :</span>
+<span class="sd">        Choose layout template for the plot - see `Plotly template tutorial &lt;https://plotly.com/python/templates/&gt;`_ .  Default is &quot;simple_white&quot;</span>
+<span class="sd">    layout_kwargs :</span>
+<span class="sd">        Update features of the graph such as title axis titles, colours etc. These additional parameters are passed to \</span>
+<span class="sd">        plotly update_layout, See here for all the layout features that can be accessed: `Layout Plotly reference &lt;https://plotly.com/python-api-reference/generated/plotly.graph_objects.Layout.html#plotly.graph_objects.Layout/&gt;`_</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        The function returns a `Plotly GO figure` object `Figure Plotly reference &lt;https://plotly.com/python-api-reference/generated/plotly.graph_objects.Figure.html#id0/&gt;`_</span>
+<span class="sd">        This means that the user can customise any part of the graph after it is created</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    For more background, see :footcite:t:`LopPaqStu09emaa`.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. footbibliography::</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="c1"># Plot single EAF data</span>
+        <span class="k">if</span> <span class="n">percentiles</span><span class="p">:</span>
+            <span class="c1"># If specific values are given, only select data from these given percentiles</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">percentiles</span><span class="p">)]</span>
+        <span class="n">num_percentiles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">def_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">get_default_fill_colorway</span><span class="p">(</span><span class="n">num_percentiles</span><span class="p">)</span>
+        <span class="n">colorway</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+            <span class="n">colorway</span><span class="p">,</span> <span class="n">def_colours</span><span class="p">,</span> <span class="n">num_percentiles</span>
+        <span class="p">)</span>
+        <span class="n">fill_border_colours</span> <span class="o">=</span> <span class="n">colour</span><span class="o">.</span><span class="n">parse_colorway</span><span class="p">(</span>
+            <span class="n">fill_border_colours</span><span class="p">,</span> <span class="n">def_colours</span><span class="p">,</span> <span class="n">num_percentiles</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">create_2d_eaf_plot</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="p">,</span>
+            <span class="n">colorway</span><span class="p">,</span>
+            <span class="n">fill_border_colours</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
+            <span class="n">line_dashes</span><span class="o">=</span><span class="n">line_dashes</span><span class="p">,</span>
+            <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">legend_title_text</span><span class="o">=</span><span class="s2">&quot;Percentile&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 0&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;2d Empirical Attainment Function&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot multiple Eaf data. Expect dictionaries with this format:</span>
+<span class="sd">        {&#39;alg_name&#39; : dataset}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">percentiles</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">percentiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="c1"># If You want to choose percentiles inside each algorithm, use 2d list</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">percentiles</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;percentile len != dataset len&quot;</span><span class="p">)</span>
+                    <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">set</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">percentiles</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">percentiles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                    <span class="c1"># Use same percentiles for all datasets</span>
+                    <span class="n">dataset</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="nb">set</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">percentiles</span><span class="p">)]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Incorrect type for percentiles&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="n">dataset</span>
+            <span class="p">)</span>  <span class="c1"># Set all types to be single type argument</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;type list must be same length as dataset dictionary&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">traces_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Extract list with names from dict</span>
+        <span class="n">names_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">names_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">traces_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">_combine_2d_figures</span><span class="p">(</span>
+            <span class="n">traces_list</span><span class="p">,</span>
+            <span class="n">names_list</span><span class="p">,</span>
+            <span class="nb">type</span><span class="p">,</span>
+            <span class="n">colorway</span><span class="p">,</span>
+            <span class="n">fill_border_colours</span><span class="p">,</span>
+            <span class="n">line_dashes</span><span class="p">,</span>
+            <span class="n">line_width</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">legend_title_text</span><span class="o">=</span><span class="s2">&quot;Algorithm&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 0&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Objective 1&quot;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;2d Empirical Attainment Function&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">apply_legend_preset</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">legend_preset</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">layout_kwargs</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">trace_names</span><span class="p">:</span>
+        <span class="c1"># Change trace names</span>
+        <span class="n">current_names</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">fig</span><span class="o">.</span><span class="n">data</span> <span class="k">if</span> <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;showlegend&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_names</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Your names list of len </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trace_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> is different to the number of traces: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">current_names</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tracename</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_names</span><span class="p">):</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">trace_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">selector</span><span class="o">=</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">tracename</span><span class="p">})</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">diff_eaf_plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2014-2025, Manuel López-Ibáñez and Fergus Rooney.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
