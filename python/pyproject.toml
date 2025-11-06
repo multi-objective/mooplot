@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-  "setuptools>=42",
+  "setuptools>=77.0.3",
 ]
 
 [project]
@@ -47,8 +47,8 @@ urls.Tracker = "https://github.com/multi-objective/mooplot/issues"
 package-dir = { "" = "src" }
 
 [tool.ruff]
-# Set the maximum line length to 79.
-line-length = 79
+line-length = 80
+format.docstring-code-line-length = 80
 format.docstring-code-format = true
 lint.extend-select = [
   "D",    # pydocstyle
@@ -69,6 +69,8 @@ lint.per-file-ignores."examples/*" = [
 lint.per-file-ignores."src/mooplot/colour.py" = [
   "D",
 ] # FIXME!
+lint.pycodestyle.max-doc-length = 80
+lint.pycodestyle.max-line-length = 80
 lint.pydocstyle.convention = "numpy"
 
 [tool.pytest.ini_options]
