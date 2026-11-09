@@ -30,6 +30,8 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dependencies = [
   "matplotlib>=3.6",
@@ -68,10 +70,10 @@ lint.per-file-ignores."examples/*" = [
 ]
 lint.per-file-ignores."src/mooplot/colour.py" = [
   "D",
-] # FIXME!
+]  # FIXME!
 lint.pycodestyle.max-doc-length = 80
 lint.pycodestyle.max-line-length = 80
 lint.pydocstyle.convention = "numpy"
 
-[tool.pytest.ini_options]
-doctest_optionflags = "NUMBER"
+[tool.pytest]
+ini_options.doctest_optionflags = "NUMBER"
